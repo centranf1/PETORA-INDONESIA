@@ -14,13 +14,39 @@ Panduan PR menjamin konsistensi merge dan deployment.
 
 ## PR Requirements
 
-Clear scope, linked issue or requirement, summary, tests, and migration notes when needed.
+Every PR states why, scope/non-goals, linked `PET-REQ`/`PET-FTR`/test IDs, user-visible behavior, affected modules, data/API/security impacts, rollout and recovery notes, validation commands/results, and unresolved decisions. Screenshots/video are appropriate for meaningful UI changes but must contain synthetic/de-identified data.
 
 ## Checklist
 
-No hidden debug code, no secrets, no unrelated file changes, and all required docs updated.
+## Author Checklist
+
+- [ ] Changes are limited to the requested behavior; pre-existing user edits are preserved.
+- [ ] Tests cover positive, negative, boundary, retry/concurrency and authorization behavior as applicable.
+- [ ] Database migration, RLS, permission, API error, secrets, audit and retention implications are documented.
+- [ ] UI states include loading/empty/error/forbidden/pending/conflict and accessible mobile/keyboard behavior where relevant.
+- [ ] No secrets, production data, debug bypasses, generated temp files or unrelated reformats.
+- [ ] Docs, IDs, traceability, open decisions, runbooks and release notes are updated.
+- [ ] CI results and known limitations are stated honestly.
 
 ## Approval
 
-Minimum one reviewer plus relevant domain owner if impact is functional or security-sensitive.
+At least one code reviewer; add business/domain owner for policy/workflow changes, security reviewer for auth/RLS/data-sensitivity/integration changes, and database/operations reviewer for high-risk schema/deployment/recovery changes. Approval does not waive required CI or production controls.
+
+## PR Description Template
+
+```text
+Why / requirement IDs:
+What changed and out of scope:
+Data/API/permission impact:
+Tests and validation evidence:
+Migration/deployment/rollback:
+Docs and traceability updated:
+Open decisions / residual risks:
+```
+
+## Related Documents
+
+- [Code Review Guidelines](code-review-guidelines.md)
+- [Definition of Done](definition-of-done.md)
+- [Change Management](change-management.md)
 

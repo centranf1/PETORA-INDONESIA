@@ -14,13 +14,27 @@ Panduan desain PETORA fokus pada konsistensi, aksesibilitas, dan operasional.
 
 ## Style Foundation
 
-Use clean hierarchy, high contrast, readable type scale, and clear status differentiation. Design should support daily operational speed rather than ornamental visual complexity.
+Prioritize fast scanning, data comparison, short repeated actions, exception review and handoff. Keep pages organized by task and domain, with clear page title, scope indicator, primary action, filters, content, and status. Use stable layout and compact but readable density; avoid decorative cards that obscure work or marketing-style hero layouts in operational screens.
 
 ## Color
 
-Use neutral base colors with accent palette for success, warning, danger, information, and brand. Ensure text contrast is sufficient.
+Use semantic color tokens; exact brand palette requires approval. Success/warning/danger/info must also include text or icon labels. Test contrast on text, outlines, focus, badges, disabled states and charts. Avoid using the same color for unrelated semantic states.
 
 ## Spacing
 
-Use 4px spacing scale and consistent margin/padding across all modules.
+Use a 4px base spacing scale with documented increments, consistent page gutters, and responsive constraints. Maintain stable widths/heights for repeated controls; long labels and validation messages must wrap without overlapping adjacent actions. Do not scale font size directly with viewport width.
+
+## Responsive and Data-Dense Layout
+
+Desktop may use side navigation and multi-column tables. Tablet/mobile should prioritize the current task, stack filters and details, preserve primary actions, and convert complex rows into labeled summaries when horizontal scrolling would hide meaning. Do not simply shrink desktop tables to unreadable text.
+
+## Motion and Feedback
+
+Use motion only to explain transitions (drawer/dialog, progress, state change); honor reduced-motion preferences. Async actions keep their layout stable and distinguish loading, pending, success, and failure.
+
+## Related Documents
+
+- [Design System](design-system.md)
+- [Accessibility Guidelines](accessibility-guidelines.md)
+- [Information Architecture](information-architecture.md)
 

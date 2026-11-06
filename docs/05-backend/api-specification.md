@@ -16,6 +16,21 @@ Spesifikasi API mendefinisikan pola akses dan sumber data.
 
 Use resource-based endpoints: /customers, /pets, /products, /inventory, /sales, /payments, /bookings, /medical-records, /payroll, /reports.
 
+### Request and Query Contract
+
+- Use JSON for commands and standard HTTP semantics; versioning strategy remains a team decision before external consumers exist.
+- Use opaque UUID-like resource IDs, never client-chosen tenant ownership as proof of access.
+- List endpoints support bounded `limit`, cursor/keyset pagination for large data, stable sort order, and documented filter allowlists. Do not accept arbitrary SQL/order expressions.
+- Commands return authoritative state/version and a `trace_id`; clients do not infer success from a network timeout.
+- Mutation endpoints accept an idempotency key when retries could create a second business effect. Same key/same payload returns prior result; same key/different payload conflicts.
+- Amounts, permissions, policy flags, status transitions, and tenant scope are recalculated/validated server-side.
+
+### Common Response Shapes
+
+Successful response: `{ "data": ..., "meta": { "trace_id": "...", "next_cursor": null } }`. Error response follows [error-handling.md](error-handling.md), with stable `code`, safe `message`, `retryable`, and `trace_id`.
+
+Do not include fields the caller cannot read; list and export endpoints must enforce row-level scope before pagination/count aggregation to avoid leaking other-tenant totals.
+
 ### System Settings Endpoint Group
 
 | Endpoint | Tujuan | Kewenangan |
@@ -44,7 +59,6 @@ Use resource-based endpoints: /customers, /pets, /products, /inventory, /sales, 
 {
   "setting_group": "stock_policy",
   "key": "allow_negative_stock",
-  "value_type": "boolean",
   "value": false,
   "reason": "Menjaga kontrol stok dan mencegah oversell",
   "expected_version_no": 2
@@ -88,5 +102,13 @@ Status, message, data, pagination, and trace_id. Error responses include code, m
 
 ## Open Decision
 
-Actual path naming and versioning still need confirmation by frontend/backend team.
+Endpoint path/version, pagination convention and idempotency header name must be agreed before external API commitment. This document's settings endpoints are proposed internal contracts; they are not implemented endpoints.
+
+## Related Documents
+
+- [Authentication and Authorization](authentication-authorization.md)
+- [Business Logic Specification](business-logic-specification.md)
+- [Edge Functions Specification](edge-functions-specification.md)
+- [Error Handling](error-handling.md)
+- [Integration Guide](integration-guide.md)
 

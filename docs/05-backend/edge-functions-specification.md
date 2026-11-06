@@ -16,11 +16,47 @@ Dokumen ini memerinci fungsi edge untuk workflow kritis.
 
 Checkout orchestration, payment reconciliation, refund processor, stock adjustment review, appointment conflict detection, and notification dispatch.
 
+Also includes privileged settings proposal/approval, webhook verification, journal posting, clinical dispensing checks, and scoped exports where direct client database access is inappropriate. A function should map to a bounded command/use case rather than a generic privileged CRUD proxy.
+
 ## Security
 
-Functions validate auth claims, ensure branch and org checks, and use service role only internally; never expose secrets to client.
+Every function must:
+
+1. Validate method, content type, size, JWT signature/issuer/audience, account status, and allowed caller.
+2. Resolve organization/branch assignment server-side; reject client scope claims not matching membership.
+3. Check action permission and record/workflow state before privileged database access.
+4. Validate request schema and business limits; do not accept client-supplied approval flags or trusted totals.
+5. Apply rate limits/idempotency and use the minimum database privilege necessary.
+6. Emit a correlation ID and audit event for privileged actions; redact secret and sensitive payload.
+7. Return stable response/error envelope without stack trace or service credential.
+
+Service-role credentials may be used only inside protected server runtime, never in browser output, client-readable environment, logs, or returned error.
 
 ## Implementation Pattern
 
-Functions should return clear errors and be idempotent where needed using request IDs or transaction IDs.
+Use the shared error contract in `error-handling.md`. For mutations accept an idempotency key scoped to authenticated actor/organization/action and persist its result under a uniqueness constraint. A repeated key with different request hash is rejected. External calls use durable attempts; do not keep a database transaction open while waiting on provider network.
+
+## Function Contract Template
+
+| Contract item | Required detail |
+| --- | --- |
+| Name/version | Stable operation and compatibility policy |
+| Caller | User JWT, service-to-service identity, or provider webhook |
+| Authorization | Permission, tenant/branch scope, ownership and workflow checks |
+| Request | Validated schema, size limits, idempotency and correlation identifiers |
+| Writes | Transaction boundary, constraints, audit and outbox records |
+| External effects | Provider, timeout, retry, signature and reconciliation |
+| Responses | Success/pending/error status, safe code and trace ID |
+| Verification | Unit/integration/RLS/security tests and operational metrics |
+
+## Operations
+
+Set bounded execution time and payload size, monitor error/latency/retry counts, and alert on reconciliation backlog. Deploy environment-specific secrets without logging values. Document rollback/compatibility when function payloads change.
+
+## Related Documents
+
+- [Authentication and Authorization](authentication-authorization.md)
+- [API Specification](api-specification.md)
+- [Error Handling](error-handling.md)
+- [Integration Architecture](../03-architecture/integration-architecture.md)
 

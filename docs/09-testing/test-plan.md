@@ -14,11 +14,18 @@ Rencana testing menandai jalur, data, dan prioritas tahapan.
 
 ## Execution Levels
 
-Unit -> integration -> DB/RLS -> API -> component -> end-to-end -> acceptance.
+Run the narrowest relevant unit/component check first, then integration/API/database/RLS checks, E2E and UAT according to risk. Security-sensitive changes require direct authorization/RLS/storage tests even when UI tests pass.
+
+## Test Environment and Data
+
+- Use isolated local/test/staging projects with migrations applied and RLS enabled.
+- Seed synthetic organization A/B, branch A/B, role and relationship fixtures; define run-scoped identifiers and cleanup.
+- Use provider sandbox/fakes. Never make real payment, send real messaging, or use real clinical/customer records in automated tests.
+- Record build/commit, schema version, environment, seed set and trace ID for reproducibility.
 
 ## Critical Scenarios
 
-Double checkout, double payment, illegal price modification, negative stock, unauthorized data access, medical record revision, and refund handling.
+Double checkout/payment, client price tampering, concurrent stock movement, negative-stock policy, booking capacity conflict, invalid prescription/dispense, unauthorized cross-tenant access, finalized medical revision, refund timeout/retry, unbalanced journal, stale settings approval, secret exposure, and report/export scope.
 
 ## Dynamic Settings Scenarios
 
@@ -31,15 +38,24 @@ Double checkout, double payment, illegal price modification, negative stock, una
 | PET-TST-SET-005 | Branch-only config restriction | Manager on Branch A read Branch B config | Access branch config | Forbidden and recorded |
 | PET-TST-SET-006 | Non-admin mutation | Cashier or branch manager submits a settings mutation directly to the API | Request denied; active value unchanged; denial event is logged |
 
-## Execution Schedule
+## Scheduling Proposal
 
-- Smoke test: every PR merge
-- Critical regression suite: nightly
-- Security and RLS suite: before each release
-- UAT sign-off: before production go-live
+- Pull request: changed-slice tests, lint/typecheck/build, secret/dependency checks, and required P0 tests.
+- Main/staging promotion: full integration, database/RLS, security and smoke suite.
+- Nightly/scheduled: broad regression and performance trend suite where infrastructure exists.
+- Before production: migration/restore rehearsal, release-critical security suite, owner UAT and go/no-go sign-off.
 
-## Scheduling
+Exact schedules depend on CI cost/runtime and must be configured by repository owner; a written schedule is not evidence that a pipeline currently runs.
 
-Critical test suite runs on every merge to main and before production release; UAT sign-off required before go-live.
+## Entry and Exit Criteria
+
+Entry: requirement and acceptance are approved/accepted, test data and environment are available, and blocking decisions are resolved. Exit: expected result passes, no unresolved blocker/critical defect, relevant logs/evidence are attached, and exception owners/expiry are recorded.
+
+## Related Documents
+
+- [Test Strategy](test-strategy.md)
+- [Test Scenarios](test-scenarios.md)
+- [Regression Testing](regression-testing.md)
+- [UAT](user-acceptance-testing.md)
 
 

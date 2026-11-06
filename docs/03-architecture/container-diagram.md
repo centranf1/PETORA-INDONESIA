@@ -12,26 +12,45 @@ related_documents: ['system-context.md']
 
 Diagram container mengilustrasikan penyebaran platform.
 
-## Containers
+## Containers and Trust Boundaries
 
-Web app (React/Vite), API layer (Supabase PostgREST + Edge Functions), Database (PostgreSQL), Storage, Realtime, Auth, Monitoring, and External services.
+| Container | Responsibility | Sensitive boundary |
+| --- | --- | --- |
+| Browser Web App | React/Vite user interface, form state, accessible workflows | Public code only; no service role/provider secret; never authoritative for price or permission |
+| Supabase Auth | Sign-in, session and identity | Claims must be server-managed; MFA/provider choices are open decisions |
+| API / Edge Functions | Validate requests, resolve scope, orchestrate domain commands and provider calls | Server-side credentials, stable errors, rate limits and authorization |
+| PostgreSQL | Source of truth, transaction constraints and RLS | Tenant isolation, transaction boundary and migration control |
+| Private Storage | Customer, clinical and transaction documents | Per-object authorization, short-lived access, retention and audit |
+| Realtime | Updates for authorized client subscriptions | Same tenant/scope checks; not the source of truth for critical state |
+| Monitoring | Logs, metrics, traces and alerts | Redaction; no credentials or unnecessary clinical payload |
+| External Providers | Payment, email/SMS/WhatsApp, shipping if selected | Signed callbacks, idempotency, timeout and reconciliation |
 
 ## Deployment Base
 
-Frontend can run on Vercel or Cloudflare Pages; backend and database on Supabase; monitoring via Sentry or equivalent.
+Vercel/Cloudflare Pages, Supabase, and Sentry/equivalent are candidate providers, not final deployment decisions. Environment ownership, region, data residency, secret injection, support coverage, backup responsibility, and cost need approval before production.
 
 ## Mermaid
 
 ```mermaid
 flowchart TB
-A[Browser / Mobile Web] --> B[Frontend App]
+A[Browser] --> B[Web App]
 B --> C[Supabase Auth]
-B --> D[Supabase REST / GraphQL]
-D --> E[Edge Functions]
-E --> F[(PostgreSQL)]
-E --> G[Storage]
-E --> H[Realtime]
-E --> I[External Gateway]
-B --> J[Sentry]
+B --> D[Public API with user session]
+D --> E[Edge Functions / Domain Commands]
+E --> F[(PostgreSQL + RLS)]
+E --> G[Private Storage]
+E --> H[Outbox / Reconciliation]
+H --> I[External Providers]
+I --> E
+B --> J[Client Error Monitoring - redacted]
+E --> K[Server Monitoring - redacted]
 ```
+
+Direct user-scoped reads may use the Data API only for tables with reviewed RLS policies. All privileged writes and external side effects pass through server-side handlers. A deployment diagram is not a substitute for the approved provider/deployment ADR.
+
+## Related Documents
+
+- [System Context](system-context.md)
+- [Environment Configuration](../10-devops/environment-configuration.md)
+- [Secrets Management](../08-security/secrets-management.md)
 

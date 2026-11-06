@@ -18,21 +18,25 @@ ADR-01 sampai ADR-05 disetujui sebagai baseline arsitektur. Implementasi belum d
 
 ## ADR-01
 
-Modular monolith is the proposed baseline to keep domain boundaries simple while supporting multi-branch complexity.
+Modular monolith is the approved baseline to keep domain boundaries explicit while supporting multi-branch complexity. See [ADR-0001](adr/ADR-0001-monolithic-modules.md).
 
 ## ADR-02
 
-Supabase Postgres + RLS is proposed because it fits multi-tenant organization and branch security needs; claim shape, assignment resolver, and service-role boundary remain subject to security review.
+Supabase Auth + PostgreSQL RLS + Edge Functions is the approved authorization platform baseline. Claim shape, assignment resolver, per-table policies, and service-role boundary remain implementation/security details to be verified. See [ADR-0002](adr/ADR-0002-supabase-authorization.md).
 
 ## ADR-03
 
-Sensitive business flows are executed in Edge Functions or database transactions, not client-side.
+Sensitive business flows are executed in authenticated server-side services and/or database transactions, not client-side. External provider calls require persisted idempotency/reconciliation. See [ADR-0003](adr/ADR-0003-server-side-critical-workflows.md).
 
 ## ADR-04
 
-Frontend uses React + TypeScript and shared state patterns to keep maintainability and testability.
+Frontend uses React + TypeScript and feature boundaries; server state, form state and transient UI state have explicit ownership. See [ADR-0004](adr/ADR-0004-frontend-platform.md).
 
 ## ADR-05
 
-Audit log must record every change with actor, timestamp, and reason.
+Sensitive mutations and privileged actions produce attributable audit events; immutable ledgers/finalized records are corrected through revisions/reversals. Retention and disposal follow approved policy. See [ADR-0005](adr/ADR-0005-audit-and-history.md).
+
+## Implementation Status
+
+The architecture baseline is Approved by the Product Owner; implementation has not started in this repository. Approval does not approve numeric NFRs, data retention periods, provider selection, claim schemas, table-level RLS policies or release readiness. Track those in [Open Decisions](../13-traceability/open-decisions.md).
 

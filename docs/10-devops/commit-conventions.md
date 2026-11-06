@@ -14,9 +14,32 @@ Konvensi commit memudahkan tracking dan review.
 
 ## Format
 
-type(scope): summary. Example: feat(pos): add multi-payment support. fix(inventory): prevent negative stock on transfer. docs(auth): update security policy.
+Gunakan format Conventional Commits: `<type>(<scope>): <imperative summary>`; breaking API/schema change memakai footer `BREAKING CHANGE:`.
+
+| Type | Meaning |
+| --- | --- |
+| `feat` | Perilaku/fitur baru |
+| `fix` | Perbaikan bug dengan regression coverage |
+| `docs` | Dokumentasi saja |
+| `refactor` | Struktur tanpa perubahan perilaku yang disengaja |
+| `test` | Test/fixtures |
+| `build` / `ci` | Toolchain atau pipeline |
+| `perf` | Perubahan performa yang disertai bukti benchmark |
+| `security` | Hardening/security fix, tanpa membocorkan detail sensitif pada subject |
+
+Scope memakai nama domain kecil seperti `pos`, `inventory`, `clinical`, `auth`, `settings`, `docs`. Contoh: `fix(pos): keep checkout retry idempotent`.
 
 ## Rule
 
-Commits should remain atomic and include reason. Avoid mixing unrelated changes.
+Commit harus menggambarkan satu perubahan koheren, menyertakan alasan melalui issue/PR reference, dan tidak memasukkan secret, generated output, atau file unrelated. Subject ringkas menggunakan imperative mood; detail berisiko/security dijelaskan melalui channel review terkontrol, bukan secret/log payload.
+
+## Validation
+
+Sebelum commit, review `git diff`, jalankan check relevan, pastikan file staging sesuai task, dan cari secret/temporary output. Jangan amend/rewrite shared history setelah push tanpa koordinasi. Commit signing requirement dan release tag format menunggu keputusan repository owner.
+
+## Related Documents
+
+- [Git Workflow](git-workflow.md)
+- [Branching Strategy](branching-strategy.md)
+- [Pull Request Guidelines](../12-development-standards/pull-request-guidelines.md)
 

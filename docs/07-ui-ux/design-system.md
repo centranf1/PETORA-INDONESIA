@@ -12,15 +12,34 @@ related_documents: ['design-guidelines.md']
 
 Dokumen ini merinci design token dasar PETORA.
 
-## Tokens
+## Token Model
 
-Primary colors, secondary colors, neutral palette, typography, elevation, border radius, grid size, and icon sizing.
+Define semantic tokens rather than embedding raw color values in components: `surface`, `surface-raised`, `text-primary`, `text-muted`, `border`, `focus`, `brand`, `success`, `warning`, `danger`, and `info`. Brand hue and exact palette remain unapproved; semantic contrast and status meaning are mandatory.
+
+Typography tokens define display/page heading/section heading/body/label/caption with a small consistent scale. Spacing uses a documented 4px base. Define focus ring, disabled opacity, motion duration/reduced-motion behavior, control heights, icon size, and responsive breakpoints in one token source.
+
+Prefer compact operational density for tables and repeated workflows. Do not use color alone for status, do not use arbitrary gradients as a substitute for hierarchy, and keep layout stable when content/validation appears.
 
 ## Components
 
-Buttons, input, tables, modal, dropdown, toast, tabs, filters, and datagrid.
+| Component | Required variants/states |
+| --- | --- |
+| Button | primary/secondary/tertiary/danger, loading, disabled, icon-only tooltip |
+| Input/select/combobox | label, hint, required, invalid, disabled, loading options, empty results |
+| Data table | loading, empty, error, sorted, filtered, selected, paginated, narrow viewport |
+| Dialog/drawer | title/description, focus management, cancel/confirm, destructive variant |
+| Status badge | semantic label + icon/text, never color-only |
+| Toast/banner | success, pending, warning, error with appropriate persistence/action |
+| Tabs/navigation | selected state and keyboard behavior |
+| Currency/date | locale display, canonical data value, explicit timezone/currency |
 
 ## Open Decision
 
-Specific brand color palette is a design decision that requires stakeholder approval; default baseline uses functional neutral + pet-care accent tones.
+Specific brand palette, typeface/license, density preference, and dark-mode requirement need design owner approval. Do not finalize a brand palette or claim WCAG conformance before contrast testing.
+
+## Related Documents
+
+- [Design Guidelines](design-guidelines.md)
+- [Accessibility Guidelines](accessibility-guidelines.md)
+- [Interaction Patterns](interaction-patterns.md)
 
