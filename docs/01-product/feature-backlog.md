@@ -22,7 +22,7 @@ Semua item backlog harus memiliki owner, acceptance criteria, and business rules
 
 ## Priority Notes
 
-Deferred items: e-commerce, advanced cra, and integrated external shipping need management sign-off.
+Deferred items: e-commerce, advanced analytics, and integrated external shipping need management sign-off.
 
 ## Release Strategy
 

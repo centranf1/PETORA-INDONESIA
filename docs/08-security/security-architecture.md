@@ -53,7 +53,7 @@ PETORA memperlakukan beberapa kebijakan sebagai konfigurasi runtime yang dapat d
 
 - Semua perubahan harus diautentikasi dengan session yang valid.
 - Hanya Super Admin atau Owner dengan hak approval yang dapat mengubah config khusus.
-- `scope` harus dibatasi ke `organization`, `branch`, atau `global`.
+- Scope baseline dibatasi ke organization atau branch; global lintas tenant belum didukung sampai keputusan tenancy disetujui.
 - `value_type` harus cocok dengan schema valid sebelum disimpan.
 - `requires_approval=true` mengharuskan status draft dan persetujuan sebelum config aktif.
 - Sistem menolak perubahan jika `is_system_locked=true` dan tidak disetujui oleh owner/super admin.
@@ -91,34 +91,14 @@ RLS harus aktif untuk seluruh tabel yang mungkin diakses dari API. Data organisa
 ### Design Example
 
 ```sql
--- rancangan awal; harus diverifikasi sebelum implementasi
+-- Rancangan awal: settings tidak diekspos melalui Supabase Data API.
 ALTER TABLE public.system_settings ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "settings_org_isolation"
-ON public.system_settings
-FOR SELECT
-USING (
-	organization_id = auth.jwt() ->> 'organization_id'
-	AND (
-		scope = 'organization'
-		OR (scope = 'branch' AND branch_id = auth.jwt() ->> 'branch_id')
-		OR scope = 'global'
-	)
-);
-
-CREATE POLICY "settings_update_only_super_admin"
-ON public.system_settings
-FOR UPDATE
-USING (
-	auth.jwt() ->> 'role' = 'super_admin'
-	OR (
-		auth.jwt() ->> 'role' = 'owner'
-		AND requires_approval = true
-	)
-);
+ALTER TABLE public.setting_change_requests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.setting_versions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.setting_audit_log ENABLE ROW LEVEL SECURITY;
 ```
 
-Catatan penting: `organization_id` dan `branch_id` tidak boleh dipercaya dari browser. Nilai tersebut harus diturunkan dari session atau divalidasi di server sebelum diterapkan.
+Tanpa policy client, RLS menolak akses Data API secara default. Settings dibaca dan diubah hanya melalui Edge Function/server endpoint yang memverifikasi user, permission, organization, branch assignment, key allowlist, lock state, approval, dan expected version sebelum memakai akses privileged. Service role tidak boleh diteruskan ke frontend. Jika desain kelak mengizinkan pembacaan langsung, tambahkan policy role-aware dan negative tests terlebih dahulu; jangan menyalin policy tenant-only yang memberi semua anggota organisasi akses ke seluruh policy.
 
 ## Storage, Secrets, and External Integrations
 

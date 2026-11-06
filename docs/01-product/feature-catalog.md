@@ -41,7 +41,7 @@ Katalog fitur PETORA mencatat fitur utama sesuai README.md dengan ID, tujuan, pe
 | PET-FTR-023 | Attendance Management | Mengelola clock-in dan presensi | HR, Staff | Jadwal dan shift dibuat | Kehadiran harus dapat disesuaikan melalui proses persetujuan dan koreksi |
 | PET-FTR-024 | Commission Management | Menghitung komisi pegawai atas penjualan dan layanan | HR, Manager | Aturan komisi ditentukan | Snapshot aturan komisi harus ikut disimpan saat transaksi terjadi |
 | PET-FTR-025 | Payroll Management | Mengelola gaji, lembur, dan pembayaran SDM | HR, Finance | Absensi dan komisi tersedia | Gaji harus diperiksa sebelum pembayaran dan dicatat di keuangan |
-| PET-FTR-026 | Finance Management | Mengelola kas, pengeluaran, dan paiutang | Finance, Manager | Rekening dan akun tersedia | Setiap cash movement harus ada bukti, kode, dan jurnal pendukung |
+| PET-FTR-026 | Finance Management | Mengelola kas, pengeluaran, dan piutang | Finance, Manager | Rekening dan akun tersedia | Setiap cash movement harus ada bukti, kode, dan jurnal pendukung |
 | PET-FTR-027 | Accounting Management | Menyusun jurnal, buku besar, neraca, dan laporan finansial | Accounting, Finance | Chart of account aktif | Jurnal yang diposting tidak boleh dihapus tanpa koreksi yang terdokumentasi |
 | PET-FTR-028 | Consignment Management | Mengelola stok titipan supplier/mitra | Inventory, Finance | Mitra konsinyasi dibuat | Pembagian keuntungan dan settlement perlu riwayat terstruktur |
 | PET-FTR-029 | Reports & Business Analytics | Menyajikan laporan operasional dan bisnis | Owner, Manager, Staff | Data transaksi tersedia | Export dan laporan harus mengikuti scope organisasi dan cabang |

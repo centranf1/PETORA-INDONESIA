@@ -26,6 +26,8 @@ If a required source is missing, record that fact and create or update the appro
 
 ## Before Implementation
 
+Before editing, inspect the working tree and read any existing user changes in files relevant to the task. Preserve unrelated and pre-existing edits; never reset, revert, or overwrite them. Do not create a commit or branch unless explicitly requested.
+
 For each task, establish a small trace from the request to:
 
 - requirement and feature IDs;

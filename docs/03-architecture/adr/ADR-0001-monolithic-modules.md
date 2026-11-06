@@ -11,7 +11,7 @@ related_documents: ['../architecture-decisions.md']
 # ADR 0001: Modular Monolith for PETORA
 
 ## Status
-Accepted
+Proposed; approval has not been recorded. The metadata status remains Draft until an accountable architecture owner reviews this ADR.
 
 ## Context
 PETORA covers many domains but it remains a single business platform and must minimize coordination complexity.

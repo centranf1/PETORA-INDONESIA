@@ -20,33 +20,34 @@ Use resource-based endpoints: /customers, /pets, /products, /inventory, /sales, 
 
 | Endpoint | Tujuan | Kewenangan |
 | --- | --- | --- |
-| GET /settings | Menampilkan semua config aktif untuk org/branch | Super Admin, Owner, Manager |
+| GET /settings | Menampilkan setting aktif yang diizinkan pada verified scope | Super Admin, Owner, Manager (read-only sesuai permission) |
 | GET /settings/:group | Menampilkan config per kelompok | Super Admin, Owner |
 | POST /settings | Membuat usulan perubahan konfigurasi | Super Admin |
-| PATCH /settings/:id | Update setting aktif atau draft | Super Admin |
+| PATCH /settings/:id | Mengubah proposal/draft; tidak mengaktifkan policy kritis langsung | Super Admin |
 | POST /settings/:id/approve | Menyetujui perubahan kritis | Owner / Super Admin |
+| POST /settings/:id/reject | Menolak proposal dengan alasan | Owner / Super Admin |
 | GET /settings/:id/history | Mencari riwayat perubahan | Super Admin, Owner |
 | POST /settings/validate | Validasi konfigurasi sebelum diterapkan | Super Admin |
 
 ### Aturan API setting
 
-- Semua request setting harus mengirim `organization_id` dan `branch_id` yang valid dari auth context, bukan dari browser body.
+- Organization dan branch scope diturunkan dari authenticated context yang diverifikasi server. Client boleh meminta branch context, tetapi tidak dapat mengklaim membership dengan mengirim ID pada body.
 - perubahan setting dengan `requires_approval=true` wajib disetujui sebelum berlaku.
-- response harus menyertakan `effective_value`, `status`, `version_no`, dan audit metadata.
+- response membedakan nilai aktif dan nilai proposal; proposal pending tidak mengubah `effective_value`.
+- response harus menyertakan `status`, `active_version_no`, `proposed_version_no` bila ada, dan audit metadata yang aman.
+- secret/provider credential tidak boleh dikembalikan dalam nilai setting; gunakan masked state dan server-side secret manager.
 - method update harus menulis ke `setting_versions` dan `setting_audit_log` sebelum final commit.
 
 ### Request / Response DTO example
 
 ```json
 {
-  "organization_id": "org_123",
-  "branch_id": "branch_456",
   "setting_group": "stock_policy",
   "key": "allow_negative_stock",
   "value_type": "boolean",
   "value": false,
   "reason": "Menjaga kontrol stok dan mencegah oversell",
-  "requires_approval": true
+  "expected_version_no": 2
 }
 ```
 
@@ -54,8 +55,10 @@ Use resource-based endpoints: /customers, /pets, /products, /inventory, /sales, 
 {
   "id": "set_789",
   "status": "pending_approval",
-  "effective_value": false,
-  "version_no": 3,
+  "effective_value": true,
+  "proposed_value": false,
+  "active_version_no": 2,
+  "proposed_version_no": 3,
   "approved_by": null,
   "updated_at": "2026-11-06T09:00:00Z",
   "audit": {
@@ -72,6 +75,8 @@ Use resource-based endpoints: /customers, /pets, /products, /inventory, /sales, 
 - `refund_policy` dan `notification_policy` tidak boleh dibuat dengan nilai yang melanggar batas yang diatur di level organisasi.
 - `branch_id` tidak boleh dipakai untuk mengubah global config yang tidak mengizinkan scope branch.
 - Semua perubahan policy harus di-commit dalam satu transaksi database yang mencakup audit log dan version record.
+- Server mengambil `requires_approval`, lock state, key type, dan scope rules dari katalog/config aktif; client tidak boleh menentukan sendiri flag approval tersebut.
+- `expected_version_no` wajib dipakai untuk mencegah overwrite perubahan yang terjadi sejak form dibuka; konflik dikembalikan sebagai conflict response, bukan last-write-wins.
 
 ## Auth
 

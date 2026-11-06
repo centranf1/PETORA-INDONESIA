@@ -14,11 +14,14 @@ Aturan bisnis ini menjadi baseline proses transaksi dan kontrol internal.
 
 ## General Rules
 
-User must be assigned to an organization and branch. A branch may be active or inactive, but historical records must remain visible for audit. Transactions cannot be edited after payment without defined compensation workflow.
+- User must have an active organization membership and valid branch assignment for the requested operation; a browser-supplied scope is not authorization.
+- Inactive branches reject new operational transactions while permitted history remains available to authorized users.
+- Paid, posted, finalized, or dispensed records cannot be silently edited or deleted; corrections use a linked reversal/revision workflow.
+- Use `pending`, `completed`, `failed`, `cancelled`, and `reversed` states only where each state transition is defined; do not treat timeout as success.
 
 ## Stock Rules
 
-Stock movement must be tracked and cannot be changed outside valid transactions. Stock negative is prohibited unless explicit setting is enabled by business policy.
+Stock movement must be tracked in an append-oriented ledger and cannot be changed outside valid transactions. Stock negative is prohibited unless an approved policy explicitly enables it; stock reservation, concurrent checkout, damaged/quarantine stock, and adjustment thresholds need complete domain rules before implementation.
 
 ## Clinical Rules
 
@@ -26,7 +29,7 @@ Medical records finalization requires revision rather than direct overwrite. Pre
 
 ## Finance Rules
 
-Journal must balance. Payment reconciliation and refund must produce linked financial entries. Void or refund requires authorization and reason code.
+Journal must balance. Payment reconciliation and refund must produce linked financial entries. Void or refund requires authorization, reason, idempotency, provider reconciliation where applicable, and a linked correction record.
 
 ## Promotion Rules
 
@@ -50,10 +53,11 @@ Beberapa aturan bisnis tidak dapat dianggap final karena dapat berubah seiring k
 
 ### Rule Implementation
 
-- Semua konfigurasi dinamis harus diakses melalui table setting, configuration, atau metadata policy yang di-join ke runtime logic.
+- Semua konfigurasi dinamis harus dibaca melalui server-side policy service dari setting key yang allowlisted dan schema-validated; client tidak membaca atau mengubah tabel langsung.
 - Nilai default hanya berlaku sebagai baseline, bukan final policy.
 - Perubahan konfigurasi tidak boleh dilakukan secara langsung dari browser tanpa validasi server yang memastikan role dan scope.
 - Konfigurasi yang memengaruhi keuangan atau data medis harus memiliki proses approval dan audit trail.
+- Proposal pending/rejected tidak mengubah nilai aktif; penerapan membandingkan expected version dan menulis active value, version, serta audit secara transaksional.
 
 ### Example Policy Types
 
@@ -64,6 +68,8 @@ Beberapa aturan bisnis tidak dapat dianggap final karena dapat berubah seiring k
 | stock_policy | allow_negative_stock = false, opname_tolerance = 2 | Super Admin |
 | service_policy | max_booking_per_slot = 5, cancellation_fee = 10% | Super Admin |
 | notification_policy | reminder_before_minutes = 60, retry_policy = 3 | Super Admin |
+
+Nilai pada tabel di atas adalah ilustrasi tipe policy, bukan angka yang disetujui atau production default. Final schema, range valid, approval owner, dan scope per key harus dikelola di policy catalog dan open-decision register.
 
 ### Validation Requirement
 

@@ -1,8 +1,8 @@
 ---
 title: ADR 0002: Supabase Authorization Model
 document_id: PET-ADR-0002
-status: Draft
-version: 1.0
+status: Approved
+version: 1.1
 owner: Engineering Team
 last_updated: 2026-11-06
 related_documents: ['../architecture-decisions.md']
@@ -11,7 +11,7 @@ related_documents: ['../architecture-decisions.md']
 # ADR 0002: Supabase Authorization Model
 
 ## Status
-Accepted
+Approved. Stack Supabase (Auth + PostgreSQL RLS + Edge Functions) ditetapkan.
 
 ## Context
 Multi-tenant organization and branch access require row-level security supporting role and permission checks.

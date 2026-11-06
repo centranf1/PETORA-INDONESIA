@@ -48,12 +48,12 @@ Kebijakan runtime seperti refund, stock, pricing, loyalty, booking, dan notifica
 
 | Test ID | Requirement ID | Scenario | Priority |
 | --- | --- | --- | --- |
-| PET-TST-SET-001 | PET-REQ-018 | Super Admin creates draft setting | P0 |
-| PET-TST-SET-002 | PET-REQ-018 | Owner approves critical config | P0 |
-| PET-TST-SET-003 | PET-REQ-018 | Branch-scoped config cannot be read outside branch | P0 |
-| PET-TST-SET-004 | PET-REQ-018 | Invalid value_type is rejected | P0 |
-| PET-TST-SET-005 | PET-REQ-018 | Locked setting cannot be edited without approval | P0 |
-| PET-TST-SET-006 | PET-REQ-018 | Non-admin cannot mutate settings | P0 |
+| PET-TST-SET-001 | PET-REQ-016 | Super Admin creates draft setting | P0 |
+| PET-TST-SET-002 | PET-REQ-016 | Owner approves critical config | P0 |
+| PET-TST-SET-003 | PET-REQ-016 | Branch-scoped config cannot be read outside branch | P0 |
+| PET-TST-SET-004 | PET-REQ-016 | Invalid value_type is rejected | P0 |
+| PET-TST-SET-005 | PET-REQ-016 | Locked setting cannot be edited without approval | P0 |
+| PET-TST-SET-006 | PET-REQ-016 | Non-admin cannot mutate settings | P0 |
 
 ## Tools and Execution Layers
 
@@ -65,7 +65,7 @@ Kebijakan runtime seperti refund, stock, pricing, loyalty, booking, dan notifica
 
 ## Release Gate
 
-Semua P0 dan P1 test untuk konfigurasi dinamis harus lulus sebelum production deployment. Jika ada perubahan pada policy critical, password atau approval rule, release harus diakses oleh owner dan super admin.
+Semua P0 dan P1 test untuk konfigurasi dinamis harus lulus sebelum production deployment. Perubahan policy kritis, authorization, atau approval rule memerlukan review oleh owner dan security/engineering reviewer sesuai tanggung jawab.
 
 ## Priority
 

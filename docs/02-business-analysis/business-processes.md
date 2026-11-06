@@ -23,12 +23,12 @@ Dokumen ini merangkum proses utama yang berlangsung di PETORA, termasuk trigger,
   3. Diskon, voucher, pajak, dan biaya layanan dihitung.
   4. Metode pembayaran dipilih dan divalidasi.
   5. Sistem memeriksa ketersediaan stok dan hak akses.
-  6. Payment gateway atau cash acceptance diproses.
-  7. Stock ledger, sales transaction, payment, loyalty, dan jurnal keuangan dibuat dalam transaksi yang atomik.
-  8. Struk dan invoice dibuat lalu diserahkan ke pelanggan.
-- Alternative flow: pembayaran campuran, pembayaran sebagian, atau voucher/loyalty redemption.
-- Failure flow: stok tidak cukup, metode pembayaran gagal, harga diubah oleh pengguna tidak berwenang, data pelanggan tidak valid.
-- Data created/updated: sales, sale_items, payment_records, loyalty_records, stock_movements, journal_entries.
+  6. Untuk pembayaran tunai, kasir mencatat tender; untuk provider eksternal, sistem membuat payment attempt dengan idempotency reference dan menunggu hasil terverifikasi.
+  7. Setelah payment success terkonfirmasi, sistem menyelesaikan sale, payment, stock ledger, loyalty event, dan journal posting dalam satu transaksi database internal.
+  8. Notifikasi/struk dikirim melalui outbox atau mekanisme retryable setelah commit; sistem tidak menganggap pemanggilan provider dan commit database sebagai satu transaksi atomik.
+- Alternative flow: pembayaran campuran, pembayaran sebagian bila policy mengizinkan, atau voucher/loyalty redemption.
+- Failure flow: stok tidak cukup, metode pembayaran gagal/timeout, webhook tidak valid/duplikat, harga diubah oleh pengguna tidak berwenang, atau data pelanggan tidak valid. Timeout masuk status pending/reconciliation dan tidak boleh membuat efek transaksi ganda.
+- Data created/updated: `sales_transactions`, `sale_items`, `payments`, `stock_ledgers`, `loyalty_events`, `journal_entries`; payment attempts, stock reservations, dan outbox entities masih perlu finalisasi schema.
 - Hak akses: kasir dapat melakukan checkout; refund/void memerlukan otorisasi supervisor atau owner.
 
 ```mermaid
@@ -50,12 +50,13 @@ I --> J[Audit Log]
 - Aktor: kasir, supervisor, finance, customer service
 - Main flow:
   1. Refund atau void diajukan dengan alasan dan dokumen pendukung.
-  2. Sistem memeriksa apakah transaksi sudah dibayar dan statusnya valid untuk refund.
-  3. Otorisasi sesuai role dan policy.
-  4. Saldo stok, poin loyalitas, dan jurnal keuangan dikoreksi secara konsisten.
-  5. Pelanggan menerima konfirmasi refund atau penggantian.
-- Failure flow: transaksi tidak ditemukan, sudah lewat batas waktu, atau stock tidak dapat dikembalikan.
-- Data created/updated: refund_requests, refund_transactions, journal_entries, loyalty_adjustments, stock_return_records.
+  2. Sistem memeriksa status transaksi, item, metode payment, jumlah yang dapat dikembalikan, dan batas policy aktif.
+  3. Otorisasi dan approval dijalankan sesuai role, limit, dan separation-of-duties policy.
+  4. Untuk provider eksternal, refund dikirim sebagai idempotent provider request dan dipantau sampai hasil final; timeout tidak dianggap berhasil.
+  5. Setelah hasil terkonfirmasi, koreksi payment, stok yang benar-benar kembali, loyalty event, dan jurnal dibuat secara konsisten dalam transaksi database internal.
+  6. Pelanggan menerima konfirmasi setelah status final; seluruh tahapan tetap dapat direkonsiliasi.
+- Failure flow: transaksi tidak ditemukan, sudah lewat batas waktu, jumlah refund melebihi saldo, provider gagal/timeout, atau stock tidak dapat dikembalikan. Tidak boleh menghapus sale asli.
+- Data created/updated: `sales_transactions`, `payments`, `journal_entries`, `loyalty_events`, `stock_ledgers`; `refund_requests`/refund attempts adalah entity kandidat yang perlu didefinisikan.
 
 ## 3. Proses Penerimaan Barang dan Pembelian
 
@@ -147,7 +148,9 @@ I --> J[Audit Log]
 - Semua proses kritis harus dipastikan tercatat di audit log.
 - Data finansial dan medis tidak boleh dihapus sepihak.
 - Scope data berdasarkan organisasi dan cabang harus selalu diverifikasi sebelum operasional.
-- Proses yang melibatkan stok, payment, refund, medical treatment, dan jurnal harus bersifat atomik.
+- Mutasi database dalam satu domain workflow harus atomik; provider eksternal ditangani sebagai state machine/idempotent workflow dengan reconciliation atau compensation, bukan diasumsikan ikut transaksi PostgreSQL.
+- Setiap proses memiliki actor, organization/branch scope, state transition, reason, audit evidence, dan test scenario.
+- Status `pending`, `failed`, `cancelled`, dan `reversed` harus dibedakan dari `completed` untuk payment, booking, approval, dan provider operation.
 
 ## Related Documents
 

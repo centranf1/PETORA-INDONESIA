@@ -1,7 +1,32 @@
+---
+title: Documentation Completeness Report
+document_id: PET-DOC-1306
+status: Draft
+version: 1.1
+owner: Engineering Team
+last_updated: 2026-11-06
+related_documents: ['requirements-traceability-matrix.md', 'open-decisions.md', '../00-overview/documentation-guide.md']
+---
+
 # Documentation Completeness Report
 
 ## Summary
-This report records the materials created for PETORA documentation as a draft baseline derived from README.md and AGENTS.md. It is intended to support the development of the system and to identify unresolved decisions.
+Laporan ini mencatat kondisi dokumentasi PETORA sebagai draft baseline yang diturunkan dari README.md. Dokumen ini bukan bukti bahwa aplikasi telah dibangun, requirement telah disetujui, atau sistem siap produksi.
+
+## Audit Snapshot
+
+Audit dilakukan pada 2026-11-06 terhadap working tree yang tersedia.
+
+| Check | Result | Interpretation |
+| --- | --- | --- |
+| Markdown files under `docs/` | 111 | Seluruh berkas Markdown ditemukan dalam inventaris |
+| Documents under 180 words | 70 | Sinyal dokumen ringkas yang perlu review; jumlah kata bukan penilaian mutu final |
+| Missing standard frontmatter | 0 | `docs/README.md` dan laporan ini sudah memiliki metadata |
+| Duplicate `document_id` found | 0 | Konflik ID indeks dengan project overview telah diperbaiki |
+| Broken relative Markdown links found | 0 | Tidak ditemukan target link lokal yang hilang pada audit |
+| Application source, migrations, tests, or CI files at repository root | Not present in inspected tree | Dokumen belum diverifikasi terhadap implementasi aktual |
+
+Audit tautan/metadata perlu dijalankan kembali setelah perubahan dokumentasi. Ambang 180 kata hanya heuristik untuk menemukan kandidat review, bukan syarat panjang dokumen.
 
 ## Documents created
 - docs/README.md
@@ -73,5 +98,33 @@ This report records the materials created for PETORA documentation as a draft ba
 - Mermaid blocks are included in the architecture, process, and ERD sections in a syntactically simple form suitable for standard Mermaid renderers.
 - Final diagrams should be re-checked against the actual implementation once code is added.
 
-## Documentation completeness status
-Status: Draft baseline complete per README.md and AGENTS.md requirements. Full production approval still requires stakeholder confirmation on open decisions and final operational policy.
+## Readiness Assessment
+
+**Status: Documentation baseline in progress; not yet approved as implementation-ready.** Struktur dokumentasi mencakup domain utama README dan sekarang memiliki 18 requirement IDs, acceptance criteria, test mapping, serta 33 feature-to-module/data mappings. Namun dokumen inti masih banyak yang ringkas, entity fisik/API tertentu masih TBD, dan belum ada kode, migration, test suite, atau pipeline untuk membuktikan kontrak teknis.
+
+### Blocking Gaps Before Full Implementation
+
+- Menyelesaikan dan menyetujui role/permission serta tenant/branch scope.
+- Menentukan tax/legal policy, retention dan disposal, provider payment/notification, serta deployment ownership.
+- Menyelesaikan target non-functional terukur (availability, latency, recovery objectives, capacity) bersama stakeholder.
+- Menetapkan entity fisik, endpoint final, constraints, ownership/RLS, dan migration untuk baris TBD di data mapping.
+- Memvalidasi rancangan SQL/RLS/API terhadap autentikasi dan schema yang benar sebelum production use.
+- Menyusun prioritas fase, release acceptance, dan pemilik keputusan per domain.
+
+### Next Readiness Gates
+
+1. Product/Business owner menyetujui scope, requirement IDs, workflow, dan keputusan bisnis kritis.
+2. Engineering/Security owner menyetujui arsitektur, tenancy, RLS, schema, API, threat model, dan NFR.
+3. Setiap P0 requirement memiliki acceptance criteria dan test scenario yang terpetakan; tim implementasi menambahkan serta menjalankan test otomatis untuk membuktikannya.
+4. Tim implementasi menguji migrasi, authorization, transaksi kritis, backup/restore, serta deployment di environment non-production.
+5. Status dokumen dinaikkan ke In Review/Approved hanya setelah approval terdokumentasi.
+
+## Scope and Limitations
+
+Laporan ini mengaudit inventaris, metadata, tautan relatif, serta beberapa dokumen inti; ini bukan review semantik penuh atas 111 dokumen. Dokumen yang belum dibaca dan diverifikasi satu per satu tetap memerlukan review domain sebelum dianggap lengkap.
+
+## Related Documents
+
+- [Documentation guide](../00-overview/documentation-guide.md)
+- [Open decisions](open-decisions.md)
+- [Requirements traceability matrix](requirements-traceability-matrix.md)

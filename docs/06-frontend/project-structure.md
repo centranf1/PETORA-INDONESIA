@@ -112,7 +112,7 @@ src/features/settings/
 ### State and validation pattern
 
 - Gunakan `react-hook-form` + `zod` untuk form setting.
-- Gunakan `TanStack Query` untuk membaca `system_settings` dan `setting_audit_log`.
+- Gunakan `TanStack Query` untuk membaca settings melalui server-side Settings API; frontend tidak mengakses tabel `system_settings`, `setting_change_requests`, atau audit secara langsung melalui Supabase Data API.
 - Gunakan `useMutation` untuk submit perubahan, dengan status `draft`, `pending_approval`, atau `active`.
 - Validasi field berdasarkan `value_type`: string, number, boolean, enum, object.
 - Frontend harus menampilkan status terakhir dan current version secara jelas.

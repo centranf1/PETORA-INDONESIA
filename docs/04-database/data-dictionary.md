@@ -12,18 +12,18 @@ related_documents: ['database-design.md']
 
 Data dictionary mencatat definisi kolom utama, variabel, dan relasi yang diperlukan untuk menjaga konsistensi data PETORA.
 
-## 1. Standard Column Pattern
+## 1. Common Column Guidance
 
-Semua tabel utama diharapkan memiliki pola kolom berikut:
+Kolom berikut digunakan sesuai karakter data; jangan menambahkan kolom tenant, branch, atau soft-delete secara mekanis ke semua tabel. Setiap tabel harus mendokumentasikan ownership, retention, sensitivity, lifecycle, dan audit needs secara eksplisit.
 
 | Column | Type | Purpose | Rule |
 | --- | --- | --- | --- |
 | id | uuid | primary key | PK, generated default |
-| organization_id | uuid | tenant scope | not null for tenant-aware tables |
-| branch_id | uuid | branch scope | nullable for org-level tables |
+| organization_id | uuid | tenant scope | not null for tenant-owned data; omit only with documented reason |
+| branch_id | uuid | branch scope | present only for branch-scoped data; null may represent org-level data |
 | created_at | timestamptz | creation timestamp | not null |
 | updated_at | timestamptz | last updated timestamp | not null |
-| deleted_at | timestamptz | logical delete | nullable |
+| deleted_at | timestamptz | logical delete | only for records whose lifecycle permits soft deletion; never use to erase immutable ledger history |
 | created_by | uuid | creator user | not null for user-managed tables |
 | updated_by | uuid | last updater | nullable |
 | status | text | lifecycle state | use enum/check constraint |
@@ -58,6 +58,10 @@ Semua tabel utama diharapkan memiliki pola kolom berikut:
 | payroll_records | detail gaji | id, organization_id, branch_id, payroll_cycle_id, employee_id, gross_pay, deductions | reconciles with finance |
 | journal_entries | jurnal umum | id, organization_id, branch_id, ref_type, ref_id, account_code, debit, credit | must balance |
 | audit_logs | log aktivitas | id, organization_id, branch_id, actor_id, entity_type, entity_id, action, created_at | security and traceability |
+| system_settings | nilai setting aktif | id, organization_id, branch_id, setting_group, key, value_type, value_json, version_no | one active value per organization/optional branch/group/key; secret material is prohibited |
+| setting_change_requests | proposal perubahan setting | id, organization_id, branch_id, setting_id, proposed_value_json, expected_version_no, status, requested_by, reason | pending/rejected proposal never changes active value |
+| setting_versions | riwayat nilai aktif | id, setting_id, change_request_id, version_no, value_json, changed_by, reason | immutable snapshots; unique setting/version |
+| setting_audit_log | event konfigurasi | id, organization_id, branch_id, setting_id, change_request_id, changed_by, change_type, reason | append-only; redact sensitive values and enforce scope |
 
 ## 3. Data Rules and Constraints
 
@@ -66,6 +70,9 @@ Semua tabel utama diharapkan memiliki pola kolom berikut:
 - `created_at` dan `updated_at` selalu memakai type `timestamptz`.
 - Foreign keys harus menjaga referential integrity, kecuali data archiving yang diijinkan.
 - Gunakan check constraints untuk status, currency, quantity, dan range nilai yang sensitif.
+- For `system_settings`, enforce separate uniqueness for organization-level rows (`branch_id IS NULL`) and branch-level rows (`branch_id IS NOT NULL`) using partial unique indexes; a normal unique constraint does not prevent duplicate NULL-scope rows.
+- For setting proposals, verify organization/branch matches the parent setting and compare `expected_version_no` atomically before approval/application.
+- Do not store provider tokens, passwords, or credentials in `value_json`; use the server-side secret manager.
 
 ## 4. Example Data Definition
 
@@ -92,6 +99,7 @@ CREATE TABLE public.customers (
 - Setiap perubahan struktur data harus meningkatkan dokumentasi ERD dan data dictionary.
 - Nama tabel dan kolom yang digunakan di backend dan frontend harus konsisten.
 - Jika ada fitur yang mengharuskan history table, dokumentasikan tabel historis dan hubungannya dengan master table.
+- Each new table must document whether it is organization-scoped, branch-scoped, global/reference data, or immutable history, with corresponding RLS and retention behavior.
 
 ## Related Documents
 
