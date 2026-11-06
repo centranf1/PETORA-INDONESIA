@@ -32,6 +32,28 @@ Queue, patient profile, note-taking, diagnosis, prescription, treatment summary,
 
 Booking history, medical access, loyalty balance, membership status, and notifications.
 
+## Additional Core Pages
+
+Daftar berikut melengkapi page pattern untuk seluruh area utama. Hak akses ditentukan dari permission/scope server; tabel ini menjelaskan presentasi dan aksi UI, bukan otorisasi.
+
+| Page / feature IDs | Main content and actions | Validation / states | Primary access rule |
+| --- | --- | --- | --- |
+| Customer & Pet Profile (PET-FTR-005/006) | Customer search, contact/consent summary, pet list, owner relationship, service/transaction timeline, add pet/request ownership change | Duplicate candidate, owner verification, inactive customer, no pets, restricted clinical summary | Staff by customer scope; customer sees own relationship only |
+| Product Catalog & Price (PET-FTR-007) | SKU/barcode search, variant/unit, status, stock availability, effective-price history, price-change proposal | Invalid unit/price, conflict, inactive item, branch override and pending approval | Catalog read by assigned org/branch; price mutation permission separate |
+| Purchasing & Receiving (PET-FTR-010) | Supplier, PO lines, approval status, received/remaining quantity, batch/expiry entry, invoice match | Partial receipt, quantity mismatch, duplicate invoice, damaged/quarantine status | Purchasing prepares; Inventory receives; approver/Finance has separate actions |
+| Booking & Schedule (PET-FTR-012) | Calendar/list, service/resource/staff filters, waitlist if enabled, booking detail and check-in | Slot conflict, capacity reached, pending confirmation, cancellation/no-show, timezone display | Customer own booking; staff assigned service/branch |
+| Grooming / Service Visit (PET-FTR-011/015) | Work queue, customer/pet brief, pre-service condition, checklist, additional consent, completion/handover | Missing consent, allergy flag, delayed service, incomplete checklist, incident report | Assigned service staff; clinical details remain restricted |
+| Boarding / Daycare (PET-FTR-013) | Occupancy board, room assignment, check-in/out, feeding/medication/care checklist, owner update | Capacity/room unavailable, missed care task, emergency, late pickup, sanitation block | Assigned boarding team; health details limited to care need |
+| Transport Dispatch (PET-FTR-014) | Requested pickup/drop, route/driver assignment, pet condition, handover signatures, trip status | Address/area invalid, driver unavailable, delay, safety incident | Assigned operations/driver; customer sees own trip status |
+| Clinical Visit & Record (PET-FTR-016/017) | Queue/triage, visit context, vitals/exam, diagnosis, consent, draft/final record, revision timeline | Wrong patient, clinician mismatch, missing consent, allergy alert, save conflict | Assigned veterinarian; finalized content revised, never silently overwritten |
+| Pharmacy Dispense (PET-FTR-018) | Prescription work queue, patient and dose check, eligible batch/expiry, dispensed quantity | Invalid/expired prescription, allergy warning, batch expired, insufficient stock | Pharmacist sees minimum clinical info needed and assigned branch stock |
+| Membership / Loyalty / Promotion (PET-FTR-019..021) | Membership status/benefit, loyalty event ledger, campaign eligibility and usage | Expired plan, insufficient points, non-stackable promo, branch/period mismatch | Customer own balance; staff campaign edits require specific permission |
+| Workforce / Attendance / Payroll (PET-FTR-022..025) | Staff roster, attendance correction requests, commission snapshots, payroll period and itemized review | Missing timesheet, pending correction, closed period, calculation error | HR/Finance only; employee self-view limited to own data |
+| Finance / Accounting (PET-FTR-026/027/028) | Cash close/reconciliation, supplier payable, journal preview, period lock, consignment settlement | Difference remains exception, unbalanced journal, duplicate source, approval pending | Finance/Accounting scope; post/close/approve actions separated |
+| Reports & Exports (PET-FTR-029) | Report selection, scoped filters, generated file/job status, export history | Empty result, long-running job, denied scope, export expiry | Report permission checked before aggregation and again before download |
+| User / Role Administration (PET-FTR-002/003) | Account status, organization/branch assignments, role permission review, access history | Deactivated user, assignment conflict, privilege escalation warning, pending approval | Admin manages allowed organization; role changes audit and may require approval |
+| Integration Health (PET-FTR-033) | Provider status, last success/failure, test connection, masked credential status, event backlog | Secret missing/expired, provider timeout/rate limit, webhook verification failure | Super Admin/service owner only; never display or log secret value |
+
 ## System Settings Dashboard
 
 ### Purpose and Access

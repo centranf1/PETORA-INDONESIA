@@ -84,7 +84,7 @@ PETORA mencakup berbagai modul utama yang saling terhubung untuk mendukung selur
 
 ### A. Dashboard dan Pengelolaan Organisasi
 
-### 4.1 Dashboard Management
+#### 4.1 Dashboard Management
 
 Dashboard merupakan halaman utama yang menyajikan gambaran kondisi bisnis dan aktivitas operasional berdasarkan hak akses pengguna.
 
@@ -112,7 +112,7 @@ Dashboard merupakan halaman utama yang menyajikan gambaran kondisi bisnis dan ak
 
 Dashboard manajemen pusat menyediakan informasi konsolidasi seluruh cabang, sedangkan dashboard operasional menampilkan informasi sesuai tanggung jawab pengguna.
 
-### 4.2 User Management
+#### 4.2 User Management
 
 Mengelola akun seluruh pengguna yang menggunakan sistem.
 
@@ -132,7 +132,7 @@ Mengelola akun seluruh pengguna yang menggunakan sistem.
 
 Akun pengguna yang dinonaktifkan tetap memiliki hubungan dengan riwayat transaksi dan aktivitas sebelumnya.
 
-### 4.3 Role & Permission Management
+#### 4.3 Role & Permission Management
 
 Mengelola peran, kewenangan, dan pembatasan akses pengguna.
 
@@ -153,7 +153,7 @@ Mengelola peran, kewenangan, dan pembatasan akses pengguna.
 
 Sistem mendukung cakupan data own, branch, all, dan assigned_records.
 
-### 4.4 Branch Management
+#### 4.4 Branch Management
 
 Mengelola seluruh lokasi operasional perusahaan.
 
@@ -178,7 +178,7 @@ Cabang yang dinonaktifkan tidak dapat menerima transaksi baru, tetapi riwayat op
 
 ### B. Manajemen Pelanggan, Hewan, dan Produk
 
-### 4.5 Customer Management
+#### 4.5 Customer Management
 
 Mengelola seluruh data pelanggan sebagai pusat informasi hubungan perusahaan dengan pemilik hewan.
 
@@ -203,7 +203,7 @@ Mengelola seluruh data pelanggan sebagai pusat informasi hubungan perusahaan den
 
 Data pelanggan yang dinonaktifkan tidak menghilangkan riwayat transaksi maupun rekam medis yang berkaitan.
 
-### 4.6 Pet Management
+#### 4.6 Pet Management
 
 Mengelola informasi setiap hewan peliharaan yang terdaftar.
 
@@ -233,7 +233,7 @@ Mengelola informasi setiap hewan peliharaan yang terdaftar.
 
 Setiap hewan dapat terhubung dengan beberapa pemilik, tetapi memiliki satu pemilik utama yang pengubahannya dibatasi berdasarkan kewenangan.
 
-### 4.7 Product Management
+#### 4.7 Product Management
 
 Mengelola seluruh produk yang dijual oleh perusahaan.
 
@@ -267,7 +267,7 @@ Mengelola seluruh produk yang dijual oleh perusahaan.
 - Pengelolaan paket produk.
 - Pengaturan produk yang membutuhkan perlakuan khusus.
 
-### 4.8 Inventory & Warehouse Management
+#### 4.8 Inventory & Warehouse Management
 
 Mengelola seluruh aktivitas pergerakan persediaan barang.
 
@@ -308,7 +308,7 @@ Seluruh pergerakan barang harus memiliki catatan yang dapat ditelusuri. Saldo st
 
 ### C. Penjualan, Pembelian, dan Pelayanan
 
-### 4.9 POS & Sales Management
+#### 4.9 POS & Sales Management
 
 Mengelola seluruh transaksi penjualan produk dan jasa.
 
@@ -355,7 +355,7 @@ Mengelola seluruh transaksi penjualan produk dan jasa.
 
 Order yang telah dibayar tidak dapat diedit secara langsung. Koreksi harus melalui prosedur refund dan transaksi baru.
 
-### 4.10 Purchasing & Supplier Management
+#### 4.10 Purchasing & Supplier Management
 
 Mengelola proses pembelian dan hubungan dengan pemasok.
 
@@ -387,7 +387,7 @@ Mengelola proses pembelian dan hubungan dengan pemasok.
 - Pengelolaan kontrak dan kesepakatan harga.
 - Riwayat perubahan harga beli.
 
-### 4.11 Grooming Management
+#### 4.11 Grooming Management
 
 Mengelola seluruh layanan perawatan dan kebersihan hewan.
 
@@ -424,7 +424,7 @@ Mengelola seluruh layanan perawatan dan kebersihan hewan.
 - Pengelolaan peralatan grooming.
 - Pemantauan produktivitas groomer.
 
-### 4.12 Booking & Reservation Management
+#### 4.12 Booking & Reservation Management
 
 Mengelola seluruh reservasi layanan perusahaan.
 
@@ -462,7 +462,7 @@ Mengelola seluruh reservasi layanan perusahaan.
 
 Pengecekan kapasitas menggunakan pengendalian transaksi untuk mencegah pemesanan berlebih.
 
-### 4.13 Pet Hotel & Daycare Management
+#### 4.13 Pet Hotel & Daycare Management
 
 Mengelola layanan penginapan dan penitipan hewan.
 
@@ -501,7 +501,7 @@ Mengelola layanan penginapan dan penitipan hewan.
 - Pengelolaan kapasitas berdasarkan jenis, ukuran, dan kebutuhan hewan.
 - Pencatatan kerusakan fasilitas.
 
-### 4.14 Transport Management
+#### 4.14 Transport Management
 
 Mengelola layanan penjemputan dan pengantaran hewan.
 
@@ -531,7 +531,7 @@ Mengelola layanan penjemputan dan pengantaran hewan.
 - Jadwal perawatan kendaraan.
 - Pelaporan keterlambatan dan insiden perjalanan.
 
-### 4.15 Home Grooming Management
+#### 4.15 Home Grooming Management
 
 Mengelola layanan grooming yang dilaksanakan di rumah pelanggan.
 
@@ -562,7 +562,7 @@ Mengelola layanan grooming yang dilaksanakan di rumah pelanggan.
 
 ### D. Klinik Hewan dan Farmasi
 
-### 4.16 Veterinary Management
+#### 4.16 Veterinary Management
 
 Mengelola kegiatan operasional klinik dan pelayanan dokter hewan.
 
@@ -601,7 +601,7 @@ Mengelola kegiatan operasional klinik dan pelayanan dokter hewan.
 - Pencatatan hasil konsultasi.
 - Pengingat vaksinasi dan pemeriksaan berkala.
 
-### 4.17 Medical Records Management
+#### 4.17 Medical Records Management
 
 Mengelola rekam medis setiap hewan secara lengkap, berkesinambungan, dan terstruktur.
 
@@ -642,7 +642,7 @@ Rekam medis yang telah difinalisasi tidak dapat diubah secara langsung. Koreksi 
 
 Informasi medis sensitif dienkripsi dan hanya dapat diakses sesuai kewenangan. Pelanggan hanya dapat melihat informasi yang telah ditandai untuk ditampilkan kepada pemilik.
 
-### 4.18 Pharmacy & Medicine Management
+#### 4.18 Pharmacy & Medicine Management
 
 Mengelola seluruh obat dan kebutuhan farmasi klinik.
 
@@ -682,7 +682,7 @@ Obat yang memerlukan resep hanya dapat dikeluarkan berdasarkan resep final dokte
 
 ### E. Membership, Loyalty, dan Promosi
 
-### 4.19 Membership Management
+#### 4.19 Membership Management
 
 Mengelola program keanggotaan pelanggan.
 
@@ -712,7 +712,7 @@ Mengelola program keanggotaan pelanggan.
 - Pengelolaan hak benefit antar-cabang.
 - Pengingat perpanjangan keanggotaan.
 
-### 4.20 Loyalty Management
+#### 4.20 Loyalty Management
 
 Mengelola program penghargaan pelanggan berdasarkan aktivitas transaksi.
 
@@ -740,7 +740,7 @@ Mengelola program penghargaan pelanggan berdasarkan aktivitas transaksi.
 - Riwayat koreksi poin.
 - Pengelolaan poin yang membutuhkan persetujuan.
 
-### 4.21 Promotion Management
+#### 4.21 Promotion Management
 
 Mengelola seluruh program pemasaran.
 
@@ -775,7 +775,7 @@ Mengelola seluruh program pemasaran.
 
 ### F. Manajemen Sumber Daya Manusia
 
-### 4.22 Staff Management
+#### 4.22 Staff Management
 
 Mengelola seluruh informasi dan administrasi karyawan.
 
@@ -810,7 +810,7 @@ Mengelola seluruh informasi dan administrasi karyawan.
 - Pengelolaan surat peringatan.
 - Pengelolaan proses onboarding dan offboarding.
 
-### 4.23 Attendance Management
+#### 4.23 Attendance Management
 
 Mengelola kehadiran dan waktu kerja.
 
@@ -838,7 +838,7 @@ Mengelola kehadiran dan waktu kerja.
 - Rekapitulasi jam kerja.
 - Integrasi penggajian.
 
-### 4.24 Commission Management
+#### 4.24 Commission Management
 
 Mengelola komisi karyawan berdasarkan aktivitas kerja.
 
@@ -865,7 +865,7 @@ Mengelola komisi karyawan berdasarkan aktivitas kerja.
 - Pengelolaan insentif.
 - Laporan performa karyawan.
 
-### 4.25 Payroll Management (Tambahan)
+#### 4.25 Payroll Management (Tambahan)
 
 Mengelola administrasi penggajian karyawan secara terintegrasi.
 
@@ -891,7 +891,7 @@ Perhitungan komponen pajak dan kewajiban ketenagakerjaan perlu mengikuti ketentu
 
 ### G. Keuangan dan Administrasi Bisnis
 
-### 4.26 Finance Management
+#### 4.26 Finance Management
 
 Mengelola seluruh transaksi keuangan operasional perusahaan.
 
@@ -926,7 +926,7 @@ Mengelola seluruh transaksi keuangan operasional perusahaan.
 - Analisis keuntungan per jenis layanan.
 - Analisis biaya per produk.
 
-### 4.27 Accounting Management
+#### 4.27 Accounting Management
 
 Mengelola pencatatan akuntansi dan laporan keuangan perusahaan.
 
@@ -962,7 +962,7 @@ Mengelola pencatatan akuntansi dan laporan keuangan perusahaan.
 
 Jurnal yang telah diposting tidak dapat dihapus langsung. Koreksi dilakukan menggunakan mekanisme jurnal pembalik atau jurnal koreksi sesuai ketentuan akuntansi.
 
-### 4.28 Consignment Management
+#### 4.28 Consignment Management
 
 Mengelola produk titipan dari supplier atau mitra usaha.
 
@@ -989,7 +989,7 @@ Mengelola produk titipan dari supplier atau mitra usaha.
 - Penanganan barang rusak.
 - Laporan hutang kepada mitra.
 
-### 4.29 Reports & Business Analytics
+#### 4.29 Reports & Business Analytics
 
 Menyediakan informasi dan laporan untuk mendukung pengawasan serta pengambilan keputusan.
 
@@ -1043,7 +1043,7 @@ Tambahan kemampuan analitik:
 
 ### H. Komunikasi dan Pengaturan Sistem
 
-### 4.30 Notification Management
+#### 4.30 Notification Management
 
 Mengelola komunikasi otomatis antara perusahaan, staf, dan pelanggan.
 
@@ -1077,7 +1077,7 @@ Mengelola komunikasi otomatis antara perusahaan, staf, dan pelanggan.
 - Template pesan berdasarkan kejadian.
 - Pengelolaan notifikasi internal karyawan.
 
-### 4.31 Customer Portal
+#### 4.31 Customer Portal
 
 Menyediakan akses mandiri bagi pelanggan.
 
@@ -1114,7 +1114,7 @@ Menyediakan akses mandiri bagi pelanggan.
 - Pengelolaan beberapa hewan dalam satu akun.
 - Pengaturan preferensi notifikasi.
 
-### 4.32 System Settings
+#### 4.32 System Settings
 
 Mengelola konfigurasi umum perusahaan.
 
@@ -1134,7 +1134,7 @@ Mengelola konfigurasi umum perusahaan.
 - Pengaturan kebijakan transaksi.
 - Pengaturan notifikasi.
 
-### 4.33 Integration Settings
+#### 4.33 Integration Settings
 
 Mengelola hubungan PETORA dengan layanan eksternal.
 
@@ -1413,45 +1413,45 @@ PETORA dirancang menggunakan pendekatan integrasi proses bisnis sehingga setiap 
 
 Contoh alur integrasi:
 
-1. Alur Penjualan Produk
+1. **Alur Penjualan Produk**
 
-Pelanggan → POS → Perhitungan Diskon dan Pajak → Pembayaran → Pengurangan Stok → Pencatatan Loyalty → Keuangan → Laporan Penjualan.
+	Pelanggan → POS → Perhitungan Diskon dan Pajak → Pembayaran → Pengurangan Stok → Pencatatan Loyalty → Keuangan → Laporan Penjualan.
 
-2. Alur Pembelian Produk
+2. **Alur Pembelian Produk**
 
-Permintaan Pembelian → Persetujuan → Purchase Order → Supplier → Penerimaan Barang → Pemeriksaan Barang → Penambahan Stok → Invoice → Pembayaran → Keuangan.
+	Permintaan Pembelian → Persetujuan → Purchase Order → Supplier → Penerimaan Barang → Pemeriksaan Barang → Penambahan Stok → Invoice → Pembayaran → Keuangan.
 
-3. Alur Grooming
+3. **Alur Grooming**
 
-Pelanggan → Data Hewan → Booking → Konfirmasi → Check-in → Pemeriksaan Kondisi → Grooming → Dokumentasi Hasil → Pembayaran → Riwayat Layanan → Loyalty.
+	Pelanggan → Data Hewan → Booking → Konfirmasi → Check-in → Pemeriksaan Kondisi → Grooming → Dokumentasi Hasil → Pembayaran → Riwayat Layanan → Loyalty.
 
-4. Alur Pemeriksaan Klinik
+4. **Alur Pemeriksaan Klinik**
 
-Pelanggan → Data Hewan → Booking → Antrean → Pemeriksaan Dokter → Diagnosis → Rekam Medis → Resep → Farmasi → Pembayaran → Riwayat Medis.
+	Pelanggan → Data Hewan → Booking → Antrean → Pemeriksaan Dokter → Diagnosis → Rekam Medis → Resep → Farmasi → Pembayaran → Riwayat Medis.
 
-5. Alur Pet Hotel
+5. **Alur Pet Hotel**
 
-Booking → Pemeriksaan Kapasitas → Reservasi Kamar → Check-in → Monitoring → Pemberian Makan dan Obat → Laporan Perkembangan → Check-out → Pembayaran.
+	Booking → Pemeriksaan Kapasitas → Reservasi Kamar → Check-in → Monitoring → Pemberian Makan dan Obat → Laporan Perkembangan → Check-out → Pembayaran.
 
-6. Alur Home Grooming
+6. **Alur Home Grooming**
 
-Booking → Pemeriksaan Area → Penjadwalan → Penugasan Groomer → Persiapan Peralatan → Perjalanan → Pelayanan di Lokasi → Dokumentasi → Pembayaran.
+	Booking → Pemeriksaan Area → Penjadwalan → Penugasan Groomer → Persiapan Peralatan → Perjalanan → Pelayanan di Lokasi → Dokumentasi → Pembayaran.
 
-7. Alur Transportasi Hewan
+7. **Alur Transportasi Hewan**
 
-Permintaan Transportasi → Penjadwalan → Penugasan Driver → Penjemputan → Pemeriksaan Kondisi → Perjalanan → Pengantaran → Konfirmasi Penerimaan → Pembayaran.
+	Permintaan Transportasi → Penjadwalan → Penugasan Driver → Penjemputan → Pemeriksaan Kondisi → Perjalanan → Pengantaran → Konfirmasi Penerimaan → Pembayaran.
 
-8. Alur Penggajian
+8. **Alur Penggajian**
 
-Data Karyawan → Absensi → Perhitungan Jam Kerja → Lembur → Komisi → Tunjangan dan Potongan → Persetujuan Payroll → Pembayaran → Pencatatan Keuangan.
+	Data Karyawan → Absensi → Perhitungan Jam Kerja → Lembur → Komisi → Tunjangan dan Potongan → Persetujuan Payroll → Pembayaran → Pencatatan Keuangan.
 
-9. Alur Pengelolaan Komplain
+9. **Alur Pengelolaan Komplain**
 
-Pelanggan → Pengaduan → Tiket Keluhan → Penugasan Petugas → Investigasi → Penyelesaian → Konfirmasi Pelanggan → Evaluasi Layanan.
+	Pelanggan → Pengaduan → Tiket Keluhan → Penugasan Petugas → Investigasi → Penyelesaian → Konfirmasi Pelanggan → Evaluasi Layanan.
 
-10. Alur Pengelolaan Multi-Cabang
+10. **Alur Pengelolaan Multi-Cabang**
 
-Aktivitas Cabang → Pencatatan Transaksi → Pembaruan Persediaan → Pencatatan Keuangan → Konsolidasi Data → Dashboard Pusat → Analisis Performa Perusahaan.
+	Aktivitas Cabang → Pencatatan Transaksi → Pembaruan Persediaan → Pencatatan Keuangan → Konsolidasi Data → Dashboard Pusat → Analisis Performa Perusahaan.
 
 ## 7. Keamanan, Integritas, dan Audit Sistem
 
@@ -1486,7 +1486,7 @@ Koreksi dilakukan melalui mekanisme yang memiliki alasan, identitas pelaksana, w
 
 PETORA mendukung beberapa kelompok pengguna dengan tanggung jawab berbeda.
 
-Super Admin
+### Super Admin
 
 - Mengelola konfigurasi global.
 - Mengelola seluruh cabang.
@@ -1494,7 +1494,7 @@ Super Admin
 - Mengelola integrasi.
 - Mengawasi seluruh aktivitas organisasi.
 
-Owner / Business Owner
+### Owner / Business Owner
 
 - Memantau performa perusahaan.
 - Melihat laporan konsolidasi.
@@ -1502,48 +1502,48 @@ Owner / Business Owner
 - Memantau performa cabang.
 - Mengambil keputusan bisnis.
 
-Branch Manager
+### Branch Manager
 
 - Mengelola operasional cabang.
 - Memantau kinerja staf.
 - Menyetujui aktivitas sesuai kewenangan.
 - Memantau persediaan dan transaksi cabang.
 
-Administrator
+### Administrator
 
 - Mengelola data operasional.
 - Mengelola pelanggan dan produk.
 - Mengatur jadwal layanan.
 - Mengawasi proses administrasi.
 
-Kasir
+### Kasir
 
 - Memproses penjualan.
 - Menerima pembayaran.
 - Mengelola transaksi sesuai kewenangan.
 - Melakukan penutupan kasir.
 
-Inventory Staff
+### Inventory Staff
 
 - Mengelola persediaan.
 - Menerima barang.
 - Melakukan transfer.
 - Melaksanakan stock opname.
 
-Purchasing Staff
+### Purchasing Staff
 
 - Mengelola supplier.
 - Membuat purchase order.
 - Mengelola penerimaan dan pembelian.
 
-Groomer
+### Groomer
 
 - Melihat jadwal penugasan.
 - Melaksanakan layanan grooming.
 - Mencatat kondisi hewan.
 - Memperbarui status layanan.
 
-Veterinarian
+### Veterinarian
 
 - Mengelola kunjungan medis.
 - Melakukan pemeriksaan.
@@ -1551,32 +1551,32 @@ Veterinarian
 - Membuat resep.
 - Mengelola rekam medis.
 
-Pharmacist / Pharmacy Staff
+### Pharmacist / Pharmacy Staff
 
 - Mengelola persediaan obat.
 - Memproses resep.
 - Mencatat pengeluaran obat.
 
-Customer Service
+### Customer Service
 
 - Mengelola komunikasi pelanggan.
 - Menangani keluhan.
 - Melakukan follow-up.
 
-HR / Payroll Staff
+### HR / Payroll Staff
 
 - Mengelola karyawan.
 - Mengelola absensi.
 - Mengelola penggajian dan administrasi SDM.
 
-Finance / Accounting Staff
+### Finance / Accounting Staff
 
 - Mengelola kas.
 - Mengelola pembayaran.
 - Mencatat transaksi keuangan.
 - Menyusun laporan keuangan.
 
-Customer
+### Customer
 
 - Mengelola profil.
 - Mengelola hewan peliharaan.
@@ -1588,7 +1588,7 @@ Daftar tersebut merupakan kelompok peran yang dapat disesuaikan dengan struktur 
 
 ## 9. Manfaat PETORA
 
-Bagi Pemilik dan Manajemen
+### Bagi Pemilik dan Manajemen
 
 - Memiliki kendali terhadap seluruh operasional perusahaan.
 - Memantau performa setiap cabang.
@@ -1598,7 +1598,7 @@ Bagi Pemilik dan Manajemen
 - Mengevaluasi produktivitas karyawan.
 - Mengambil keputusan berdasarkan data aktual.
 
-Bagi Karyawan
+### Bagi Karyawan
 
 - Mempermudah pelaksanaan pekerjaan.
 - Mengurangi pencatatan manual.
@@ -1606,7 +1606,7 @@ Bagi Karyawan
 - Mempermudah koordinasi antarbagian.
 - Mempercepat proses pelayanan pelanggan.
 
-Bagi Dokter dan Tenaga Medis
+### Bagi Dokter dan Tenaga Medis
 
 - Memiliki riwayat pasien yang terorganisasi.
 - Mempermudah pencatatan pemeriksaan.
@@ -1614,7 +1614,7 @@ Bagi Dokter dan Tenaga Medis
 - Mengelola resep dan tindakan medis.
 - Meningkatkan kesinambungan pelayanan kesehatan hewan.
 
-Bagi Pelanggan
+### Bagi Pelanggan
 
 - Mempermudah reservasi layanan.
 - Memiliki informasi hewan dalam satu akun.

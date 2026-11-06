@@ -20,10 +20,11 @@ Audit dilakukan pada 2026-11-06 terhadap working tree yang tersedia.
 | Check | Result | Interpretation |
 | --- | --- | --- |
 | Markdown files under `docs/` | 114 | Seluruh berkas Markdown ditemukan dalam inventaris |
-| Documents under 180 words | 1 | Satu dokumen kandidat review; ambang kata bukan penilaian mutu final |
+| Documents under 180 words | 0 | Seluruh dokumen melewati heuristik panjang minimum; ambang kata bukan penilaian mutu final |
 | Missing standard frontmatter | 0 | `docs/README.md` dan laporan ini sudah memiliki metadata |
 | Duplicate `document_id` found | 0 | Konflik ID indeks dengan project overview telah diperbaiki |
 | Broken relative Markdown links found | 0 | Tidak ditemukan target link lokal yang hilang pada audit |
+| Primary numbered test scenarios | 26 | `PET-TST-001` through `PET-TST-026`; settings/security suites are separately mapped |
 | Application source, migrations, tests, or CI files at repository root | Not present in inspected tree | Dokumen belum diverifikasi terhadap implementasi aktual |
 
 Audit tautan/metadata perlu dijalankan kembali setelah perubahan dokumentasi. Ambang 180 kata hanya heuristik untuk menemukan kandidat review, bukan syarat panjang dokumen.

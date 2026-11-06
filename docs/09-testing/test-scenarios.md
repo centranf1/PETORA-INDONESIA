@@ -56,6 +56,7 @@ Accounting balance. Expected: journal total debits equal credits and close perio
 | PET-TST-023 | PET-REQ-006 | Submit checkout/payment twice with the same idempotency key and retry after a simulated timeout. | Exactly one sale/payment/stock effect is committed; retry returns the original outcome. |
 | PET-TST-024 | PET-REQ-008 | Submit concurrent booking requests for the last available service slot or room. | Capacity is reserved at most once; losing request receives a conflict and no duplicate reservation. |
 | PET-TST-025 | PET-REQ-013 | Post a source transaction to accounting and attempt an unbalanced or closed-period journal. | Valid event produces balanced journal; invalid posting is rejected without partial finance state. |
+| PET-TST-026 | PET-REQ-013 | Reconcile consignment receipt, sale, return/damage and settlement for one approved partner period. | Custody quantities and settlement amount reconcile to source records; discrepancies remain pending; duplicate payout is prevented. |
 
 Settings-specific workflow cases are defined in [test plan](test-plan.md); adversarial configuration cases are defined in [security testing](security-testing.md).
 

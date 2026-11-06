@@ -143,6 +143,58 @@ I --> J[Audit Log]
   4. Laporan perusahaan dibuat berdasarkan organisasi dan cabang.
 - Failure flow: akses cabang tidak valid, data tidak konsisten, atau laporan tidak sesuai scope.
 
+## 10. Membership, Loyalty, and Promotion
+
+- **Trigger:** customer membeli membership, memperoleh/menukar loyalty, atau kasir menerapkan promo.
+- **Aktor:** customer service, cashier, marketing/admin, finance reviewer.
+- **Prasyarat:** customer aktif dan terverifikasi; program/promo aktif pada organization/branch; policy version berlaku pada waktu transaksi.
+- **Alur utama:** sistem menentukan eligibility dan harga/promo dari server → menampilkan benefit/discount yang berlaku → customer menyetujui → transaksi menyimpan snapshot rule, membership/loyalty reference, dan nilai yang dihitung → setelah sale completed, loyalty event ditambahkan satu kali.
+- **Alternatif:** promo tidak memenuhi syarat ditolak dengan alasan aman; redemption hanya dilakukan jika saldo tersedia dan limit policy mengizinkan.
+- **Koreksi/refund:** refund/void membuat reversal loyalty/benefit event yang mengacu ke event asal; saldo tidak diedit langsung.
+- **Failure flow:** program expired, branch mismatch, promo stacking conflict, saldo berubah bersamaan, retry duplikat; transaksi tidak menggunakan aturan dari cache/browser sebagai kebenaran.
+- **Data/output:** `memberships`, `loyalty_events`, `promotions`, `promo_rules`, sale price snapshot; schema detail membership/benefit masih perlu disahkan.
+- **Akses/test:** pelanggan hanya melihat benefit miliknya; perubahan rule memerlukan permission/approval. PET-REQ-010/011; PET-TST-015/016.
+
+## 11. Attendance, Commission, and Payroll
+
+- **Trigger:** staff clock-in/out, koreksi absensi, atau payroll period dibuka/ditutup.
+- **Aktor:** employee, supervisor, HR, payroll reviewer, finance approver.
+- **Alur utama:** staff mencatat waktu/shift → sistem memvalidasi assignment dan waktu server → exception (lupa clock-out, shift swap, leave) dibuat sebagai request dengan bukti/alasan → supervisor/HR menyetujui koreksi → payroll period mengambil snapshot attendance, commission dan aturan yang disetujui → HR meninjau itemized calculation → approver menyahkan → finance mengeksekusi pembayaran dan posting sumber jurnal.
+- **Alternatif:** perubahan rule komisi selama period tidak mengubah transaksi yang sudah menyimpan snapshot; dibuatkan adjustment yang dapat ditelusuri.
+- **Failure flow:** data absensi hilang, employee tidak aktif, formula belum disetujui, period telah ditutup, atau posting tidak seimbang; payroll tetap draft dan tidak dibayar.
+- **Data/output:** `employees`, `attendance`, `commissions`, `payroll_cycles`, `payroll_records`, audit dan payment/journal references. Pajak, statutory deductions, overtime formula, approval limit dan exact retention menunggu keputusan owner/legal.
+- **Akses/test:** HR/finance data dibatasi per organization/assignment; export payslip diaudit. PET-REQ-012; PET-TST-017.
+
+## 12. Customer Portal and Notification
+
+- **Trigger:** customer masuk, mengelola pet, membuat booking, melihat transaksi yang diizinkan, atau menerima reminder.
+- **Aktor:** customer, customer service, notification service/provider.
+- **Alur utama:** authentication mengikat user ke customer identity → API mengecek pet ownership/consent → customer mengirim booking/change request → server menyimpan request dan status authoritative → notification outbox dijadwalkan → adapter mengirim pesan sesuai preference/consent → delivery attempt dan provider reference dicatat.
+- **Alternatif:** perubahan yang perlu staff review menjadi `pending`, bukan langsung aktif; customer dapat mengubah preferensi/opt-out sesuai policy.
+- **Failure flow:** customer-to-user link tidak valid, consent tidak ada, provider timeout/rate limit, duplicate event, atau message ditolak; data portal tetap dapat dilihat sesuai izin dan status pengiriman tidak dianggap sukses.
+- **Data/output:** `customer_portal_access`, booking/customer-owned records, `notifications`, delivery attempts/outbox candidate entities. Payload provider diminimalkan.
+- **Akses/test:** customer tidak dapat mengakses pet milik akun lain, internal notes, payroll, atau clinical fields yang tidak disetujui. PET-REQ-015/018; PET-TST-019/020.
+
+## 13. System Settings Proposal and Approval
+
+- **Trigger:** Super Admin mengubah policy yang terdaftar dalam key catalog.
+- **Aktor:** Super Admin proposer, Owner/approver, server-side settings service.
+- **Alur utama:** pilih organization/branch context → baca active value/version → ubah nilai dan alasan → server memvalidasi key/type/range/scope/permission/lock → sistem menyimpan proposal dengan `expected_version_no` → jika approval diperlukan, Owner meninjau diff/dampak/alasan → server menolak self/stale/unauthorized approval sesuai policy → approval, active value update, version dan audit commit dalam satu transaksi.
+- **Alternatif:** setting non-critical yang disahkan policy dapat aktif melalui workflow yang sama tanpa second approver; decision dan audit tetap tercatat.
+- **Failure flow:** schema tidak valid, lock, role/scope mismatch, missing reason, expected version stale, approval ditolak, atau transaction gagal; active value tidak berubah.
+- **Data/output:** `system_settings`, `setting_change_requests`, `setting_versions`, `setting_audit_log`; runtime hanya membaca active version.
+- **Akses/test:** frontend menggunakan Settings API, bukan direct table mutation. PET-REQ-016/018; PET-TST-SET-* dan PET-TST-SEC-SET-*.
+
+## 14. Consignment and Settlement
+
+- **Trigger:** mitra menyerahkan barang titipan, barang terjual/retur, atau periode settlement tiba.
+- **Aktor:** inventory staff, cashier, finance, consignment partner representative.
+- **Alur utama:** validasi kontrak/partner dan barang → receiving mencatat custody, kuantitas, kondisi dan lokasi → sale menandai unit/line sebagai consignment sesuai ownership → periode settlement menghitung sold/returned/damaged quantity dan hak mitra berdasarkan kontrak yang berlaku → finance mereview rekonsiliasi dan menyetujui pembayaran → settlement/payment/journal reference disimpan.
+- **Alternatif:** retur barang tidak terjual dan barang rusak menggunakan reason/approval; perbedaan stok masuk exception queue.
+- **Failure flow:** kontrak/beneficiary tidak valid, kuantitas tidak reconcile, harga/commission rule berubah, invoice duplicate, atau payout gagal; settlement tetap pending dan tidak menutup selisih secara manual.
+- **Data/output:** candidate entities `consignment_partners`, `consignment_stock`, `settlements`, stock ledger, sales and finance records. Kepemilikan stok, revenue recognition, margin split, pajak, dan settlement cycle memerlukan keputusan finance/legal.
+- **Akses/test:** purchasing/inventory dapat mengelola custody; payout memerlukan finance approval. PET-FTR-028 dan PET-REQ-013; skenario test detail ditambahkan saat feature disetujui untuk release.
+
 ## Business Rules Summary
 
 - Semua proses kritis harus dipastikan tercatat di audit log.

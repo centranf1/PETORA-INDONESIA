@@ -35,7 +35,7 @@ Pemetaan test ke requirement.
 | PET-REQ-010 | PET-REQ-010 | PET-TST-015 | Loyalty accrual, redemption, and refund reversal |
 | PET-REQ-011 | PET-REQ-011 | PET-TST-016 | Promotion eligibility, scope, and stacking |
 | PET-REQ-012 | PET-REQ-012 | PET-TST-017 | Payroll source traceability and access restriction |
-| PET-REQ-013 | PET-REQ-013 | PET-TST-005, PET-TST-025 | Balanced journal and reconciliation |
+| PET-REQ-013 | PET-REQ-013 | PET-TST-005, PET-TST-025, PET-TST-026 | Balanced journal, cash and consignment reconciliation |
 | PET-REQ-014 | PET-REQ-014 | PET-TST-018 | Report scope and export authorization |
 | PET-REQ-015 | PET-REQ-015 | PET-TST-019 | Portal relationship scope and notification retry |
 | PET-REQ-016 | PET-REQ-016 | PET-TST-SET-001..006, PET-TST-SEC-SET-004..005 | Settings validation, version, approval, lock, audit |
