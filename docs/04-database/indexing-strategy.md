@@ -10,42 +10,21 @@ related_documents: ['database-conventions.md']
 
 # Indexing Strategy
 
-Index harus dibangun dari query nyata dan predicate RLS, lalu diverifikasi menggunakan `EXPLAIN (ANALYZE, BUFFERS)` pada dataset representatif. Rancangan berikut adalah kandidat, bukan kewajiban untuk menambahkan semua index tanpa pengukuran.
+Strategi indexing untuk kebutuhan pencarian dan analitik.
 
-## Query Patterns
+## Indexes
 
-- Lookup customer berdasarkan `organization_id` dan normalized phone/name.
-- Produk aktif menurut organisasi/cabang, kategori, dan pencarian SKU/barcode.
-- Saldo/mutasi stok berdasarkan organization, branch, location, product, batch, dan waktu.
-- Penjualan/pembayaran berdasarkan cabang dan waktu; event idempotency berdasarkan provider reference.
-- Booking berdasarkan branch dan rentang waktu/status untuk kalender serta capacity check.
-- Medical record berdasarkan pet dan waktu dengan predicate permission/visibility.
-- Payroll berdasarkan organization/cycle/employee dengan role-restricted query.
-- Settings berdasarkan org/optional branch dan key definition; audit berdasarkan setting serta timestamp.
+Indexes for customer lookup, pet by owner, product by branch + status, stock by SKU + branch + warehouse, sales by date, payment by transaction id, medical record by pet and date, payroll by employee and period.
 
-## Candidate Index Rules
+## Composite Indexes
 
-- Letakkan equality filter tenant/branch lebih dulu jika query rutin memakai scope itu, lalu status/date/order keys sesuai query plan.
-- Index FK yang sering dipakai join/filter dan unique/idempotency references; PostgreSQL tidak otomatis membuat index pada referencing FK columns.
-- Gunakan partial index untuk active/open rows hanya bila predicate query identik dan cardinality mendukung.
-- GIN hanya untuk kebutuhan JSONB/full-text yang terukur; jangan index setiap JSONB key.
-- Untuk unique scope dengan nullable `branch_id`, gunakan partial unique indexes atau strategi null semantics yang disepakati; UNIQUE biasa memperbolehkan beberapa NULL.
+Combine organization_id, branch_id, status, and date when frequent filtering occurs.
 
 ## Performance
 
-Hindari redundant indexes dan index kolom dengan cardinality rendah tanpa komposit yang tepat; index juga menambah biaya write. Tentukan kebutuhan retention/partitioning dari volume dan maintenance evidence, bukan praduga. Query report besar harus memiliki timeout, pagination/export limits, serta server-side authorization.
+Avoid over-indexing; use partial indexes for active records and statuses.
 
 ## Monitoring
 
-Review slow query logs, `pg_stat_statements` bila extension diaktifkan, index usage, bloat, lock waits, and query plans per release. Baseline latency/SLO dan threshold alert memerlukan keputusan operasi.
-
-## Change Checklist
-
-Migration PR menyertakan query/use case yang dilayani, EXPLAIN evidence, write overhead consideration, cleanup plan, serta pengujian dengan predicate RLS aktif.
-
-## Related Documents
-
-- [Database conventions](database-conventions.md)
-- [Data dictionary](data-dictionary.md)
-- [Transaction integrity](transaction-integrity.md)
+Review slow query logs and pg_stat_statements regularly.
 

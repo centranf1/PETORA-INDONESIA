@@ -10,27 +10,21 @@ related_documents: ['frontend-architecture.md']
 
 # Coding Standards
 
-Standar ini adalah baseline TypeScript/React untuk menjaga modul dapat diuji dan tidak mencampur presentation dengan authority bisnis. Konfigurasi lint/format belum ditemukan dan perlu di-bootstrap bersama repository implementasi.
+Standar coding frontend mengikat gaya penulisan dan struktur.
 
 ## TypeScript
 
-Aktifkan strict TypeScript; gunakan `unknown` lalu narrow untuk data eksternal; hindari `any`, unsafe cast, non-null assertion, dan duplikasi generated API types. Parse response boundary dengan schema bila contract tidak dapat dipercaya statically. Props, return values, query/mutation payload, permission action, dan status lifecycle harus bertipe eksplisit.
+Strongly typed props, utility types, and avoid any unless explicitly deserved.
 
 ## Naming
 
-Komponen/type/interface React `PascalCase`; function, variable, property `camelCase`; hook `useX`; file kebab-case kecuali konvensi tool/generator menentukan lain; constant hanya UPPER_SNAKE_CASE bila benar-benar immutable domain-level. Nama harus menjelaskan intent, hindari `data`, `handle`, atau singkatan kabur.
+Use PascalCase for component names; camelCase for variables; kebab-case for file names; descriptive hook names starting with use.
 
 ## Linting
 
-Ikuti lint/format config repository setelah dibuat. Pisahkan API adapter, schema, hook, UI, dan domain formatting; hindari effect yang hanya menyalin derived state. Component tidak menjalankan SQL/business authority. Jangan menambah abstraction/memoization tanpa alasan performa atau pola lokal.
+Follow ESLint, Prettier, and project linting rules. Keep business logic out of UI components.
 
 ## Review
 
-PR memeriksa type/lint/build/test, permission/loading/error/empty behavior, accessibility, responsive layout, query-key scope, invalidation, dan redaction. Untuk mutation kritis, review server contract, idempotency, confirmation, audit behavior, serta failure/retry path.
-
-## Related Documents
-
-- [Frontend architecture](frontend-architecture.md)
-- [Definition of Done](../12-development-standards/definition-of-done.md)
-- [Accessibility guidelines](../07-ui-ux/accessibility-guidelines.md)
+PRs require component logic, validation, and accessibility review for user-facing changes.
 

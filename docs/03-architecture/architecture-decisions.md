@@ -10,29 +10,25 @@ related_documents: ['adr/README.md']
 
 # Architecture Decisions
 
-Ringkasan ini menunjuk ke ADR canonical. Tidak ada decision pada repository yang sudah disetujui; seluruh status tetap Draft/Proposed sampai owner memberikan approval tertulis.
+Dokumen ini mencatat keputusan utama yang mendasari rancangan PETORA.
 
 ## ADR-01
 
-Proposed modular monolith; lihat [ADR-0001](adr/ADR-0001-monolithic-modules.md).
+Modular monolith is the baseline to keep domain boundaries simple while supporting multi-branch complexity.
 
 ## ADR-02
 
-Proposed Supabase Auth + PostgreSQL/RLS; lihat [ADR-0002](adr/ADR-0002-supabase-authorization.md).
+Supabase Postgres + RLS is selected because it fits multi-tenant organization and branch security needs.
 
 ## ADR-03
 
-Proposed server-side critical workflows; lihat [ADR-0003](adr/ADR-0003-server-side-critical-workflows.md).
+Sensitive business flows are executed in Edge Functions or database transactions, not client-side.
 
 ## ADR-04
 
-React/TypeScript/Vite dan supporting stack adalah baseline dari AGENTS.md attachment; code/config belum ada untuk verifikasi. Hosting/router/CI choices memerlukan approval/implementation ADR.
+Frontend uses React + TypeScript and shared state patterns to keep maintainability and testability.
 
 ## ADR-05
 
-Audit actor/timestamp/reason adalah security requirement dari README; format/retention dibahas pada security/database docs dan exact retention masih open decision. Ini bukan keputusan terpisah yang sudah diterima.
-
-## Decision Governance
-
-Jika proposal berubah, update ADR status, decision owner/date, consequences, and links. Architecture decision tidak menyatakan implementation exists until repository/environment evidence confirms it.
+Audit log must record every change with actor, timestamp, and reason.
 

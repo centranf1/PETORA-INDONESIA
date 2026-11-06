@@ -10,21 +10,17 @@ related_documents: ['error-handling.md']
 
 # Frontend Error Handling
 
-Frontend memetakan error contract backend menjadi tindakan yang aman dan dapat dipahami tanpa membocorkan detail teknis atau data yang tidak berhak dilihat user.
+Prinsip pencegahan dan penanganan bug pada frontend.
 
 ## Error States
 
-Modelkan loading, empty, success, field validation, unauthenticated, forbidden, not found, conflict/stale version, rate limit, network timeout, provider pending, and server failure secara terpisah. Untuk cross-tenant resource, jangan menyatakan record ada/tidak ada jika itu dapat mengungkap keberadaannya.
+Loading, empty, success, validation, server, network, and forbidden states should be modeled consistently.
 
 ## Operational Rule
 
-Tampilkan message dan recovery action yang aman; sertakan `trace_id` untuk support. Technical error dapat dikirim ke Sentry/solusi setara bila disetujui, dengan scrub PII, medical details, tokens, request body, dan URL secret. Jangan log credential atau full record.
+Display user-friendly message; log technical details to Sentry or monitoring service.
 
 ## Retry
 
-Query dapat di-retry untuk transient error dengan bounded backoff. Mutation hanya retry bila idempotency key menjamin satu efek; payment, checkout, refund, settings approval, dispensing, dan payroll tidak boleh auto-repeat tanpa idempotency. Provider `pending/unknown` menampilkan status reconciliation, bukan success/failure yang ditebak.
-
-## Recovery UX
-
-Conflict meminta refresh/review perubahan terbaru. Validation meminta koreksi field. Permission denial menghentikan submit. Session expiry meminta reauthentication tanpa mengulang command non-idempotent secara otomatis. Form action harus disabled selama request pending, tetapi backend tetap wajib deduplikasi.
+Retry only when operation is idempotent or user has confirmation.
 

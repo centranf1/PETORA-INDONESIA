@@ -10,22 +10,17 @@ related_documents: ['pull-request-guidelines.md']
 
 # Code Review Guidelines
 
-Review menilai behavior, risk, dan operability, bukan hanya gaya kode. Reviewer harus memahami affected requirement, domain contract, dan data classification.
+Panduan review kode untuk menjaga kualitas.
 
 ## Focus
 
-Review correctness/business rules, boundary and domain ownership, failure/concurrency paths, authorization/RLS, privacy/secrets, transaction/idempotency, performance, accessibility/UX states, tests, migrations, observability, and documentation. Pertimbangkan backward compatibility untuk deployed client/functions/data.
+Check correctness, security, maintainability, testing, UX, and documentation clarity.
 
 ## Required Review Points
 
-Untuk perubahan permission/RLS: test allowed AND denied role/tenant/branch and view/RPC/storage/realtime paths. Untuk transaksi: duplicate request/webhook, conflict/retry, compensation/reconciliation, balanced ledger. Untuk settings: definition trust, version conflict, approval separation, audit, secret masking. Untuk medical/payroll: least privilege and retention/privacy. Untuk UI: role-hidden action plus backend denial, keyboard/accessibility, cache scope/invalidation.
+Validate permission checks, transaction safety, query optimization, and data validation.
 
 ## Review Rule
 
-No approval untuk blocker/critical security, data-integrity, or correctness comments. Reviewer meminta test/evidence yang sesuai; nit style dipisahkan dari blocking findings. Jangan menambah broad cleanup yang tidak relevan pada risk area.
-
-## Related Documents
-
-- [Pull request guidelines](pull-request-guidelines.md)
-- [Security checklist](../08-security/security-checklist.md)
+No review approval for unresolved critical comments.
 

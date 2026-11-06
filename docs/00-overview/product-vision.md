@@ -22,21 +22,13 @@ Menyediakan data yang akurat, proses operasional yang terdokumentasi, dan keputu
 
 ## Value Proposition
 
-PETORA menghubungkan pelanggan/pet, transaksi, inventory, layanan klinis/non-klinis, workforce, finance, dan cabang agar aktivitas dapat ditelusuri lintas domain dan manajemen memperoleh informasi sesuai kewenangan.
-
-## Outcome Measures (Proposed)
-
-Keberhasilan dapat diukur dari akurasi stock/reconciliation, kecepatan checkout dan booking, kelengkapan care/medical records, ketepatan payroll/jurnal, customer repeat visit/satisfaction, dan waktu penyelesaian exception. Baseline, target angka, cara pengukuran, serta owner KPI belum ditentukan; jangan klaim peningkatan sebelum data produksi tersedia.
+PETORA memberikan integrasi data pelanggan, transaksi, medis, keuangan, dan operasional untuk meningkatkan efisiensi, kepuasan, serta kemampuan pengendalian.
 
 ## Stakeholders
 
 Owner, branch manager, staff, doctor, pharmacist, customer service, finance, customer, supplier, and super admin.
 
-## Product Boundaries
-
-PETORA menyediakan workflow dan catatan operasional terpadu; provider payment, messaging, shipping, legal/tax calculation authority, clinical professional judgment, and hosting operations tetap memiliki pihak/otoritas eksternal atau bisnis yang harus dipilih. Sistem tidak menggantikan persetujuan dokter/owner atau keputusan akuntansi/legal.
-
 ## Open Decisions
 
-Prioritas release, brand identity, KPI target, provider, dan policy final perlu keputusan owner; [open decisions register](../13-traceability/open-decisions.md) menjadi catatan canonical.
+Detail feature prioritization and roadmap by phase require confirmation from business owner; this document presents recommended baseline only.
 

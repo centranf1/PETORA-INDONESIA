@@ -18,7 +18,7 @@ PETORA adalah sistem pengelolaan petshop, veterinary, grooming, boarding, dan ke
 
 ## Scope
 
-Core scope adalah 33 fitur README bagian 4: dashboard/organization/access; customer/pet/catalog/inventory; POS/purchasing; grooming/booking/boarding/transport/home grooming; veterinary/medical/pharmacy; membership/loyalty/promotion; HR/attendance/commission/payroll; finance/accounting/consignment/reporting; notifications/portal/settings/integrations. 13 modul README bagian 5 adalah **recommended extensions**, bukan komitmen release sampai Product Owner menyetujui.
+Cakupan mencakup organisasi, cabang, pelanggan, hewan, produk, stok, penjualan, pembelian, grooming, klinik, farmasi, SDM, payroll, finance, laporan, CRM, portal pelanggan, dan sistem keamanan.
 
 ## Background
 
@@ -26,15 +26,9 @@ Bisnis pet care memiliki kompleksitas multi-layanan. PETORA menggantikan operasi
 
 ## Key Modules
 
-Gunakan [Feature Catalog](../01-product/feature-catalog.md) untuk daftar feature ID lengkap dan pemisahan scope core/recommended; [PRD](../01-product/product-requirements-document.md) untuk requirement canonical PET-REQ-001..031.
+Modul utama: Dashboard, User & Role, Branch, Customer, Pet, Product, Inventory, POS, Purchase, Grooming, Booking, Hotel, Veterinary, Pharmacy, Membership, HR, Finance, Reporting, Notifications, Customer Portal, System Settings.
 
 ## Assumptions
 
-Supabase/React baseline berasal dari AGENTS.md yang disertakan sebagai instruksi sesi; belum ada source application, migrations, CI, package manifest, atau test runner dalam working tree. Karena itu arsitektur/schema dalam docs adalah target design. Detail pajak, cuti/payroll, customer medical visibility, role/branch permission, providers, dan release phases memerlukan konfirmasi.
-
-## Related Documents
-
-- [Product vision](product-vision.md)
-- [Project scope](project-scope.md)
-- [Documentation guide](documentation-guide.md)
+Banyak fitur dapat diterapkan sebagai modul terukur pada Supabase; beberapa detail operasional masih membutuhkan konfirmasi manajemen terkait kebijakan tertentu seperti cuti, pajak, dan tingkat akses pelanggan.
 

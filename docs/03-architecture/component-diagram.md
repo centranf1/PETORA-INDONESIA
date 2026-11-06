@@ -10,48 +10,31 @@ related_documents: ['module-architecture.md']
 
 # Component Diagram
 
-Component view menunjukkan pembagian antara UI feature modules, API adapters, authorization boundary, dan domain services.
+Diagram komponen menunjukkan pembagian fitur agar domain tetap terisolasi.
 
 ## Main Components
 
-App shell/session/scope provider; feature modules for organization/customer/pet/catalog/sales/inventory/procurement/booking/services/clinical/pharmacy/workforce/finance/reporting/settings/portal; shared design primitives; feature API adapters and TanStack Query client.
+App shell, auth gateway, dashboard, customer module, sales pos, inventory, clinical, finance, payroll, reports, and shared services.
 
 ## Cross-cutting Components
 
-Supabase Auth identity, DB-backed authorization/RLS, Edge Function command handlers, domain validators, PostgreSQL transaction/ledger constraints, audit/outbox, Storage authorization, provider adapters, and monitoring. Frontend permission helpers only control presentation.
+Validation layer, RBAC service, audit logger, notifications, cache layer, and API client helpers.
 
 ## Mermaid
 
 ```mermaid
-flowchart LR
-	subgraph Frontend
-		APP[App Shell + Scope Provider]
-		QUERY[TanStack Query + API Adapters]
-		SALES[Sales / POS Feature]
-		STOCK[Inventory Feature]
-		CLIN[Clinical / Pharmacy Features]
-		SETTINGS[Settings / Integrations Features]
-		UI[Shared UI + Form Schemas]
-		APP --> SALES
-		APP --> STOCK
-		APP --> CLIN
-		APP --> SETTINGS
-		SALES --> QUERY
-		STOCK --> QUERY
-		CLIN --> QUERY
-		SETTINGS --> QUERY
-		APP --> UI
-	end
-	QUERY -->|RLS reads / commands| AUTHZ[Supabase Auth + API Boundary]
-	AUTHZ --> RLS[PostgreSQL RLS + Constraints]
-	AUTHZ --> EDGE[Edge Function Commands]
-	EDGE --> DOMAIN[Domain Validation / Authorization]
-	DOMAIN --> TX[PostgreSQL Transactions]
-	TX --> AUDIT[Audit + Outbox]
-	EDGE --> PROVIDER[External Provider Adapters]
+flowchart TD
+A[App Shell] --> B[Auth Provider]
+A --> C[Dashboard]
+A --> D[Customer Module]
+A --> E[POS Module]
+A --> F[Inventory Module]
+A --> G[Clinical Module]
+A --> H[Finance Module]
+A --> I[Reporting Module]
+A --> J[Shared Services]
+J --> K[Validation]
+J --> L[RBAC]
+J --> M[Audit]
 ```
-
-## Boundary Rules
-
-Feature UI does not directly write cross-domain transaction state. Shared UI contains no business permission. RLS protects direct reads; command handler rechecks actor/scope/action. Audit/outbox is committed with relevant state. See [module architecture](module-architecture.md) for ownership and dependency rules.
 

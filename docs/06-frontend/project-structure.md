@@ -12,7 +12,7 @@ related_documents: ['frontend-architecture.md']
 
 Struktur folder yang direkomendasikan untuk frontend PETORA.
 
-## Recommended Structure (Target)
+## Recommended Structure
 
 src/app, src/features, src/shared, src/hooks, src/lib, src/services, src/types, src/utils, src/pages, src/routes, src/styles, src/tests.
 
@@ -24,50 +24,43 @@ src/
     routes/
     providers/
   features/
-    organization/
-    customers/
-    pets/
-    catalog/
     sales/
     inventory/
-    procurement/
-    booking/
-    grooming/
-    boarding/
-    transport/
     clinic/
-    pharmacy/
-    membership/
-    promotions/
-    workforce/
     finance/
     reports/
     settings/
-    integrations/
-    customer-portal/
+      admin/
+      branches/
+      roles/
+      policies/
+      notifications/
   shared/
     components/
     layouts/
     hooks/
     utils/
+  services/
+    api/
+    queryKeys.ts
+    settings.ts
+  types/
+    auth.ts
+    settings.ts
+  hooks/
+    useAuth.ts
+    useTenantScope.ts
   lib/
-    supabase/
-    query-client.ts
-    api-error.ts
     validators/
     formatters/
-  routes/
-  styles/
   tests/
-    fixtures/
-    integration/
     e2e/
     unit/
 ```
 
-## Feature Ownership
+## Module Example
 
-Setiap `features/<domain>` menyimpan file yang berubah bersama: `api/`, `components/`, `hooks/`, `pages/`, `schemas/`, `types/`, dan test terkait. Jangan membuat folder untuk modul yang belum punya implementasi; tree ini adalah target, bukan kondisi repository saat ini. Hindari top-level `services/` atau `types/` yang menjadi dumping ground; letakkan contract spesifik di domain dan hanya pindahkan tipe yang benar-benar lintas domain ke `shared`.
+features/sales, features/inventory, features/clinic, features/finance, features/reports.
 
 ## Settings Module Design
 
@@ -119,20 +112,12 @@ src/features/settings/
 ### State and validation pattern
 
 - Gunakan `react-hook-form` + `zod` untuk form setting.
-- Gunakan `TanStack Query` untuk membaca system settings, versions, dan history melalui authorized API, bukan direct table access bila workflow memerlukan server validation.
-- Gunakan `useMutation` untuk proposal/approval/rollback dengan idempotency key dan expected version; tampilkan status draft/pending/active secara berbeda.
+- Gunakan `TanStack Query` untuk membaca `system_settings` dan `setting_audit_log`.
+- Gunakan `useMutation` untuk submit perubahan, dengan status `draft`, `pending_approval`, atau `active`.
 - Validasi field berdasarkan `value_type`: string, number, boolean, enum, object.
 - Frontend harus menampilkan status terakhir dan current version secara jelas.
-
-Frontend tidak mengirim `organization_id`, role, `requires_approval`, active version, maupun keputusan permission sebagai nilai tepercaya. Form scope harus mengambil context yang diizinkan dan tetap divalidasi server.
 
 ## Naming Rule
 
 File names use kebab-case; components and hooks use PascalCase and camelCase respectively.
-
-## Related Documents
-
-- [Frontend architecture](frontend-architecture.md)
-- [API specification](../05-backend/api-specification.md)
-- [Settings page specification](../07-ui-ux/page-specifications.md)
 

@@ -88,9 +88,37 @@ flowchart LR
 
 RLS harus aktif untuk seluruh tabel yang mungkin diakses dari API. Data organisasi dan cabang tidak boleh dipetakan hanya dari payload frontend.
 
-Implementasi policy harus mengikuti satu sumber contoh dan test contract pada [RLS security policies](../04-database/rls-security-policies.md). Jangan membandingkan tenant/role langsung dengan user-editable JWT metadata atau payload browser. RLS membership harus diturunkan dari `auth.uid()` dan relasi assignment tepercaya; perubahan settings kritis dilakukan melalui server-side command dan version approval, bukan direct client UPDATE.
+### Design Example
 
-`organization_id` dan `branch_id` dari client hanya target context, bukan bukti akses. Database memvalidasi membership dan relationship; Edge Function mengulangi action permission untuk workflow kritis. Service-role path bypasses RLS, sehingga wajib memiliki explicit authorization, limited query scope, tests, and audit.
+```sql
+-- rancangan awal; harus diverifikasi sebelum implementasi
+ALTER TABLE public.system_settings ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "settings_org_isolation"
+ON public.system_settings
+FOR SELECT
+USING (
+	organization_id = auth.jwt() ->> 'organization_id'
+	AND (
+		scope = 'organization'
+		OR (scope = 'branch' AND branch_id = auth.jwt() ->> 'branch_id')
+		OR scope = 'global'
+	)
+);
+
+CREATE POLICY "settings_update_only_super_admin"
+ON public.system_settings
+FOR UPDATE
+USING (
+	auth.jwt() ->> 'role' = 'super_admin'
+	OR (
+		auth.jwt() ->> 'role' = 'owner'
+		AND requires_approval = true
+	)
+);
+```
+
+Catatan penting: `organization_id` dan `branch_id` tidak boleh dipercaya dari browser. Nilai tersebut harus diturunkan dari session atau divalidasi di server sebelum diterapkan.
 
 ## Storage, Secrets, and External Integrations
 

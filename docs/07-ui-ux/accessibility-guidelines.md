@@ -10,25 +10,17 @@ related_documents: ['design-guidelines.md']
 
 # Accessibility Guidelines
 
-Accessibility diterapkan pada seluruh alur operasional dan customer-facing, terutama POS, appointment, clinical, approval, dan portal. Target WCAG harus diverifikasi pada aplikasi saat tersedia; dokumen ini tidak mengklaim conformity sebelum audit.
+Dokumen ini mengatur aksesibilitas UI.
 
 ## Requirements
 
-Gunakan semantic HTML, logical heading order, visible focus, keyboard access untuk semua action, accessible name/label untuk control, descriptive link text, text alternative untuk visual status, contrast yang diuji, zoom/reflow, error identification, and reduced-motion behavior. ARIA hanya jika native semantics tidak cukup. Bahasa label/error ditentukan per localization decision.
+Color contrast, focus indicator, semantic headings, ARIA only when necessary, alt text for images, and keyboard navigation.
 
 ## Operational Considerations
 
-Forms mempunyai label terlihat, helper/error association, focus ke error summary, dan status pending yang announcement-friendly. Data tables menyediakan caption/name, header associations, sort/filter announcements, pagination, dan responsive alternative. Dialog/drawer mengelola focus/escape appropriately dan tidak menjebak user tanpa exit yang dapat diakses.
-
-POS numeric flow harus beroperasi dengan keyboard saja; clinic status dan urgency tidak boleh hanya warna; charts memiliki summary/table alternative; pet photo memiliki alt text sesuai fungsi; drag-and-drop menyediakan tombol alternatif.
+Forms must have visible labels; tables need sorting and screen-reader support; modal dialogs must trap focus.
 
 ## Compliance
 
-WCAG 2.1 AA adalah minimum target yang tercantum dalam draft baseline; tim dapat mengadopsi versi terbaru setelah keputusan produk. Uji automated lint/accessibility dilengkapi manual keyboard/screen-reader review untuk workflow kritis sebelum release. Tidak ada conformity claim tanpa hasil audit dan cakupan browser/assistive technology yang dicatat.
-
-## Related Documents
-
-- [Design guidelines](design-guidelines.md)
-- [Design system](design-system.md)
-- [Frontend error handling](../06-frontend/error-handling.md)
+The product should be aligned with WCAG 2.1 AA baseline for critical user journeys.
 

@@ -10,17 +10,13 @@ related_documents: ['test-scenarios.md']
 
 # Regression Testing
 
-Regression coverage menjaga invariant lintas domain saat schema, permission, policy, atau feature berubah.
+Regression testing mengamankan perubahan yang memengaruhi fitur penting.
 
 ## Scope
 
-Setiap merge/release menjalankan suite yang sesuai dampak: auth/RLS tenant+branch, customer/pet, price/promo, stock ledger/concurrent checkout, duplicate payment/webhook, PO partial receiving, booking capacity, medical revision/owner visibility, prescription dispensing, payroll privacy, balanced journal/period close, report export scope, notification/portal, settings approval/version/audit, dan rollback/reconciliation.
+Every release must run a selected subset of critical workflows: register customer, create sale, receive stock, create pet, booking, medical record, payroll, and report generation.
 
 ## Rule
 
-Bug fix yang mengubah behavior harus menambah/memperbarui test pada layer paling murah yang dapat menangkap regressi; shared permission/transaction change juga menjalankan integration/security suite. Test scenario ID merujuk [catalogue](test-scenarios.md); hasil run dicatat pada CI/release evidence, bukan disimpulkan dari dokumen.
-
-## Selection
-
-Gunakan dependency mapping dari changed modules/requirements; perubahan schema atau RLS memperluas suite ke seluruh consumer yang menggunakan table/policy tersebut. Semua P0 release gate selalu dijalankan; non-blocking suite harus memiliki owner dan jadwal.
+Bug fix requires at least one regression test if functional logic changed.
 

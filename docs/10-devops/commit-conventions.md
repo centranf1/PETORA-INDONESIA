@@ -14,11 +14,9 @@ Konvensi commit memudahkan tracking dan review.
 
 ## Format
 
-Gunakan `type(scope): imperative summary` (Conventional Commits sebagai rekomendasi): `feat(pos): support mixed payment`, `fix(inventory): reject duplicate transfer`, `docs(auth): clarify branch scope`, `test(rls): cover cross-tenant denial`, `chore(ci): pin tool versions`.
+type(scope): summary. Example: feat(pos): add multi-payment support. fix(inventory): prevent negative stock on transfer. docs(auth): update security policy.
 
 ## Rule
 
-Commit satu tujuan, summary singkat, alasan/requirement dapat ditelusuri lewat PR, dan jangan campur generated artifacts/secrets. Gunakan tipe yang konsisten: `feat`, `fix`, `docs`, `test`, `refactor`, `perf`, `chore`, `revert`. Format belum otomatis enforced; pilih commit lint/tool saat repository implementasi tersedia.
-
-Breaking public/API/schema changes may include `!` and a migration note in the PR; commit message alone is not the migration/approval record. Avoid force-push after review approval unless coordinated. Do not include production data dumps, `.env`, provider credentials, or generated build artifacts. Commit format is a recommendation until lint/tool configuration is approved.
+Commits should remain atomic and include reason. Avoid mixing unrelated changes.
 

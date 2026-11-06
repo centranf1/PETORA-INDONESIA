@@ -10,29 +10,25 @@ related_documents: ['business-processes.md', 'permission-matrix.md']
 
 # Business Overview
 
-PETORA mendukung satu organisasi yang menjalankan retail petshop, services, veterinary care, boarding, field service, dan business administration pada satu atau beberapa branch. Tujuan operasional adalah menghubungkan pelanggan/pet, transaksi, inventory, layanan, staff, finance, dan laporan tanpa menghilangkan ownership data per domain.
+Analisis bisnis menetapkan proses inti, peran, kebijakan, dan mekanisme penanganan pengecualian PETORA.
 
 ## Business Model
 
-Pendapatan berasal dari penjualan produk dan layanan, dengan alur pendukung procurement, inventory, appointment, care delivery, payment, HR, accounting, dan customer engagement. Payment/shipping/message providers merupakan external dependencies; provider selection dan aturan komersial belum disepakati.
+PETORA menggabungkan retail petshop, service, clinic, hotel, and management dashboard into one platform.
 
 ## Customer Segments
 
-Primary external actor adalah pet owner/customer dan supplier/consignment partner. Internal actors mencakup Owner, Branch Manager, Administrator, Cashier, Inventory/Purchasing, Groomer, Veterinarian, Pharmacist, Customer Service, HR/Payroll, Finance/Accounting, dan Super Admin. Role dapat dikonfigurasi, tetapi tenant boundary dan hard security invariants tidak dapat dihapus oleh konfigurasi bisnis.
+Consumer pet owners, business owners, branch managers, pet care staff, veterinarians, suppliers, and employees.
 
 ## Value Streams
 
-Acquire/register customer/pet -> catalog and book -> service/sale/purchase/clinical execution -> payment/stock/medical/finance event -> follow-up, loyalty/notification -> reporting and controls. Setiap stream harus punya owner, actor, input/output, exception path, data scope, and reconciliation.
+Sales, customer retention, health monitoring, risk management, finance control, and operational reporting.
 
 ## Business Drivers
 
-Operational efficiency, service safety, accurate stock/expiry, traceable financial outcomes, continuity of clinical history, predictable branch operations, and customer confidence. KPI baselines and targets belum ditetapkan.
+Operational efficiency, improved customer experience, better stock control, financial accuracy, and multi-branch governance.
 
 ## Key Risks
 
-Duplicate/unknown payment, stock race/mismatch, unauthorized medical/payroll/export access, cross-tenant/branch leakage, approval conflict, invalid policy change, incomplete handoff, provider outage, and inconsistent reports. Mitigations and tests map to [threat model](../08-security/threat-model.md) and [exception handling](exception-handling.md).
-
-## Business Ownership
-
-Business/Product Owner owns scope and acceptance; each domain owner (Finance, Clinical, Inventory, HR, Operations) owns policy decisions in their area; Security/Engineering own technical enforcement; Operations owns release/runbooks. Role names do not substitute for accountable decision owner.
+Double transaction, stock mismatch, unauthorized medical access, branch leakage, and business process inconsistency.
 

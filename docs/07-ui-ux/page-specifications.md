@@ -32,33 +32,6 @@ Queue, patient profile, note-taking, diagnosis, prescription, treatment summary,
 
 Booking history, medical access, loyalty balance, membership status, and notifications.
 
-## Core Module Page Inventory
-
-Page names are logical surfaces; routing and exact page composition remain subject to UX validation. Every page displays authorized scope and handles loading, empty, error, and forbidden states.
-
-| Feature | Primary page surfaces | Primary action / key content |
-| --- | --- | --- |
-| PET-FTR-001 | Dashboard by role/scope | Scoped KPIs, operational queues, expiring stock, tasks and report drill-down |
-| PET-FTR-002, PET-FTR-003, PET-FTR-004 | User/Role Admin, Branch Setup, Warehouse/Cash Setup | Invite/deactivate, assign permission/scope, manage branch lifecycle |
-| PET-FTR-005, PET-FTR-006 | Customer List/Detail, Pet Profile/Ownership | Search, interaction/transaction history, owner management, health flags |
-| PET-FTR-007 | Product/Service Catalog, Price History | Catalog, units, branch price, supplier links, effective dates |
-| PET-FTR-008 | Inventory Overview, Stock Card, Receiving, Transfer, Opname | Movement timeline, batch/expiry, adjustment/approval, discrepancy |
-| PET-FTR-009 | POS, Payment Status, Refund, Shift Close | Search/cart, customer/pet, server-priced total, payment and reconciliation |
-| PET-FTR-010 | Supplier Detail, Purchase Request/Order, Receiving, Invoice Match | PO approval, partial receipt, mismatch review, payable status |
-| PET-FTR-011, PET-FTR-012 | Service Calendar, Booking Detail, Grooming Queue/Session | Capacity, staff assignment, check-in, condition, execution and completion |
-| PET-FTR-013 | Boarding Dashboard, Room Plan, Stay Detail, Care Timeline | Availability, check-in/out, monitoring tasks, incident, invoice |
-| PET-FTR-014, PET-FTR-015 | Transport Dispatch/Trip, Home Grooming Schedule/Visit | Driver/vehicle, travel status, handoff evidence, coverage and kit checklist |
-| PET-FTR-016, PET-FTR-017 | Clinic Queue, Visit, Medical Record/Revision | Triage, exam, diagnosis/action, consent, version history and visibility |
-| PET-FTR-018 | Pharmacy Queue, Prescription Detail, Dispensing | Prescriber/status, batch/expiry, quantity and usage history |
-| PET-FTR-019, PET-FTR-020 | Membership Plan/Customer Benefits, Loyalty Ledger | Enrollment, expiry, benefit usage, earn/redeem/reversal history |
-| PET-FTR-021 | Promotion List/Editor, Eligibility Preview | Rule composition, audience, scope, quota, schedule, impact preview |
-| PET-FTR-022, PET-FTR-023, PET-FTR-024 | Employee Detail, Roster, Attendance, Commission Review | Assignment, correction approval, rule snapshot and calculation |
-| PET-FTR-025 | Payroll Cycle, Review, Approval, Payslip | Restricted compensation view, variance, approval, disbursement status |
-| PET-FTR-026, PET-FTR-027, PET-FTR-028 | Cash/Bank, Payables/Receivables, Journal/Period, Consignment | Reconciliation, balanced posting, settlement, close and audit trail |
-| PET-FTR-029 | Report Catalog, Query/Export, Scheduled Report | Scope/date filters, freshness, permission, export status and audit |
-| PET-FTR-030, PET-FTR-031 | Notification Center/Preferences, Customer Portal | Delivery history, opt-in/out, profile/pet, allowed bookings/records |
-| PET-FTR-032, PET-FTR-033 | Settings Dashboard, Approval Queue, Audit History, Integrations | Draft/active diff, version, approval, secret-masked connection health |
-
 ## System Settings Dashboard
 
 ### Purpose and Access

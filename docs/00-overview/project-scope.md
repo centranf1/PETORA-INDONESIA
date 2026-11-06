@@ -14,13 +14,11 @@ Ruang lingkup mencakup kebutuhan bisnis, sistem, dan operasional dari PETORA.
 
 ## In Scope
 
-Semua core feature README bagian 4.1-4.33 meliputi organisasi/cabang, customer/pet, product/catalog, inventory, POS/payment, supplier/procurement, grooming/booking/boarding, transport/home grooming, veterinary/medical/pharmacy, membership/loyalty/promotion, HR/payroll, finance/accounting/consignment, reports, notifications, customer portal, system settings, integrations, security, dan audit.
-
-README bagian 5.1-5.13 (CRM, complaints, care monitoring, laboratory, surgery/hospitalization, assets, SOP/checklists, document management, parcel shipping, budget, tax, backup/DR enhancements, e-commerce) tercatat sebagai recommended extensions dan belum release commitment.
+Multi-branch petshop operations, customer & pet data, POS sales, inventory, purchasing, appointments, clinic, pharmacy, HR, finance, portal, notifications, reporting, and security.
 
 ## Out of Scope
 
-Pembuatan/ownership payment network, messaging, shipping, or mapping provider sendiri tidak termasuk baseline; integrasi provider adalah bagian feature yang memerlukan pemilihan vendor dan contract. Implementasi source, deployment, provider, compliance, and business policy belum tersedia/approved di repository. Additional third-party APIs di luar README memerlukan scope change.
+Pembayaran gateway bersifat integrasi, bukan implementasi gateway khusus. Penyediaan API eksternal untuk semua mitra non-utama harus direncanakan pada fase berikutnya.
 
 ## External Dependencies
 
@@ -28,9 +26,9 @@ Supabase Auth, Postgres, storage, edge functions, payment gateway, email/SMS/Wha
 
 ## Constraints
 
-Tenant/branch isolation, least privilege, data integrity, auditability, dan safe recovery adalah cross-cutting constraints. Semua data sensitif memiliki role/scope policy; transaksi lokal kritis atomik pada PostgreSQL, sementara external effects direkonsiliasi.
+Harus menjaga data organisasi dan cabang terisolasi, dan transaksi kritis harus atomik.
 
 ## Related Areas
 
-Detail: [Business overview](../02-business-analysis/business-overview.md), [PRD](../01-product/product-requirements-document.md), [Architecture](../03-architecture/software-architecture-document.md), [Data dictionary](../04-database/data-dictionary.md), [Open decisions](../13-traceability/open-decisions.md).
+Silakan lihat business overview, architecture, and database documents for implementation detail.
 

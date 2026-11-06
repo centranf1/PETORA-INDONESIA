@@ -10,42 +10,28 @@ related_documents: ['system-context.md']
 
 # Container Diagram
 
-Container view menggambarkan runtime target berdasarkan technology baseline, bukan inventory deployment yang telah diverifikasi.
+Diagram container mengilustrasikan penyebaran platform.
 
 ## Containers
 
-React + TypeScript + Vite web app; Supabase Auth; Supabase Data API/PostgREST with RLS; Supabase Edge Functions; PostgreSQL; Supabase Storage; Supabase Realtime; external payment/notification providers; frontend hosting (Vercel or Cloudflare Pages); Sentry/equivalent monitoring. GraphQL, queue provider, and separate backend services are not baseline requirements unless an ADR approves them.
+Web app (React/Vite), API layer (Supabase PostgREST + Edge Functions), Database (PostgreSQL), Storage, Realtime, Auth, Monitoring, and External services.
 
 ## Deployment Base
 
-Frontend may deploy to Vercel or Cloudflare Pages; database/Auth/Storage/Edge Functions/Realtime use Supabase. Environment separation and provider/region/backup configuration remain open decisions.
+Frontend can run on Vercel or Cloudflare Pages; backend and database on Supabase; monitoring via Sentry or equivalent.
 
 ## Mermaid
 
 ```mermaid
 flowchart TB
-USER[Desktop / Tablet / Mobile Browser] --> HOST[Static Frontend Host]
-HOST --> APP[React + TypeScript + Vite App]
-APP --> AUTH[Supabase Auth]
-APP -->|user-scoped reads| API[Supabase Data API + RLS]
-APP -->|critical commands| FN[Supabase Edge Functions]
-API --> PG[(Supabase PostgreSQL)]
-FN --> PG
-APP --> STORAGE[Supabase Storage + Policies]
-APP --> RT[Supabase Realtime]
-FN --> PAYMENT[Payment Provider]
-FN --> NOTIFY[Email / SMS / WhatsApp Provider]
-PAYMENT -->|verified webhook| FN
-APP --> OBS[Error Monitoring]
+A[Browser / Mobile Web] --> B[Frontend App]
+B --> C[Supabase Auth]
+B --> D[Supabase REST / GraphQL]
+D --> E[Edge Functions]
+E --> F[(PostgreSQL)]
+E --> G[Storage]
+E --> H[Realtime]
+E --> I[External Gateway]
+B --> J[Sentry]
 ```
-
-## Container Responsibilities
-
-- Browser holds no service-role/database credential; it sends user intent and renders authorized data.
-- Data API is for RLS-protected access; Edge Functions orchestrate secret-bearing or multi-step commands.
-- PostgreSQL enforces constraints, transactions, RLS, and durable audit/outbox.
-- Storage/Realtime policies mirror parent record scope; events are hints that trigger refetch.
-- Provider calls have idempotency/reconciliation; monitoring scrubs PII/medical values.
-
-Note: no separate queue technology is selected; an outbox/async mechanism is a logical requirement where needed, while implementation choice remains an ADR/open decision.
 

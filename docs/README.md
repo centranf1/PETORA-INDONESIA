@@ -1,13 +1,3 @@
----
-title: PETORA Documentation Index
-document_id: PET-DOC-0000
-status: Draft
-version: 1.0
-owner: Engineering Team
-last_updated: 2026-11-06
-related_documents: ['../README.md', '00-overview/documentation-guide.md']
----
-
 # PETORA Documentation Index
 
 Dokumen ini adalah indeks sumber utama dokumentasi engineering PETORA.
@@ -34,21 +24,11 @@ PETORA merupakan sistem manajemen petshop dan pet care yang terintegrasi. Dokume
 | Standards | Engineering and change management | [12-development-standards/engineering-handbook.md](12-development-standards/engineering-handbook.md) |
 | Traceability | Requirement mapping and completeness | [13-traceability/requirements-traceability-matrix.md](13-traceability/requirements-traceability-matrix.md) |
 
-## Important Baseline Documents
-
-- [Canonical product requirements](01-product/product-requirements-document.md) uses PET-REQ-001..018 for core scope.
-- [Feature catalog](01-product/feature-catalog.md) defines PET-FTR-001..033 as README core and PET-FTR-034..046 as recommended extensions.
-- [Requirements traceability matrix](13-traceability/requirements-traceability-matrix.md) links features, workflows, logical data, API/UI, and test IDs.
-- [Open decisions](13-traceability/open-decisions.md) records unresolved stakeholder choices; recommendations there are not approved policy.
-- [Documentation completeness report](13-traceability/documentation-completeness-report.md) reports validation evidence and known gaps.
-
 ## Status
 - Status validasi dokumen: Draft
 - Sumber utama: README.md
 - Pembatasan: dokumen ini mencatat asumsi dan open decision bila informasi belum final
-- Implementation note: repository source, migration, CI, and runnable test suite must be inspected before treating the target stack/design as implemented.
 
 ## Related Files
 - [README.md](../README.md)
-
-Catatan: aturan kerja AGENTS.md diberikan sebagai instruksi sesi dan tidak tersedia sebagai file di working tree yang diperiksa.
+- [AGENTS.md](../AGENTS.md)

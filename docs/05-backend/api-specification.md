@@ -10,87 +10,78 @@ related_documents: ['edge-functions-specification.md']
 
 # API Specification
 
-Dokumen ini mendefinisikan logical API contract. Route dan transport akhir perlu diselaraskan dengan Edge Functions/Supabase API saat implementasi; contoh tidak membuktikan endpoint sudah tersedia.
+Spesifikasi API mendefinisikan pola akses dan sumber data.
 
 ## REST Conventions
 
-Gunakan resource-based operations untuk `/customers`, `/pets`, `/products`, `/inventory`, `/sales`, `/payments`, `/bookings`, `/medical-records`, `/payroll`, `/reports`, dan `/settings`. Setiap request terproteksi memerlukan session JWT valid; server menentukan actor dari token, tidak menerima identitas actor dari body.
+Use resource-based endpoints: /customers, /pets, /products, /inventory, /sales, /payments, /bookings, /medical-records, /payroll, /reports.
 
-- Paginate list dengan cursor/limit dan filter yang di-allowlist; jangan expose arbitrary SQL/filter expression.
-- Mutasi kritis menerima `Idempotency-Key` atau request ID stabil; response retry untuk key yang sama harus merujuk hasil operasi pertama.
-- Nilai transaksi seperti total, tax, discount, stock, approval state, dan effective permission dihitung/divalidasi server-side.
-- Error mengikuti envelope konsisten `{ code, message, trace_id, details? }`; detail tidak boleh membocorkan tenant lain, secret, atau medical data.
-- Gunakan conditional version (`expected_version_no`) untuk optimistic concurrency pada settings dan master data yang memiliki revision.
+### System Settings Endpoint Group
 
-## Settings API (Logical Contract)
-
-Organization context diturunkan dari Auth membership. Branch context boleh menjadi target input bila action mendukung scope branch, tetapi server wajib memvalidasi assignment dan kepemilikan branch. Client tidak dapat memilih atau menimpa tenant bebas.
-
-| Operation | Purpose | Authorization |
+| Endpoint | Tujuan | Kewenangan |
 | --- | --- | --- |
-| `GET /settings?group=&branch_id=` | Baca effective settings yang boleh dilihat; sensitive value dimask | Per-setting read permission |
-| `GET /settings/:id/versions` | Baca versi dan status tanpa secret payload | Settings audit/read permission |
-| `POST /settings/:id/versions` | Buat draft proposal berdasarkan active version | Super Admin write permission |
-| `POST /settings/:id/versions/:version/validate` | Validasi schema, range, dependency, dan impact | Super Admin write permission |
-| `POST /settings/:id/versions/:version/submit` | Ajukan perubahan untuk approval atau aktivasi | Super Admin write permission |
-| `POST /settings/:id/versions/:version/approve` | Setujui usulan sesuai kategori dan scope | Owner/approver permission; self-approval policy open |
-| `POST /settings/:id/versions/:version/reject` | Tolak usulan dengan alasan | Owner/approver permission |
-| `POST /settings/:id/rollback` | Buat versi baru dari versi lama yang dipilih | Elevated permission; reason dan audit wajib |
+| GET /settings | Menampilkan semua config aktif untuk org/branch | Super Admin, Owner, Manager |
+| GET /settings/:group | Menampilkan config per kelompok | Super Admin, Owner |
+| POST /settings | Membuat usulan perubahan konfigurasi | Super Admin |
+| PATCH /settings/:id | Update setting aktif atau draft | Super Admin |
+| POST /settings/:id/approve | Menyetujui perubahan kritis | Owner / Super Admin |
+| GET /settings/:id/history | Mencari riwayat perubahan | Super Admin, Owner |
+| POST /settings/validate | Validasi konfigurasi sebelum diterapkan | Super Admin |
 
 ### Aturan API setting
 
-- `organization_id`, actor, `requires_approval`, lock flag, permission, dan current effective value tidak dapat ditentukan oleh client.
-- Request proposal mengirim `value`, optional `branch_id`, `base_version_no`, `reason`, serta `Idempotency-Key`; value divalidasi terhadap `setting_definitions` di server.
-- Update menolak stale `base_version_no` (HTTP 409) agar perubahan lain tidak tertimpa.
-- Version + audit + setting active pointer ditulis dalam satu transaksi DB ketika aktivasi terjadi; draft/reject juga memiliki event audit.
-- Untuk approval-required, create/submit hanya menghasilkan `pending_approval`; `effective_value` tetap versi lama sampai decision berhasil dan policy runtime diperbarui.
-- Response mengembalikan `status`, `version_no`, `effective_version_no`, dan `trace_id`. Sensitive settings mengembalikan `is_configured`/masked state, bukan secret value.
-- Rollback bukan overwrite; sistem membuat versi baru yang membawa value dari versi lama dan melewati validation/approval sesuai risk policy.
+- Semua request setting harus mengirim `organization_id` dan `branch_id` yang valid dari auth context, bukan dari browser body.
+- perubahan setting dengan `requires_approval=true` wajib disetujui sebelum berlaku.
+- response harus menyertakan `effective_value`, `status`, `version_no`, dan audit metadata.
+- method update harus menulis ke `setting_versions` dan `setting_audit_log` sebelum final commit.
 
 ### Request / Response DTO example
 
 ```json
 {
+  "organization_id": "org_123",
   "branch_id": "branch_456",
+  "setting_group": "stock_policy",
+  "key": "allow_negative_stock",
+  "value_type": "boolean",
   "value": false,
-  "base_version_no": 3,
-  "reason": "Mencegah oversell sesuai kebijakan stok yang disepakati"
+  "reason": "Menjaga kontrol stok dan mencegah oversell",
+  "requires_approval": true
 }
 ```
 
 ```json
 {
-  "setting_id": "setting_uuid",
+  "id": "set_789",
   "status": "pending_approval",
-  "version_no": 4,
-  "effective_version_no": 3,
-  "trace_id": "request_trace_id"
+  "effective_value": false,
+  "version_no": 3,
+  "approved_by": null,
+  "updated_at": "2026-11-06T09:00:00Z",
+  "audit": {
+    "changed_by": "user_001",
+    "reason": "Menjaga kontrol stok dan mencegah oversell",
+    "change_type": "update"
+  }
 }
 ```
 
 ### Business validation rules
 
-- `allow_negative_stock` adalah policy risiko tinggi; perubahan hanya aktif setelah rule, approver, dan alasan yang disepakati tervalidasi. Nilai/approval threshold final masih open decision.
-- `refund_policy` dan `notification_policy` harus sesuai schema dan parent organization policy; branch override tidak boleh melemahkan constraint fundamental.
-- `branch_id` ditolak jika setting definition tidak mendukung branch scope atau branch tidak termasuk organization/assignment aktor.
-- Semua perubahan policy harus atomic antara version/audit/active pointer dan harus aman diulang.
+- Setting `allow_negative_stock` hanya dapat diubah ke `true` jika owner atau super admin menyetujui dan ada kebutuhan operasional khusus.
+- `refund_policy` dan `notification_policy` tidak boleh dibuat dengan nilai yang melanggar batas yang diatur di level organisasi.
+- `branch_id` tidak boleh dipakai untuk mengubah global config yang tidak mengizinkan scope branch.
+- Semua perubahan policy harus di-commit dalam satu transaksi database yang mencakup audit log dan version record.
 
 ## Auth
 
-Every endpoint requires valid JWT and permission check. Entity access follows RLS; sensitive write uses server-verified organization/branch and action permissions. User-provided `organization_id`, `role`, or `is_super_admin` claim is not authoritative. Use `auth.uid()`/trusted membership and invalidate sessions or refresh authorization promptly after role revocation.
+Every endpoint requires valid JWT and branch/organization mapping. Admin functions require elevated role.
 
 ## Response Pattern
 
-Success response contains `data`, optional pagination, and `trace_id`. Validation returns field-level safe errors; unauthorized and not-found semantics must not disclose whether a cross-tenant record exists. Provider errors are mapped to stable internal codes and include sanitized retryability metadata.
+Status, message, data, pagination, and trace_id. Error responses include code, message, and request context when safe.
 
-## Related Documents
+## Open Decision
 
-- [Edge Functions specification](edge-functions-specification.md)
-- [Authentication and authorization](authentication-authorization.md)
-- [Transaction integrity](../04-database/transaction-integrity.md)
-- [Settings database model](../04-database/database-design.md)
-
-## Open Decisions
-
-Final route prefix/versioning, role/approval mapping, global setting model, payload size limit, and provider idempotency behavior require implementation and product/security review.
+Actual path naming and versioning still need confirmation by frontend/backend team.
 

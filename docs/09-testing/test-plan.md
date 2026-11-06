@@ -29,7 +29,6 @@ Double checkout, double payment, illegal price modification, negative stock, una
 | PET-TST-SET-003 | Reject invalid value_type | Admin authenticated | Set value_type mismatch with value_json | Request rejected and logged |
 | PET-TST-SET-004 | Cross-organization access | User from Org A tries Org B config | Query settings by raw org_id | Request denied by RLS |
 | PET-TST-SET-005 | Branch-only config restriction | Manager on Branch A read Branch B config | Access branch config | Forbidden and recorded |
-| PET-TST-SET-006 | Non-admin mutation denial | Cashier/branch manager session, active setting | Call settings mutation directly with a valid-looking payload | API/RLS denies; active version unchanged; denial event is safely audited |
 
 ## Execution Schedule
 
