@@ -12,6 +12,13 @@ PETORA (Integrated Petshop & Pet Care Management System) merupakan platform mana
 
 PETORA dikembangkan sebagai pusat pengelolaan informasi dan aktivitas bisnis yang menghubungkan seluruh departemen, karyawan, pelanggan, serta layanan dalam satu ekosistem terpadu.
 
+## Teknologi (Stack)
+
+- Frontend: React + TypeScript
+- Backend: Supabase (PostgreSQL + RLS + Edge Functions)
+- Arsitektur: Modular Monolith
+- Deployment: Vercel/Cloudflare Pages (rencana)
+
 Sistem ini tidak hanya berfungsi sebagai aplikasi kasir atau pencatatan persediaan, melainkan sebagai sistem manajemen operasional menyeluruh yang memungkinkan setiap bagian perusahaan bekerja menggunakan data yang saling terhubung.
 
 Melalui PETORA, perusahaan dapat mengelola data pelanggan, hewan peliharaan, produk, supplier, gudang, transaksi, jadwal pelayanan, dokter hewan, groomer, karyawan, keuangan, dan berbagai aktivitas bisnis lainnya secara terpusat.
