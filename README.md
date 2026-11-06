@@ -1,12 +1,12 @@
-🐾 PETORA
+# 🐾 PETORA
 
-Integrated Petshop & Pet Care Management System
+**Integrated Petshop & Pet Care Management System**
 
 Sistem Informasi Manajemen Terintegrasi untuk Petshop, Klinik Hewan, Grooming, Pet Hotel, dan Layanan Perawatan Hewan Peliharaan.
 
 ---
 
-1. Deskripsi Umum
+## 1. Deskripsi Umum
 
 PETORA (Integrated Petshop & Pet Care Management System) merupakan platform manajemen bisnis terintegrasi yang dirancang untuk mendukung seluruh aktivitas operasional perusahaan di bidang petshop dan pet care, mulai dari penjualan produk kebutuhan hewan, pelayanan perawatan, penitipan hewan, pemeriksaan kesehatan, pengelolaan obat, hingga administrasi bisnis dan pengelolaan keuangan.
 
@@ -31,7 +31,7 @@ PETORA dirancang untuk mendukung operasional bisnis dengan satu maupun banyak ca
 
 Dengan demikian, PETORA diharapkan menjadi solusi digital yang membantu perusahaan meningkatkan efisiensi operasional, akurasi data, kualitas pelayanan, pengendalian internal, serta kemampuan dalam mengembangkan bisnis secara berkelanjutan.
 
-2. Latar Belakang dan Permasalahan
+## 2. Latar Belakang dan Permasalahan
 
 Bisnis petshop dan pet care memiliki karakteristik operasional yang cukup kompleks karena melibatkan beberapa jenis aktivitas yang berbeda tetapi saling berkaitan.
 
@@ -57,7 +57,7 @@ Apabila setiap aktivitas dikelola menggunakan pencatatan manual atau aplikasi ya
 
 PETORA dikembangkan untuk menyelesaikan permasalahan tersebut melalui integrasi seluruh proses bisnis ke dalam satu sistem yang memiliki alur kerja, pengendalian, dan dokumentasi yang jelas.
 
-3. Tujuan Pengembangan
+## 3. Tujuan Pengembangan
 
 Tujuan utama pengembangan PETORA adalah menyediakan sistem informasi manajemen yang dapat membantu perusahaan menjalankan bisnis petshop dan pet care secara profesional, terintegrasi, efisien, dan terukur.
 
@@ -78,17 +78,17 @@ Tujuan khusus meliputi:
 - Menjaga keamanan, konsistensi, dan keterlacakan data perusahaan.
 - Mendukung pertumbuhan bisnis dan penambahan jenis pelayanan.
 
-4. Ruang Lingkup dan Modul Sistem
+## 4. Ruang Lingkup dan Modul Sistem
 
 PETORA mencakup berbagai modul utama yang saling terhubung untuk mendukung seluruh kebutuhan operasional bisnis.
 
-A. Dashboard dan Pengelolaan Organisasi
+### A. Dashboard dan Pengelolaan Organisasi
 
-4.1 Dashboard Management
+### 4.1 Dashboard Management
 
 Dashboard merupakan halaman utama yang menyajikan gambaran kondisi bisnis dan aktivitas operasional berdasarkan hak akses pengguna.
 
-Fitur:
+**Fitur:**
 
 - Ringkasan omzet harian, mingguan, bulanan, dan tahunan.
 - Jumlah transaksi penjualan.
@@ -112,11 +112,11 @@ Fitur:
 
 Dashboard manajemen pusat menyediakan informasi konsolidasi seluruh cabang, sedangkan dashboard operasional menampilkan informasi sesuai tanggung jawab pengguna.
 
-4.2 User Management
+### 4.2 User Management
 
 Mengelola akun seluruh pengguna yang menggunakan sistem.
 
-Fitur:
+**Fitur:**
 
 - Pembuatan akun pengguna.
 - Pengelolaan informasi profil.
@@ -132,11 +132,11 @@ Fitur:
 
 Akun pengguna yang dinonaktifkan tetap memiliki hubungan dengan riwayat transaksi dan aktivitas sebelumnya.
 
-4.3 Role & Permission Management
+### 4.3 Role & Permission Management
 
 Mengelola peran, kewenangan, dan pembatasan akses pengguna.
 
-Fitur:
+**Fitur:**
 
 - Pembuatan role secara dinamis.
 - Pengaturan permission setiap modul.
@@ -153,11 +153,11 @@ Fitur:
 
 Sistem mendukung cakupan data own, branch, all, dan assigned_records.
 
-4.4 Branch Management
+### 4.4 Branch Management
 
 Mengelola seluruh lokasi operasional perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Pendaftaran dan pengelolaan cabang.
 - Identitas dan informasi cabang.
@@ -176,13 +176,13 @@ Fitur:
 
 Cabang yang dinonaktifkan tidak dapat menerima transaksi baru, tetapi riwayat operasionalnya tetap tersimpan.
 
-B. Manajemen Pelanggan, Hewan, dan Produk
+### B. Manajemen Pelanggan, Hewan, dan Produk
 
-4.5 Customer Management
+### 4.5 Customer Management
 
 Mengelola seluruh data pelanggan sebagai pusat informasi hubungan perusahaan dengan pemilik hewan.
 
-Fitur:
+**Fitur:**
 
 - Registrasi pelanggan.
 - Data identitas dan informasi kontak.
@@ -203,11 +203,11 @@ Fitur:
 
 Data pelanggan yang dinonaktifkan tidak menghilangkan riwayat transaksi maupun rekam medis yang berkaitan.
 
-4.6 Pet Management
+### 4.6 Pet Management
 
 Mengelola informasi setiap hewan peliharaan yang terdaftar.
 
-Fitur:
+**Fitur:**
 
 - Registrasi hewan.
 - Nama dan foto hewan.
@@ -233,11 +233,11 @@ Fitur:
 
 Setiap hewan dapat terhubung dengan beberapa pemilik, tetapi memiliki satu pemilik utama yang pengubahannya dibatasi berdasarkan kewenangan.
 
-4.7 Product Management
+### 4.7 Product Management
 
 Mengelola seluruh produk yang dijual oleh perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Kategori produk.
 - Merek produk.
@@ -258,7 +258,7 @@ Fitur:
 - Pengelolaan pemasok produk.
 - Pengelolaan produk dengan batch dan kedaluwarsa.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Pengelolaan produk berdasarkan satuan pembelian dan penjualan yang berbeda.
 - Konversi satuan, misalnya karton menjadi pcs.
@@ -267,11 +267,11 @@ Tambahan kebutuhan:
 - Pengelolaan paket produk.
 - Pengaturan produk yang membutuhkan perlakuan khusus.
 
-4.8 Inventory & Warehouse Management
+### 4.8 Inventory & Warehouse Management
 
 Mengelola seluruh aktivitas pergerakan persediaan barang.
 
-Fitur:
+**Fitur:**
 
 - Pengelolaan banyak gudang.
 - Saldo stok per cabang dan gudang.
@@ -294,7 +294,7 @@ Fitur:
 
 Seluruh pergerakan barang harus memiliki catatan yang dapat ditelusuri. Saldo stok tidak dapat diubah secara langsung tanpa pergerakan persediaan yang sah.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Permintaan pemindahan stok.
 - Persetujuan penyesuaian persediaan.
@@ -306,13 +306,13 @@ Tambahan kebutuhan:
 - Perhitungan nilai persediaan.
 - Rekonsiliasi hasil stock opname.
 
-C. Penjualan, Pembelian, dan Pelayanan
+### C. Penjualan, Pembelian, dan Pelayanan
 
-4.9 POS & Sales Management
+### 4.9 POS & Sales Management
 
 Mengelola seluruh transaksi penjualan produk dan jasa.
 
-Fitur:
+**Fitur:**
 
 - Transaksi kasir.
 - Pemilihan pelanggan.
@@ -341,7 +341,7 @@ Fitur:
 - Riwayat transaksi.
 - Idempotency untuk mencegah transaksi ganda.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Pengelolaan shift kasir.
 - Serah terima kas antar-shift.
@@ -355,11 +355,11 @@ Tambahan kebutuhan:
 
 Order yang telah dibayar tidak dapat diedit secara langsung. Koreksi harus melalui prosedur refund dan transaksi baru.
 
-4.10 Purchasing & Supplier Management
+### 4.10 Purchasing & Supplier Management
 
 Mengelola proses pembelian dan hubungan dengan pemasok.
 
-Fitur:
+**Fitur:**
 
 - Data supplier.
 - Informasi kontak pemasok.
@@ -376,7 +376,7 @@ Fitur:
 - Perhitungan harga modal rata-rata tertimbang.
 - Laporan pembelian.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Evaluasi performa supplier.
 - Perbandingan harga antar-supplier.
@@ -387,11 +387,11 @@ Tambahan kebutuhan:
 - Pengelolaan kontrak dan kesepakatan harga.
 - Riwayat perubahan harga beli.
 
-4.11 Grooming Management
+### 4.11 Grooming Management
 
 Mengelola seluruh layanan perawatan dan kebersihan hewan.
 
-Fitur:
+**Fitur:**
 
 - Katalog layanan grooming.
 - Paket grooming.
@@ -412,7 +412,7 @@ Fitur:
 - Konsumsi produk dan bahan layanan.
 - Pembayaran layanan.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Checklist prosedur grooming.
 - Dokumentasi kondisi kulit dan bulu.
@@ -424,11 +424,11 @@ Tambahan kebutuhan:
 - Pengelolaan peralatan grooming.
 - Pemantauan produktivitas groomer.
 
-4.12 Booking & Reservation Management
+### 4.12 Booking & Reservation Management
 
 Mengelola seluruh reservasi layanan perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Booking oleh staf.
 - Booking oleh pelanggan.
@@ -447,7 +447,7 @@ Fitur:
 - Pengingat otomatis.
 - Riwayat booking.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Kalender operasional terpadu.
 - Daftar tunggu ketika jadwal penuh.
@@ -462,11 +462,11 @@ Tambahan kebutuhan:
 
 Pengecekan kapasitas menggunakan pengendalian transaksi untuk mencegah pemesanan berlebih.
 
-4.13 Pet Hotel & Daycare Management
+### 4.13 Pet Hotel & Daycare Management
 
 Mengelola layanan penginapan dan penitipan hewan.
 
-Fitur:
+**Fitur:**
 
 - Data kamar.
 - Jenis kamar.
@@ -483,7 +483,7 @@ Fitur:
 - Kapasitas daycare.
 - Riwayat penitipan.
 
-Tambahan kebutuhan yang penting:
+**Tambahan kebutuhan yang penting:**
 
 - Profil kebutuhan setiap hewan selama penitipan.
 - Jadwal makan berdasarkan instruksi pemilik.
@@ -501,11 +501,11 @@ Tambahan kebutuhan yang penting:
 - Pengelolaan kapasitas berdasarkan jenis, ukuran, dan kebutuhan hewan.
 - Pencatatan kerusakan fasilitas.
 
-4.14 Transport Management
+### 4.14 Transport Management
 
 Mengelola layanan penjemputan dan pengantaran hewan.
 
-Fitur:
+**Fitur:**
 
 - Permintaan transportasi.
 - Data alamat pelanggan.
@@ -518,7 +518,7 @@ Fitur:
 - Biaya transportasi.
 - Riwayat perjalanan.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Pencatatan jarak perjalanan.
 - Pengelolaan area layanan.
@@ -531,11 +531,11 @@ Tambahan kebutuhan:
 - Jadwal perawatan kendaraan.
 - Pelaporan keterlambatan dan insiden perjalanan.
 
-4.15 Home Grooming Management
+### 4.15 Home Grooming Management
 
 Mengelola layanan grooming yang dilaksanakan di rumah pelanggan.
 
-Fitur:
+**Fitur:**
 
 - Katalog layanan.
 - Area jangkauan.
@@ -549,7 +549,7 @@ Fitur:
 - Dokumentasi hasil layanan.
 - Riwayat home grooming.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Penjadwalan perjalanan petugas.
 - Pengelolaan perlengkapan yang dibawa.
@@ -560,13 +560,13 @@ Tambahan kebutuhan:
 - Dokumentasi sebelum dan sesudah layanan.
 - Penanganan kendala di lokasi pelanggan.
 
-D. Klinik Hewan dan Farmasi
+### D. Klinik Hewan dan Farmasi
 
-4.16 Veterinary Management
+### 4.16 Veterinary Management
 
 Mengelola kegiatan operasional klinik dan pelayanan dokter hewan.
 
-Fitur:
+**Fitur:**
 
 - Data dokter hewan.
 - Jadwal praktik.
@@ -584,7 +584,7 @@ Fitur:
 - Integrasi farmasi.
 - Riwayat pelayanan.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Manajemen antrean pasien.
 - Triage atau penentuan prioritas pasien.
@@ -601,11 +601,11 @@ Tambahan kebutuhan:
 - Pencatatan hasil konsultasi.
 - Pengingat vaksinasi dan pemeriksaan berkala.
 
-4.17 Medical Records Management
+### 4.17 Medical Records Management
 
 Mengelola rekam medis setiap hewan secara lengkap, berkesinambungan, dan terstruktur.
 
-Fitur:
+**Fitur:**
 
 - Riwayat kunjungan.
 - Keluhan utama.
@@ -624,7 +624,7 @@ Fitur:
 - Revisi rekam medis.
 - Informasi medis yang dapat dilihat pemilik.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Grafik perkembangan berat badan.
 - Grafik perkembangan kondisi kesehatan.
@@ -642,11 +642,11 @@ Rekam medis yang telah difinalisasi tidak dapat diubah secara langsung. Koreksi 
 
 Informasi medis sensitif dienkripsi dan hanya dapat diakses sesuai kewenangan. Pelanggan hanya dapat melihat informasi yang telah ditandai untuk ditampilkan kepada pemilik.
 
-4.18 Pharmacy & Medicine Management
+### 4.18 Pharmacy & Medicine Management
 
 Mengelola seluruh obat dan kebutuhan farmasi klinik.
 
-Fitur:
+**Fitur:**
 
 - Data obat.
 - Kategori obat.
@@ -664,7 +664,7 @@ Fitur:
 - Integrasi rekam medis.
 - Integrasi persediaan.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Pengelolaan dosis dan aturan penggunaan.
 - Pengelolaan satuan pemberian obat.
@@ -680,13 +680,13 @@ Tambahan kebutuhan:
 
 Obat yang memerlukan resep hanya dapat dikeluarkan berdasarkan resep final dokter yang berwenang.
 
-E. Membership, Loyalty, dan Promosi
+### E. Membership, Loyalty, dan Promosi
 
-4.19 Membership Management
+### 4.19 Membership Management
 
 Mengelola program keanggotaan pelanggan.
 
-Fitur:
+**Fitur:**
 
 - Pembuatan paket membership.
 - Harga keanggotaan.
@@ -700,7 +700,7 @@ Fitur:
 - Riwayat pembayaran.
 - Pengingat masa berlaku.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Tingkatan membership.
 - Benefit khusus setiap tingkatan.
@@ -712,11 +712,11 @@ Tambahan kebutuhan:
 - Pengelolaan hak benefit antar-cabang.
 - Pengingat perpanjangan keanggotaan.
 
-4.20 Loyalty Management
+### 4.20 Loyalty Management
 
 Mengelola program penghargaan pelanggan berdasarkan aktivitas transaksi.
 
-Fitur:
+**Fitur:**
 
 - Perolehan poin.
 - Penukaran poin.
@@ -728,7 +728,7 @@ Fitur:
 - Saldo poin pelanggan.
 - Integrasi dengan POS.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Masa kedaluwarsa poin.
 - Tingkatan loyalitas.
@@ -740,11 +740,11 @@ Tambahan kebutuhan:
 - Riwayat koreksi poin.
 - Pengelolaan poin yang membutuhkan persetujuan.
 
-4.21 Promotion Management
+### 4.21 Promotion Management
 
 Mengelola seluruh program pemasaran.
 
-Fitur:
+**Fitur:**
 
 - Diskon produk.
 - Diskon layanan.
@@ -759,7 +759,7 @@ Fitur:
 - Batas penggunaan.
 - Aturan kombinasi promosi.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Promo berdasarkan cabang.
 - Promo berdasarkan jumlah pembelian.
@@ -773,13 +773,13 @@ Tambahan kebutuhan:
 - Laporan biaya diskon.
 - Pengelolaan kampanye pemasaran.
 
-F. Manajemen Sumber Daya Manusia
+### F. Manajemen Sumber Daya Manusia
 
-4.22 Staff Management
+### 4.22 Staff Management
 
 Mengelola seluruh informasi dan administrasi karyawan.
 
-Fitur:
+**Fitur:**
 
 - Data identitas karyawan.
 - Jabatan.
@@ -796,7 +796,7 @@ Fitur:
 - Pengelolaan supervisor.
 - Riwayat pekerjaan.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Pengelolaan kontrak kerja.
 - Masa berlaku kontrak.
@@ -810,11 +810,11 @@ Tambahan kebutuhan:
 - Pengelolaan surat peringatan.
 - Pengelolaan proses onboarding dan offboarding.
 
-4.23 Attendance Management
+### 4.23 Attendance Management
 
 Mengelola kehadiran dan waktu kerja.
 
-Fitur:
+**Fitur:**
 
 - Clock-in.
 - Clock-out.
@@ -827,7 +827,7 @@ Fitur:
 - Lembur.
 - Rekapitulasi kehadiran.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Persetujuan izin dan cuti.
 - Pengaturan hari libur.
@@ -838,11 +838,11 @@ Tambahan kebutuhan:
 - Rekapitulasi jam kerja.
 - Integrasi penggajian.
 
-4.24 Commission Management
+### 4.24 Commission Management
 
 Mengelola komisi karyawan berdasarkan aktivitas kerja.
 
-Fitur:
+**Fitur:**
 
 - Aturan komisi.
 - Persentase komisi.
@@ -855,7 +855,7 @@ Fitur:
 - Pembayaran komisi.
 - Riwayat komisi.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Target penjualan individu.
 - Target penjualan cabang.
@@ -865,11 +865,11 @@ Tambahan kebutuhan:
 - Pengelolaan insentif.
 - Laporan performa karyawan.
 
-4.25 Payroll Management (Tambahan)
+### 4.25 Payroll Management (Tambahan)
 
 Mengelola administrasi penggajian karyawan secara terintegrasi.
 
-Fitur:
+**Fitur:**
 
 - Pengaturan gaji pokok.
 - Tunjangan.
@@ -889,13 +889,13 @@ Modul ini menghubungkan data karyawan, absensi, lembur, dan komisi untuk membant
 
 Perhitungan komponen pajak dan kewajiban ketenagakerjaan perlu mengikuti ketentuan yang berlaku.
 
-G. Keuangan dan Administrasi Bisnis
+### G. Keuangan dan Administrasi Bisnis
 
-4.26 Finance Management
+### 4.26 Finance Management
 
 Mengelola seluruh transaksi keuangan operasional perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Pengelolaan kas.
 - Kas masuk.
@@ -910,7 +910,7 @@ Fitur:
 - Persetujuan pengeluaran.
 - Riwayat pergerakan kas.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Pengelolaan rekening bank.
 - Transfer antar-rekening.
@@ -926,11 +926,11 @@ Tambahan kebutuhan:
 - Analisis keuntungan per jenis layanan.
 - Analisis biaya per produk.
 
-4.27 Accounting Management
+### 4.27 Accounting Management
 
 Mengelola pencatatan akuntansi dan laporan keuangan perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Chart of Accounts.
 - Jurnal umum.
@@ -945,7 +945,7 @@ Fitur:
 - Laporan arus kas.
 - Riwayat jurnal.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Neraca saldo.
 - Buku besar.
@@ -962,11 +962,11 @@ Tambahan kebutuhan:
 
 Jurnal yang telah diposting tidak dapat dihapus langsung. Koreksi dilakukan menggunakan mekanisme jurnal pembalik atau jurnal koreksi sesuai ketentuan akuntansi.
 
-4.28 Consignment Management
+### 4.28 Consignment Management
 
 Mengelola produk titipan dari supplier atau mitra usaha.
 
-Fitur:
+**Fitur:**
 
 - Data mitra konsinyasi.
 - Penerimaan barang titipan.
@@ -979,7 +979,7 @@ Fitur:
 - Riwayat pembayaran.
 - Laporan konsinyasi.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Pengaturan persentase pembagian keuntungan.
 - Kontrak kerja sama.
@@ -989,11 +989,11 @@ Tambahan kebutuhan:
 - Penanganan barang rusak.
 - Laporan hutang kepada mitra.
 
-4.29 Reports & Business Analytics
+### 4.29 Reports & Business Analytics
 
 Menyediakan informasi dan laporan untuk mendukung pengawasan serta pengambilan keputusan.
 
-Laporan mencakup:
+**Laporan mencakup:**
 
 - Penjualan.
 - Pendapatan.
@@ -1041,13 +1041,13 @@ Tambahan kemampuan analitik:
 - Perbandingan kinerja antarperiode.
 - Export laporan dan penjadwalan pengiriman laporan.
 
-H. Komunikasi dan Pengaturan Sistem
+### H. Komunikasi dan Pengaturan Sistem
 
-4.30 Notification Management
+### 4.30 Notification Management
 
 Mengelola komunikasi otomatis antara perusahaan, staf, dan pelanggan.
 
-Fitur:
+**Fitur:**
 
 - Notifikasi email.
 - Notifikasi SMS.
@@ -1066,7 +1066,7 @@ Fitur:
 - Notifikasi persetujuan.
 - Pengingat jatuh tempo pembayaran.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Riwayat pengiriman pesan.
 - Status terkirim, gagal, dan dibaca jika didukung penyedia.
@@ -1077,11 +1077,11 @@ Tambahan kebutuhan:
 - Template pesan berdasarkan kejadian.
 - Pengelolaan notifikasi internal karyawan.
 
-4.31 Customer Portal
+### 4.31 Customer Portal
 
 Menyediakan akses mandiri bagi pelanggan.
 
-Fitur:
+**Fitur:**
 
 - Registrasi.
 - Login.
@@ -1099,7 +1099,7 @@ Fitur:
 - Informasi layanan.
 - Informasi promosi.
 
-Tambahan kebutuhan:
+**Tambahan kebutuhan:**
 
 - Upload foto dan dokumen hewan.
 - Permintaan perubahan data hewan.
@@ -1114,11 +1114,11 @@ Tambahan kebutuhan:
 - Pengelolaan beberapa hewan dalam satu akun.
 - Pengaturan preferensi notifikasi.
 
-4.32 System Settings
+### 4.32 System Settings
 
 Mengelola konfigurasi umum perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Identitas perusahaan.
 - Identitas cabang.
@@ -1134,11 +1134,11 @@ Fitur:
 - Pengaturan kebijakan transaksi.
 - Pengaturan notifikasi.
 
-4.33 Integration Settings
+### 4.33 Integration Settings
 
 Mengelola hubungan PETORA dengan layanan eksternal.
 
-Fitur:
+**Fitur:**
 
 - Pengelolaan kredensial integrasi.
 - Konfigurasi koneksi layanan.
@@ -1152,15 +1152,15 @@ Fitur:
 - Penyimpanan konfigurasi secara terenkripsi.
 - Pengaturan integrasi oleh Super Admin.
 
-5. Modul Tambahan yang Direkomendasikan
+## 5. Modul Tambahan yang Direkomendasikan
 
 Selain modul utama, terdapat sejumlah kebutuhan yang penting untuk mendukung operasional bisnis secara lebih lengkap. Modul berikut merupakan pengembangan yang direkomendasikan agar PETORA tidak hanya mampu mengelola transaksi, tetapi juga mampu mengelola hubungan pelanggan, pengawasan operasional, aset, dan keberlangsungan bisnis.
 
-5.1 CRM & Customer Relationship Management
+### 5.1 CRM & Customer Relationship Management
 
 Mengelola hubungan pelanggan secara lebih mendalam.
 
-Fitur:
+**Fitur:**
 
 - Segmentasi pelanggan.
 - Kategori pelanggan.
@@ -1177,11 +1177,11 @@ Fitur:
 
 Tujuannya adalah membantu perusahaan mempertahankan pelanggan lama, meningkatkan pembelian berulang, dan membangun hubungan jangka panjang.
 
-5.2 Customer Service & Complaint Management
+### 5.2 Customer Service & Complaint Management
 
 Mengelola pertanyaan, keluhan, dan permintaan pelanggan.
 
-Fitur:
+**Fitur:**
 
 - Pembuatan tiket keluhan.
 - Kategori keluhan.
@@ -1198,11 +1198,11 @@ Fitur:
 
 Modul ini penting untuk menangani keluhan terkait produk, grooming, pelayanan dokter, penitipan, dan transaksi.
 
-5.3 Pet Care Monitoring
+### 5.3 Pet Care Monitoring
 
 Mengelola pemantauan kondisi hewan selama menerima layanan.
 
-Fitur:
+**Fitur:**
 
 - Kondisi hewan saat diterima.
 - Kondisi fisik dan perilaku.
@@ -1218,11 +1218,11 @@ Fitur:
 
 Modul ini sangat berguna terutama untuk layanan pet hotel, daycare, dan rawat inap.
 
-5.4 Veterinary Laboratory Management
+### 5.4 Veterinary Laboratory Management
 
 Mengelola pemeriksaan laboratorium hewan.
 
-Fitur:
+**Fitur:**
 
 - Jenis pemeriksaan.
 - Permintaan pemeriksaan dokter.
@@ -1235,11 +1235,11 @@ Fitur:
 - Integrasi dengan rekam medis.
 - Biaya pemeriksaan.
 
-5.5 Surgery & Hospitalization Management
+### 5.5 Surgery & Hospitalization Management
 
 Mengelola tindakan operasi dan rawat inap hewan apabila perusahaan menyediakan layanan klinik lanjutan.
 
-Fitur:
+**Fitur:**
 
 - Penjadwalan operasi.
 - Persetujuan tindakan.
@@ -1254,11 +1254,11 @@ Fitur:
 - Check-in dan check-out rawat inap.
 - Tagihan tindakan medis.
 
-5.6 Asset & Maintenance Management
+### 5.6 Asset & Maintenance Management
 
 Mengelola aset dan fasilitas perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Data aset.
 - Kategori aset.
@@ -1276,11 +1276,11 @@ Fitur:
 
 Contoh aset meliputi meja grooming, kandang, peralatan medis, timbangan, komputer kasir, kendaraan, dan fasilitas penginapan.
 
-5.7 Operational Checklist & SOP Management
+### 5.7 Operational Checklist & SOP Management
 
 Mengelola prosedur kerja dan pemeriksaan aktivitas operasional.
 
-Fitur:
+**Fitur:**
 
 - Pembuatan SOP.
 - Checklist pembukaan toko.
@@ -1296,11 +1296,11 @@ Fitur:
 - Riwayat pelaksanaan.
 - Dokumentasi pelanggaran prosedur.
 
-5.8 Document Management
+### 5.8 Document Management
 
 Mengelola dokumen perusahaan secara terpusat.
 
-Fitur:
+**Fitur:**
 
 - Penyimpanan dokumen.
 - Kategori dokumen.
@@ -1316,11 +1316,11 @@ Fitur:
 - Masa berlaku dokumen.
 - Pengingat kedaluwarsa dokumen.
 
-5.9 Delivery & Shipping Management
+### 5.9 Delivery & Shipping Management
 
 Mengelola pengiriman produk yang dibeli pelanggan.
 
-Fitur:
+**Fitur:**
 
 - Pesanan pengiriman.
 - Alamat pengiriman.
@@ -1335,11 +1335,11 @@ Fitur:
 
 Modul ini berbeda dari transportasi hewan karena berfokus pada pengiriman produk.
 
-5.10 Budget & Expense Control
+### 5.10 Budget & Expense Control
 
 Mengelola anggaran dan pengawasan pengeluaran perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Anggaran per cabang.
 - Anggaran per departemen.
@@ -1351,11 +1351,11 @@ Fitur:
 - Peringatan kelebihan anggaran.
 - Analisis biaya operasional.
 
-5.11 Tax Management
+### 5.11 Tax Management
 
 Mengelola administrasi perpajakan perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Konfigurasi pajak.
 - Pengelolaan tarif pajak.
@@ -1368,11 +1368,11 @@ Fitur:
 
 Penerapannya harus mengikuti ketentuan perpajakan yang berlaku.
 
-5.12 Data Backup & Disaster Recovery
+### 5.12 Data Backup & Disaster Recovery
 
 Menjaga keberlangsungan dan keamanan data perusahaan.
 
-Fitur:
+**Fitur:**
 
 - Backup database terjadwal.
 - Backup dokumen dan lampiran.
@@ -1387,11 +1387,11 @@ Fitur:
 
 Backup harus disertai pengujian pemulihan secara berkala agar data benar-benar dapat digunakan ketika terjadi gangguan.
 
-5.13 Online Store & E-Commerce Management
+### 5.13 Online Store & E-Commerce Management
 
 Mengelola penjualan produk secara online melalui kanal digital.
 
-Fitur:
+**Fitur:**
 
 - Katalog produk online.
 - Informasi harga dan stok.
@@ -1407,7 +1407,7 @@ Fitur:
 
 Modul ini dapat menjadi perluasan bisnis PETORA untuk mendukung penjualan melalui website atau kanal penjualan digital.
 
-6. Integrasi dan Alur Bisnis Antar-Modul
+## 6. Integrasi dan Alur Bisnis Antar-Modul
 
 PETORA dirancang menggunakan pendekatan integrasi proses bisnis sehingga setiap aktivitas dapat menghasilkan pembaruan data yang relevan pada bagian lain.
 
@@ -1453,11 +1453,11 @@ Pelanggan → Pengaduan → Tiket Keluhan → Penugasan Petugas → Investigasi 
 
 Aktivitas Cabang → Pencatatan Transaksi → Pembaruan Persediaan → Pencatatan Keuangan → Konsolidasi Data → Dashboard Pusat → Analisis Performa Perusahaan.
 
-7. Keamanan, Integritas, dan Audit Sistem
+## 7. Keamanan, Integritas, dan Audit Sistem
 
 PETORA menerapkan pengendalian sistem untuk memastikan seluruh informasi dan aktivitas bisnis dikelola secara aman.
 
-Aspek keamanan meliputi:
+**Aspek keamanan meliputi:**
 
 - Autentikasi dan otorisasi pengguna.
 - Pengelolaan role dan permission.
@@ -1482,7 +1482,7 @@ Sistem juga menerapkan prinsip bahwa data historis yang memiliki kepentingan tra
 
 Koreksi dilakukan melalui mekanisme yang memiliki alasan, identitas pelaksana, waktu, dan riwayat perubahan.
 
-8. Pengguna dan Hak Akses
+## 8. Pengguna dan Hak Akses
 
 PETORA mendukung beberapa kelompok pengguna dengan tanggung jawab berbeda.
 
@@ -1586,7 +1586,7 @@ Customer
 
 Daftar tersebut merupakan kelompok peran yang dapat disesuaikan dengan struktur organisasi masing-masing perusahaan. Setiap pengguna tetap memperoleh hak akses berdasarkan permission dan cakupan data yang diberikan.
 
-9. Manfaat PETORA
+## 9. Manfaat PETORA
 
 Bagi Pemilik dan Manajemen
 
@@ -1624,7 +1624,7 @@ Bagi Pelanggan
 - Memperoleh informasi dan pengingat layanan.
 - Menikmati program membership dan loyalty.
 
-10. Visi dan Pengembangan Bisnis
+## 10. Visi dan Pengembangan Bisnis
 
 PETORA memiliki visi menjadi ekosistem digital terintegrasi yang mendukung pengelolaan bisnis petshop dan pet care dari skala usaha kecil hingga perusahaan multi-cabang.
 

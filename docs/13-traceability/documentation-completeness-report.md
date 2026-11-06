@@ -19,8 +19,8 @@ Audit dilakukan pada 2026-11-06 terhadap working tree yang tersedia.
 
 | Check | Result | Interpretation |
 | --- | --- | --- |
-| Markdown files under `docs/` | 111 | Seluruh berkas Markdown ditemukan dalam inventaris |
-| Documents under 180 words | 70 | Sinyal dokumen ringkas yang perlu review; jumlah kata bukan penilaian mutu final |
+| Markdown files under `docs/` | 114 | Seluruh berkas Markdown ditemukan dalam inventaris |
+| Documents under 180 words | 1 | Satu dokumen kandidat review; ambang kata bukan penilaian mutu final |
 | Missing standard frontmatter | 0 | `docs/README.md` dan laporan ini sudah memiliki metadata |
 | Duplicate `document_id` found | 0 | Konflik ID indeks dengan project overview telah diperbaiki |
 | Broken relative Markdown links found | 0 | Tidak ditemukan target link lokal yang hilang pada audit |
@@ -55,25 +55,20 @@ Audit tautan/metadata perlu dijalankan kembali setelah perubahan dokumentasi. Am
 - Security, RLS, and audit requirements
 - Operational and delivery support
 
-## Requirements not fully clear
-- Exact tax policy and legal compliance mapping
-- Final branch-level permission model in production org
-- Payment gateway and external notification provider choice
-- Final schedule and release priority by business owner
-- Exact retention period for medical and financial records
+## Requirements Not Fully Clear
 
-## Assumptions
-- PETORA will use a modular monolith architecture built on Supabase based on the provided baseline.
-- Frontend deployment will use Vercel or Cloudflare Pages, but the exact hosting may differ.
-- Sensitive workflows will be implemented in server-side logic and database transactions.
-- Customer medical data access permissions will be determined by role and explicit consent policy.
+Tax/legal policy, payment/notification provider, final role/claim lifecycle, numeric SLO/RPO/RTO, data retention/disposal, provider/deployment ownership, approval limits, and phased release acceptance remain open. See [open decision register](open-decisions.md) for owner and interim recommendation.
 
-## Open decisions
-- Final policy for stock negative configuration
-- Exact loyalty and discount stacking rules
-- Final multi-branch role permissions matrix
-- Final retention and disposal policy for medical records
-- Final deployment and staging environment ownership
+## Approved Baseline and Assumptions
+
+- Product Owner approved the modular monolith, React/TypeScript frontend, and Supabase Auth/PostgreSQL RLS/Edge Functions baseline in `architecture-decisions.md` and ADR-0001..0005. This is design approval, not implementation evidence.
+- Vercel/Cloudflare Pages, monitoring vendor, payment/messaging providers, regions and operations ownership remain alternatives until decided.
+- Sensitive workflows use server-side authorization and database transactions for local atomic writes; external side effects require persisted attempts/reconciliation.
+- Clinical/customer access, consent and retention require approved domain/legal policy.
+
+## Open Decisions
+
+The authoritative register is [open-decisions.md](open-decisions.md), including settings governance, policy values, access claims, legal retention, SLO/recovery goals, providers, environment ownership and release phasing. Do not copy stale lists here as a second source of truth.
 
 ## Architectural risks
 - Cross-branch data leakage without strict RLS and verification
@@ -89,22 +84,21 @@ Audit tautan/metadata perlu dijalankan kembali setelah perubahan dokumentasi. Am
 4. Separate critical workflows from direct client calls.
 5. Create a release checklist covering migration, rollback, and smoke testing.
 
-## Internal link validation
-- The docs index and major documents are linked by relative paths.
-- The generated documentation has been structured to keep cross-links aligned with the expected folder tree.
-- Further validation should be done after implementation if additional files are added.
+## Internal Link and Metadata Validation
 
-## Diagram validation
-- Mermaid blocks are included in the architecture, process, and ERD sections in a syntactically simple form suitable for standard Mermaid renderers.
-- Final diagrams should be re-checked against the actual implementation once code is added.
+The latest audit found 0 missing frontmatter, 0 duplicate document IDs and 0 broken local Markdown links across 114 documentation files. Rerun after every broad documentation update.
+
+## Diagram Validation
+
+Markdown code fences were checked for balance; a Mermaid parser/rendering pass was not run. Diagrams remain conceptual Draft and must be rendered/reconciled against approved physical schema and implementation before operational use.
 
 ## Readiness Assessment
 
-**Status: Documentation baseline in progress; not yet approved as implementation-ready.** Struktur dokumentasi mencakup domain utama README dan sekarang memiliki 18 requirement IDs, acceptance criteria, test mapping, serta 33 feature-to-module/data mappings. Namun dokumen inti masih banyak yang ringkas, entity fisik/API tertentu masih TBD, dan belum ada kode, migration, test suite, atau pipeline untuk membuktikan kontrak teknis.
+**Status: Detailed documentation baseline assembled; implementation readiness is conditional and not production-ready.** Dokumen memiliki 18 requirement IDs, acceptance criteria, test mapping, 33 feature-to-module/data mappings, technical workflow/state/exception guidance, and five architecture ADRs. Physical schema/API items, legal/business policies, deployment values and measured NFR targets still contain TBDs, and this repository has no application source, migrations, executable tests or CI pipeline to verify the documented design.
 
 ### Blocking Gaps Before Full Implementation
 
-- Menyelesaikan dan menyetujui role/permission serta tenant/branch scope.
+- Menyelesaikan role/permission details, tenant/branch assignment lifecycle, claim model, and access revocation behavior.
 - Menentukan tax/legal policy, retention dan disposal, provider payment/notification, serta deployment ownership.
 - Menyelesaikan target non-functional terukur (availability, latency, recovery objectives, capacity) bersama stakeholder.
 - Menetapkan entity fisik, endpoint final, constraints, ownership/RLS, dan migration untuk baris TBD di data mapping.
@@ -121,7 +115,7 @@ Audit tautan/metadata perlu dijalankan kembali setelah perubahan dokumentasi. Am
 
 ## Scope and Limitations
 
-Laporan ini mengaudit inventaris, metadata, tautan relatif, serta beberapa dokumen inti; ini bukan review semantik penuh atas 111 dokumen. Dokumen yang belum dibaca dan diverifikasi satu per satu tetap memerlukan review domain sebelum dianggap lengkap.
+Audit ini memeriksa inventaris, frontmatter, duplicate IDs, relative Markdown links, depth heuristic, dan canonical requirement/feature/test mapping. Dokumen inti lintas product, business, architecture, database, backend, frontend, security, testing, DevOps, operations, dan standards telah diperinci; setiap klaim domain/legal, physical schema, and implementation behavior tetap memerlukan owner review dan verifikasi saat kode/migration/test tersedia. Ambang kata hanya menemukan kandidat; dokumen ringkas tidak otomatis salah dan dokumen panjang tidak otomatis lengkap.
 
 ## Related Documents
 

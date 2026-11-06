@@ -33,7 +33,7 @@ PETORA merupakan sistem manajemen petshop dan pet care yang terintegrasi. Dokume
 | Overview | Gambaran umum project dan pedoman dokumentasi | [00-overview/project-overview.md](00-overview/project-overview.md) |
 | Product | PRD, SRS, feature catalog, backlog | [01-product/product-requirements-document.md](01-product/product-requirements-document.md) |
 | Business Analysis | Workflow, peran, permission, use cases | [02-business-analysis/business-overview.md](02-business-analysis/business-overview.md) |
-| Architecture | Arsitektur aplikasi dan sistem | [03-architecture/software-architecture-document.md](03-architecture/software-architecture-document.md) |
+| Architecture | Arsitektur aplikasi, boundary modul, dan keputusan teknis | [Software Architecture Document](03-architecture/software-architecture-document.md), [ADR Index](03-architecture/adr/README.md) |
 | Database | Relational design, ERD, RLS | [04-database/database-design.md](04-database/database-design.md) |
 | Backend | API, business logic, edge functions | [05-backend/backend-architecture.md](05-backend/backend-architecture.md) |
 | Frontend | React, routing, state, standards | [06-frontend/frontend-architecture.md](06-frontend/frontend-architecture.md) |
