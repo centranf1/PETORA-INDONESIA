@@ -131,6 +131,7 @@ Bagian ini menetapkan field minimum, relasi, dan invariant yang harus dibawa ke 
 - Use a decided currency/precision policy before physical migration; never use floating point for amounts. Rounding and tax allocation remain business decisions.
 - Quantities use `numeric` precision and a unit/conversion definition; every ledger movement stores the unit used.
 - Tenant-owned foreign keys should include `organization_id` where practical so a valid ID from another tenant cannot be linked accidentally.
+- Migration 007 adds composite tenant foreign keys for existing one-column references where both sides are organization-scoped; legacy rows remain unvalidated until a controlled data audit validates each constraint.
 
 ## 5. Physical Schema Approval Gates
 

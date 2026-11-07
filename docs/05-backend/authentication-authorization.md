@@ -45,6 +45,14 @@ If authorization fails, return a stable, safe denial response without revealing 
 
 Require or recommend 2FA for privileged roles according to the final security policy. The role list and enforcement point are open decisions; do not imply that recommendation means enforcement exists.
 
+## Repository Implementation Status
+
+- `auth-signin` authenticates email/password through Supabase Auth.
+- `auth-me` verifies the bearer token server-side, rejects inactive application users or organizations, and returns only active role assignments belonging to the user's organization.
+- The frontend loads its protected user/organization/role context through `auth-me`; it no longer reads identity and role tables directly from the browser.
+- `auth-signup` remains unavailable with `503 POLICY_NOT_APPROVED` until organization provisioning, initial branch assignment, role grant, and atomicity are approved and implemented.
+- Database RLS is enabled with no policies at this interim stage, so direct Data API access is deny-by-default. The service-role auth context endpoint still performs explicit status and assignment validation; this is not a substitute for final permission, branch-selection, and revocation policy.
+
 ## Related Documents
 
 - [Permission Matrix](../02-business-analysis/permission-matrix.md)

@@ -4,6 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Text } from '@/shared/components/ui/text'
 import { Input } from '@/shared/components/ui/input'
 import { useFinanceTransactions, useAccounts } from '@/services/api/finance'
+import { cn } from '@/lib/utils'
 import { Search, Banknote, TrendingUp, TrendingDown, Plus } from 'lucide-react'
 
 export const FinancePage = () => {
@@ -137,6 +138,3 @@ export const FinancePage = () => {
     </div>
   )
 }
-
-import { Badge } from '@/shared/components/ui/badge'
-import { cn } from '@/lib/utils'

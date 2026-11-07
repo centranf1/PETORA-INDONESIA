@@ -21,10 +21,16 @@ CREATE TABLE IF NOT EXISTS public.system_settings (
   updated_by UUID REFERENCES public.users(id) ON DELETE SET NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  version_no INTEGER NOT NULL DEFAULT 1,
-  UNIQUE (organization_id, setting_group, key) WHERE branch_id IS NULL,
-  UNIQUE (organization_id, branch_id, setting_group, key) WHERE branch_id IS NOT NULL
+  version_no INTEGER NOT NULL DEFAULT 1
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_system_settings_org_key_unique
+  ON public.system_settings (organization_id, setting_group, key)
+  WHERE branch_id IS NULL;
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_system_settings_branch_key_unique
+  ON public.system_settings (organization_id, branch_id, setting_group, key)
+  WHERE branch_id IS NOT NULL;
 
 -- Setting Change Requests table
 CREATE TABLE IF NOT EXISTS public.setting_change_requests (

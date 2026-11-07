@@ -9,6 +9,7 @@ export interface Product {
   brand?: string | null
   description?: string | null
   status: 'active' | 'inactive'
+  stock?: number
   created_at: string
   updated_at: string
 }

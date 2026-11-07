@@ -1,5 +1,13 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
-import { supabase } from '@/lib/supabase'
+import { supabase, isSupabaseConfigured } from '@/lib/supabase'
+import {
+  authenticateDemo,
+  clearDemoSession,
+  createDemoSession,
+  getStoredDemoSession,
+  hasDemoPermission,
+  saveDemoSession,
+} from '@/lib/demoAuth'
 import type { AuthContext, User, Organization, Branch, Role, Permission } from '@/types'
 import { useSupabase } from './SupabaseProvider'
 
@@ -11,6 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<any | null>(null)
   const [organization, setOrganization] = useState<Organization | null>(null)
   const [branch, setBranch] = useState<Branch | null>(null)
+  const [assignedBranchIds, setAssignedBranchIds] = useState<string[]>([])
   const [roles, setRoles] = useState<Role[]>([])
   const [permissions, setPermissions] = useState<Permission[]>([])
   const [loading, setLoading] = useState(true)
@@ -18,51 +27,56 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshSession = useCallback(async () => {
     try {
-      const { data: { session: currentSession } } = await sb.auth.getSession()
+      if (!isSupabaseConfigured) {
+        const demoSession = getStoredDemoSession() ?? createDemoSession()
+        saveDemoSession(demoSession)
+
+        setSession({ user: demoSession.user, provider: 'demo' })
+        setUser(demoSession.user)
+        setOrganization(demoSession.organization)
+        setBranch(demoSession.branch)
+        setAssignedBranchIds([demoSession.branch.id])
+        setRoles(demoSession.roles)
+        setPermissions(demoSession.permissions)
+        setError(null)
+        return
+      }
+
+      const client: any = sb
+      const { data: { session: currentSession } } = await client.auth.getSession()
       setSession(currentSession)
       
       if (currentSession?.user) {
-        const { data: userData } = await sb
-          .from('users')
-          .select('*')
-          .eq('auth_user_id', currentSession.user.id)
-          .single()
-        
-        if (userData) {
-          setUser(userData)
-          
-          const { data: orgData } = await sb
-            .from('organizations')
-            .select('*')
-            .eq('id', userData.organization_id)
-            .single()
-          
-          if (orgData) setOrganization(orgData)
-          
-          const { data: roleData } = await sb
-            .from('user_role_assignments')
-            .select('role_id, roles(*)')
-            .eq('user_id', userData.id)
-            .eq('is_active', true)
-          
-          if (roleData) {
-            const rolesList = roleData.map((r: any) => r.roles).filter(Boolean)
-            setRoles(rolesList)
-            
-            const roleIds = rolesList.map((r: Role) => r.id)
-            const { data: permData } = await sb
-              .from('role_permissions')
-              .select('permission_id, permissions(*)')
-              .in('role_id', roleIds)
-            
-            if (permData) {
-              const permList = permData.map((p: any) => p.permissions).filter(Boolean)
-              setPermissions(permList)
-            }
-          }
+        const { data: contextResponse, error: contextError } = await client.functions.invoke('auth-me')
+
+        if (contextError) throw contextError
+
+        const context = contextResponse?.data
+        if (!context?.user || !context.organization) {
+          throw new Error('Konteks akun PETORA tidak tersedia')
         }
+
+        setUser(context.user)
+        setOrganization(context.organization)
+        setBranch(context.branch ?? null)
+        setAssignedBranchIds(context.assigned_branch_ids ?? [])
+        setRoles(context.roles ?? [])
+        setPermissions(context.permissions ?? [])
+      } else {
+        setUser(null)
+        setOrganization(null)
+        setBranch(null)
+        setAssignedBranchIds([])
+        setRoles([])
+        setPermissions([])
       }
     } catch (err) {
+      setUser(null)
+      setOrganization(null)
+      setBranch(null)
+      setAssignedBranchIds([])
+      setRoles([])
+      setPermissions([])
       setError(err instanceof Error ? err.message : 'Failed to refresh session')
     } finally {
       setLoading(false)
@@ -87,6 +101,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     action: string,
     scope?: string
   ): boolean => {
+    if (!isSupabaseConfigured) {
+      return hasDemoPermission({
+        user: user ?? createDemoSession().user,
+        organization: organization ?? createDemoSession().organization,
+        branch: branch ?? createDemoSession().branch,
+        roles: roles.length ? roles : createDemoSession().roles,
+        permissions: permissions.length ? permissions : createDemoSession().permissions,
+      }, module, resource, action, scope)
+    }
+
     return permissions.some(p => 
       p.module === module &&
       p.resource === resource &&
@@ -95,15 +119,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     )
   }
 
+  const signOut = useCallback(async () => {
+    if (!isSupabaseConfigured) {
+      clearDemoSession()
+      setUser(null)
+      setSession(null)
+      setOrganization(null)
+      setBranch(null)
+      setAssignedBranchIds([])
+      setRoles([])
+      setPermissions([])
+      return
+    }
+
+    await sb.auth.signOut()
+    setUser(null)
+    setSession(null)
+    setOrganization(null)
+    setBranch(null)
+    setRoles([])
+    setPermissions([])
+  }, [sb])
+
   const value: AuthContext = {
     user,
     session,
     organization,
     branch,
+    assignedBranchIds,
     roles,
     permissions,
+    loading,
+    error,
     hasPermission,
     refreshSession,
+    signOut,
   }
 
   if (loading) {

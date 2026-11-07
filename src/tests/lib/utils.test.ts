@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { formatCurrency, formatNumber, formatDate, getInitials } from '../lib/utils'
+import { formatCurrency, formatNumber, formatDate, getInitials } from '@/lib/utils'
 
 test('formatCurrency should format IDR correctly', () => {
   const result = formatCurrency(1000000)

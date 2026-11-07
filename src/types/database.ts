@@ -106,6 +106,27 @@ export interface Database {
           updated_at?: string
         }
       }
+      roles: {
+        Row: any
+        Insert: any
+        Update: any
+      }
+      permissions: {
+        Row: any
+        Insert: any
+        Update: any
+      }
+      user_role_assignments: {
+        Row: any
+        Insert: any
+        Update: any
+      }
+      role_permissions: {
+        Row: any
+        Insert: any
+        Update: any
+      }
+      [key: string]: any
     }
   }
 }

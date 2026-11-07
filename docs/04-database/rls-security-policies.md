@@ -88,6 +88,10 @@ Medical records and payroll require stronger policies, sometimes restricting to 
 
 Final policy matrix, signed-claim shape, multi-branch assignment resolver, and service-role access pattern must be aligned with the operational and legal policy of the client organization. SQL snippets are design examples, not migrations.
 
+## Current Repository Baseline
+
+All 45 tables created by the current migrations have RLS enabled. No public-table policies are installed while the signed tenant/branch claim and permission resolver remain unresolved; this intentionally denies direct Data API reads and writes. Run `npm run test:db` to verify migration idempotency, RLS coverage, absence of unapproved policies, and unscoped-read denial. This baseline does not provide usable scoped Data API access and does not validate production Supabase Auth claims.
+
 ## Validation Requirements
 
 For each RLS-protected table, test anonymous access, same-organization access, cross-organization denial, same-branch access, cross-branch denial, role/assignment revocation, and mutation policy. Include tests that omit or forge scope claims.

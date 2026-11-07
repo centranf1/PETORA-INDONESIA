@@ -7,7 +7,7 @@ import { useDashboardSummary } from '@/services/api/reports'
 import { useSales } from '@/services/api/sales'
 import { useCustomers } from '@/services/api/customers'
 import { useProducts } from '@/services/api/products'
-import { formatCurrency, formatDate } from '@/lib/utils'
+import { cn, formatCurrency, formatDate } from '@/lib/utils'
 import {
   BarChart3,
   ShoppingBag,

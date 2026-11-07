@@ -82,8 +82,12 @@ export interface AuthContext {
   session: any | null
   organization: Organization | null
   branch: Branch | null
+  assignedBranchIds: string[]
   roles: Role[]
   permissions: Permission[]
+  loading: boolean
+  error: string | null
   hasPermission: (module: string, resource: string, action: string, scope?: string) => boolean
   refreshSession: () => Promise<void>
+  signOut: () => Promise<void>
 }

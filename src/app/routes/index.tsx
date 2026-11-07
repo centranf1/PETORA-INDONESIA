@@ -1,3 +1,4 @@
+import React from 'react'
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@/app/providers/AuthProvider'
 import { DashboardLayout } from '@/shared/layouts/DashboardLayout'
@@ -130,7 +131,13 @@ export const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <PublicRoute><AuthLayout><Outlet /></AuthRoute>,
+    element: (
+      <PublicRoute>
+        <AuthLayout>
+          <Outlet />
+        </AuthLayout>
+      </PublicRoute>
+    ),
     children: [
       {
         index: true,

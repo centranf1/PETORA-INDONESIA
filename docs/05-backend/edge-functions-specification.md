@@ -53,6 +53,10 @@ Use the shared error contract in `error-handling.md`. For mutations accept an id
 
 Set bounded execution time and payload size, monitor error/latency/retry counts, and alert on reconciliation backlog. Deploy environment-specific secrets without logging values. Document rollback/compatibility when function payloads change.
 
+## Repository Runtime Status
+
+Deployable Supabase entry points are exposed as `auth-me`, `auth-signin`, `auth-signup`, `customers-list`, `products-list`, `inventory-locations`, `sales-list`, `settings-approve`, `settings-propose`, and `settings-reject`; nested handler modules are invoked by these `Deno.serve` wrappers. `npm run typecheck:backend` checks their TypeScript separately from the Vite application. This typecheck does not prove deployment, database migration validity, RLS behavior, or transactional correctness. Customer, product, inventory-location, and sales-header reads are bounded read-only endpoints guarded by verified identity and explicit role permission. Until provisioning and settings policies are approved and atomic database commands are implemented, signup and all settings endpoints return `503 POLICY_NOT_APPROVED` without accessing the database. Stock ledger reads and inventory mutations remain unavailable.
+
 ## Related Documents
 
 - [Authentication and Authorization](authentication-authorization.md)

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { AppError, ErrorCodes } from './errors'
+import { AppError, ErrorCodes } from './errors.ts'
 
 export function validateRequest<T>(schema: z.ZodType<T>, data: unknown): T {
   const result = schema.safeParse(data)

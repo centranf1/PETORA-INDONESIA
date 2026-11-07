@@ -1,3 +1,4 @@
+import React from 'react'
 import '@testing-library/jest-dom'
 import { vi } from 'vitest'
 
@@ -12,15 +13,15 @@ vi.mock('@/lib/supabase', () => ({
       signIn: vi.fn(),
     },
     from: vi.fn(() => ({
-      select: vi.fn().returnThis(),
-      insert: vi.fn().returnThis(),
-      update: vi.fn().returnThis(),
-      delete: vi.fn().returnThis(),
-      eq: vi.fn().returnThis(),
+      select: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockReturnThis(),
+      update: vi.fn().mockReturnThis(),
+      delete: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
       single: vi.fn(),
-      order: vi.fn().returnThis(),
-      limit: vi.fn().returnThis(),
-      in: vi.fn().returnThis(),
+      order: vi.fn().mockReturnThis(),
+      limit: vi.fn().mockReturnThis(),
+      in: vi.fn().mockReturnThis(),
     })),
   },
 }))
@@ -32,8 +33,8 @@ vi.mock('react-router-dom', async () => {
     ...actual,
     useNavigate: () => vi.fn(),
     useLocation: () => ({ pathname: '/' }),
-    Link: ({ children, to }: any) => <a href={to}>{children}</a>,
-    Outlet: () => <div>Outlet</div>,
+    Link: ({ children, to }: any) => React.createElement('a', { href: to }, children),
+    Outlet: () => React.createElement('div', null, 'Outlet'),
   }
 })
 

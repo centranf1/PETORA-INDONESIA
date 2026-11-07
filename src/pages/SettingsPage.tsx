@@ -2,6 +2,8 @@ import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { Button } from '@/shared/components/ui/button'
 import { Text } from '@/shared/components/ui/text'
+import { Input } from '@/shared/components/ui/input'
+import { Label } from '@/shared/components/ui/label'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/shared/components/ui/tabs'
 import { useSettings, useCreateSetting } from '@/services/api/settings'
 import { useAuditLogs } from '@/services/api/finance'
@@ -159,5 +161,3 @@ export const SettingsPage = () => {
     </div>
   )
 }
-
-import { Label } from '@/shared/components/ui/label'

@@ -16,5 +16,23 @@ port = 54323
 [auth]
 enabled_providers = ["email", "google"]
 
+[functions.auth-signin]
+verify_jwt = false
+
+[functions.auth-signup]
+verify_jwt = false
+
+[functions.customers-list]
+verify_jwt = true
+
+[functions.products-list]
+verify_jwt = true
+
+[functions.inventory-locations]
+verify_jwt = true
+
+[functions.sales-list]
+verify_jwt = true
+
 [realtime]
 enabled = true

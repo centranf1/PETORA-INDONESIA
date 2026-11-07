@@ -75,7 +75,9 @@ export const stockAdjustmentSchema = z.object({
   location_id: z.string().uuid(),
   product_id: z.string().uuid(),
   batch_id: z.string().uuid().optional(),
-  quantity_delta: z.number().nonzero('Quantity delta tidak boleh nol'),
+  quantity_delta: z.number().refine(value => value !== 0, {
+    message: 'Quantity delta tidak boleh nol',
+  }),
   unit: z.string().min(1),
   movement_type: z.enum(['in', 'out', 'transfer', 'adjustment', 'damaged', 'expired', 'return']),
   source_type: z.string().min(1),

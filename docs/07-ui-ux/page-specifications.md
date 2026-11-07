@@ -20,6 +20,15 @@ Summary cards, charts, alerts, today operations, and quick actions. Must support
 
 Cart, customer and pet selection, item search, calculator, discount, payment, receipt, and close shift.
 
+### Current Demo Boundary
+
+- Saat Supabase belum dikonfigurasi, checkout menyimpan transaksi demo pada browser agar transaksi tunai muncul di daftar penjualan setelah refresh.
+- Riwayat menampilkan pratinjau item dan payment untuk transaksi demo yang tersimpan; pratinjau wajib diberi label bukan struk fiskal.
+- Pembayaran tunai demo dapat berstatus `completed`; metode non-tunai tetap `pending` sampai integrasi provider dan konfirmasi server tersedia.
+- Penyimpanan browser bukan sumber transaksi produksi. Demo ini tidak membuat stock ledger, jurnal, receipt resmi, atau rekonsiliasi provider.
+- Saat backend dikonfigurasi tetapi API checkout belum tersedia, UI harus menampilkan kegagalan dan mempertahankan cart; jangan menampilkan sukses palsu.
+- Harga dan pajak demo belum menjadi kebijakan final dan tidak boleh dipakai untuk transaksi nyata.
+
 ## Inventory
 
 Stock card, movement history, batch/expiry summary, reorder alert, and stock adjustment form.

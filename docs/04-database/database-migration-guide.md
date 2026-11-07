@@ -27,6 +27,10 @@ All schema changes are versioned, deterministic, code-reviewed, and run in the s
 7. Observe migration duration, errors, locks, row counts, and application health. Pause/abort on agreed thresholds.
 8. Remove deprecated columns/paths only in a later migration after all deployed readers/writers have moved.
 
+For local schema smoke validation, run `npm run test:db`. The script starts an ephemeral PostgreSQL 16 container, applies all migrations twice, verifies RLS is enabled on every public table, rejects unapproved public RLS policies, and confirms an authenticated role without scope cannot read tenant rows. The current zero-policy assertion is an interim deny-by-default gate, not a finished access model. It does not replace Supabase integration tests for Auth claims, grants, Edge Functions, or approved scoped RLS policies.
+
+Migration `007_tenant_integrity.sql` adds composite organization-scoped foreign keys for existing single-column relationships where both tables have `organization_id`. Constraints start `NOT VALID` to avoid blocking rollout on legacy rows while rejecting new cross-tenant references. Audit existing rows and validate constraints in a controlled environment before considering the migration fully reconciled.
+
 ## Release Steps
 
 Review migration diff and owner approval; run migration in staging; validate RLS, grants, seeds, application integration tests, backup/restore and rollback/forward recovery; deploy under change window; run smoke tests and monitor. Production is not the first environment to test an irreversible migration.

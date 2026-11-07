@@ -1,31 +1,15 @@
-import { createServerClient } from '@supabase/supabase-js'
-import type { Database } from '../types/database'
+import { createClient } from '@supabase/supabase-js'
+import type { Database } from '@/types/database'
 
-export function createSupabaseAdmin() {
+function createSupabaseServerClient(token?: string) {
   const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
-  
-  if (!url || !key) {
-    throw new Error('Supabase URL and SERVICE_ROLE_KEY are required')
-  }
-  
-  return createServerClient<Database>(url, key, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  })
-}
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY
 
-export function createSupabaseClient(token?: string) {
-  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
-  const key = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY
-  
   if (!url || !key) {
-    throw new Error('Supabase URL and ANON_KEY are required')
+    throw new Error('Supabase URL and key are required')
   }
-  
-  return createServerClient<Database>(url, key, {
+
+  return createClient<Database>(url, key, {
     auth: {
       autoRefreshToken: false,
       persistSession: false,
@@ -36,36 +20,44 @@ export function createSupabaseClient(token?: string) {
   })
 }
 
+export function createSupabaseAdmin() {
+  return createSupabaseServerClient()
+}
+
+export function createSupabaseClient(token?: string) {
+  return createSupabaseServerClient(token)
+}
+
 export async function authenticateUser(token: string) {
   const client = createSupabaseClient(token)
   const { data: { user }, error } = await client.auth.getUser(token)
-  
+
   if (error || !user) {
     throw new Error('Invalid token')
   }
-  
+
   return user
 }
 
 export async function getUserContext(authUserId: string) {
-  const client = createSupabaseAdmin()
-  
+  const client: any = createSupabaseAdmin()
+
   const { data: appUser, error: userError } = await client
     .from('users')
     .select('*')
     .eq('auth_user_id', authUserId)
     .single()
-  
+
   if (userError || !appUser) {
     throw new Error('User not found in application context')
   }
-  
+
   const { data: organization } = await client
     .from('organizations')
     .select('*')
     .eq('id', appUser.organization_id)
     .single()
-  
+
   const { data: roleAssignments } = await client
     .from('user_role_assignments')
     .select(`
@@ -81,11 +73,11 @@ export async function getUserContext(authUserId: string) {
     `)
     .eq('user_id', appUser.id)
     .eq('is_active', true)
-  
-  const roles = roleAssignments?.map(r => r.roles).filter(Boolean) || []
-  const roleCodes = roles.map(r => r.code)
-  
-  const roleIds = roles.map(r => r.id)
+
+  const roles = (roleAssignments ?? []).map((r: any) => r.roles).filter(Boolean)
+  const roleCodes = roles.map((r: any) => r.code)
+
+  const roleIds = roles.map((r: any) => r.id)
   const { data: permissionData } = await client
     .from('role_permissions')
     .select(`
@@ -100,9 +92,9 @@ export async function getUserContext(authUserId: string) {
       )
     `)
     .in('role_id', roleIds)
-  
-  const permissions = permissionData?.map(p => p.permissions).filter(Boolean) || []
-  
+
+  const permissions = (permissionData ?? []).map((p: any) => p.permissions).filter(Boolean)
+
   return {
     user: appUser,
     organization: organization || null,

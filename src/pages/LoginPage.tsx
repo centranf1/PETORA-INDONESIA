@@ -6,7 +6,8 @@ import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { Text } from '@/shared/components/ui/text'
 import { Alert, AlertDescription } from '@/shared/components/ui/alert'
-import { supabase } from '@/lib/supabase'
+import { isSupabaseConfigured, supabase } from '@/lib/supabase'
+import { authenticateDemo, saveDemoSession } from '@/lib/demoAuth'
 import { PawPrint } from 'lucide-react'
 
 export const LoginPage = () => {
@@ -22,7 +23,14 @@ export const LoginPage = () => {
     setError(null)
     
     try {
-      const { error: authError } = await supabase.auth.signUp({
+      if (!isSupabaseConfigured) {
+        const session = authenticateDemo(email, password)
+        saveDemoSession(session)
+        navigate('/')
+        return
+      }
+
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
@@ -31,8 +39,10 @@ export const LoginPage = () => {
         setError(authError.message)
         return
       }
-      
-      navigate('/')
+
+      if (data.session) {
+        navigate('/')
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login gagal')
     } finally {
@@ -74,12 +84,29 @@ export const LoginPage = () => {
         </div>
         
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Memproses...' : 'Masuk / Daftar'}
+          {loading ? 'Memproses...' : 'Masuk'}
+        </Button>
+
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full"
+          onClick={() => {
+            try {
+              const session = authenticateDemo('admin@petora.local', 'password123')
+              saveDemoSession(session)
+              navigate('/')
+            } catch (err) {
+              setError(err instanceof Error ? err.message : 'Login demo gagal')
+            }
+          }}
+        >
+          Masuk sebagai Demo Admin
         </Button>
         
         <div className="text-center">
           <Text size="xs" muted>
-            Dengan继续使用, Anda setuju dengan syarat dan ketentuan PETORA
+            Demo credentials: admin@petora.local / password123
           </Text>
         </div>
       </form>

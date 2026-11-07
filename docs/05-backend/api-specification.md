@@ -40,6 +40,8 @@ Nama path di bawah adalah kontrak internal yang diusulkan, bukan route yang suda
 | Proposed operation | Permission and request contract | Result / invariant |
 | --- | --- | --- |
 | `GET /customers` | `customer.view`; cursor, bounded limit, normalized search/filter allowlist | Hanya customer dalam scope; count tidak membocorkan tenant lain |
+| `GET /inventory/locations` | `inventory.locations.view`; cursor, bounded limit, optional assigned `branch_id` | Metadata lokasi dibatasi ke tenant/cabang terotorisasi; tidak menyertakan saldo |
+| `GET /sales` | `sales.transactions.view`; cursor, bounded limit, allowlisted status/search filters | Header transaksi saja, dibatasi tenant/cabang; payment detail memerlukan endpoint/permission terpisah |
 | `POST /customers` | `customer.create`; name/contact/consent fields; server normalizes contact | Created resource ID; duplicate policy enforced server-side |
 | `POST /customers/:id/pets` | `pet.create` on customer relation; pet profile and identifiers | Pet-owner relation created; customer must belong to authorized organization |
 | `GET /inventory/ledger` | `inventory.ledger.view`; product/location/date cursor filters | Append-oriented movements; no client-supplied balance |
@@ -200,4 +202,14 @@ Endpoint path/version, pagination convention and idempotency header name must be
 - [Edge Functions Specification](edge-functions-specification.md)
 - [Error Handling](error-handling.md)
 - [Integration Guide](integration-guide.md)
+
+## Repository Implementation Status
+
+- `GET /customers` is implemented by the Supabase Edge Function `customers-list`. It requires a verified JWT and an explicit `customers.records.view` grant. `branch` grants are restricted to active branch assignments; `all` is honored only for an organization-level role assignment. Client-supplied organization IDs are ignored, and out-of-scope branch filters are denied.
+- `GET /products` is implemented by `products-list` as an organization-scoped master-catalog read requiring `products.catalog.view`. The bounded response does not include prices or stock balances; those require separately authorized effective-price and inventory endpoints. The current Products page reads one page (up to 100 items) and locally filters it.
+- `GET /inventory/locations` is implemented by `inventory-locations` and requires an explicit `inventory.locations.view` grant. It returns assigned location metadata only; stock ledger reads and inventory mutations remain unavailable in live mode.
+- `GET /sales` is implemented by `sales-list` and requires an explicit `sales.transactions.view` grant. It returns a bounded sales header projection only; it does not return payment details, sale items, or perform writes.
+- The endpoint returns a bounded customer projection and opaque keyset cursor. It is read-only; customer creation, individual customer detail, pet ownership views, `own` scope, and `assigned_records` scope are not implemented by this endpoint.
+- The database currently has no direct Data API RLS policies while the final claim/permission model remains open. This Edge Function uses a server-side service client and performs explicit user, organization, role, permission, and branch checks; deploy only after Supabase integration tests validate the configured Auth and service-role boundary.
+- Signup and settings writes remain fail-closed. Other CRUD and transactional workflow rows in this document remain proposed until their own endpoints and tests exist.
 

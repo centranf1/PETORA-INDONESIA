@@ -1,34 +1,54 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { Button } from '@/shared/components/ui/button'
+import { Badge } from '@/shared/components/ui/badge'
 import { Text } from '@/shared/components/ui/text'
 import { Input } from '@/shared/components/ui/input'
-import { useProducts, useCreateProduct } from '@/services/api/products'
-import { Search, Plus, Package, Tag, Hash } from 'lucide-react'
+import { useProductCatalog } from '@/services/api/products'
+import { isSupabaseConfigured } from '@/lib/supabase'
+import { getLowStockProducts } from '@/lib/mockData'
+import { Search, Plus, Package } from 'lucide-react'
 
 export const ProductsPage = () => {
   const [search, setSearch] = React.useState('')
-  const { data: products, isLoading } = useProducts()
+  const { data: products, isLoading, error } = useProductCatalog()
   
-  const filteredProducts = products?.filter(p => 
-    p.name.toLowerCase().includes(search.toLowerCase()) ||
-    p.sku.toLowerCase().includes(search.toLowerCase())
+  const filteredProducts = (products ?? []).filter(product =>
+    product.name.toLowerCase().includes(search.toLowerCase()) ||
+    product.sku.toLowerCase().includes(search.toLowerCase())
   )
+  const lowStockProducts = isSupabaseConfigured ? [] : getLowStockProducts(products ?? [])
   
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <Text size="2xl" weight="bold">ManajemenProduk</Text>
+          <Text size="2xl" weight="bold">Manajemen Produk</Text>
           <Text muted>Kelola katalog produk dan layanan</Text>
         </div>
         <Button>
           <Plus className="h-4 w-4 mr-2" />
-          TambahProduk
+          Tambah Produk
         </Button>
       </div>
       
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card>
+          <CardContent className="p-4">
+            <Text size="sm" muted>Total Produk</Text>
+            <Text size="2xl" weight="bold">{products?.length ?? 0}</Text>
+          </CardContent>
+        </Card>
+        {!isSupabaseConfigured && (
+          <Card>
+            <CardContent className="p-4">
+              <Text size="sm" muted>Low Stock</Text>
+              <Text size="2xl" weight="bold">{lowStockProducts.length}</Text>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+
       <Card>
         <CardHeader>
           <div className="flex items-center gap-4">
@@ -44,7 +64,11 @@ export const ProductsPage = () => {
           </div>
         </CardHeader>
         <CardContent>
-          {isLoading ? (
+          {error ? (
+            <div role="alert" className="py-8 text-center text-sm text-destructive">
+              Katalog produk tidak dapat dimuat. Coba muat ulang halaman.
+            </div>
+          ) : isLoading ? (
             <div className="space-y-2">
               {[1, 2, 3, 4, 5].map(i => (
                 <div key={i} className="h-16 bg-muted rounded-md animate-pulse" />
@@ -73,6 +97,9 @@ export const ProductsPage = () => {
                     <Badge variant={product.status === 'active' ? 'default' : 'secondary'}>
                       {product.status}
                     </Badge>
+                    {!isSupabaseConfigured && Boolean(product.stock) && product.stock! <= 5 && (
+                      <Badge variant="destructive">Stok Rendah</Badge>
+                    )}
                     <Button variant="ghost" size="sm">Edit</Button>
                   </div>
                 </div>
@@ -90,5 +117,3 @@ export const ProductsPage = () => {
     </div>
   )
 }
-
-import { Badge } from '@/shared/components/ui/badge'

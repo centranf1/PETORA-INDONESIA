@@ -2,16 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { Button } from '@/shared/components/ui/button'
+import { Badge } from '@/shared/components/ui/badge'
 import { Text } from '@/shared/components/ui/text'
 import { Input } from '@/shared/components/ui/input'
 import { useInventoryLocations, useStockLedger } from '@/services/api/products'
-import { useProducts } from '@/services/api/products'
+import { useDemoProducts } from '@/services/api/products'
+import { isSupabaseConfigured } from '@/lib/supabase'
+import { getLowStockProducts } from '@/lib/mockData'
 import { Search, Warehouse, TrendingDown, TrendingUp, AlertTriangle } from 'lucide-react'
 
 export const InventoryPage = () => {
-  const { data: locations } = useInventoryLocations()
-  const { data: ledger } = useStockLedger()
-  const { data: products } = useProducts()
+  const { data: locations, error: locationsError, isLoading: locationsLoading } = useInventoryLocations()
+  const { data: ledger, error: ledgerError, isLoading: ledgerLoading } = useStockLedger()
+  const { data: demoProducts } = useDemoProducts()
+  const lowStockProducts = getLowStockProducts(demoProducts ?? [])
   
   return (
     <div className="space-y-6">
@@ -53,19 +57,21 @@ export const InventoryPage = () => {
             </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-950/20">
-                <AlertTriangle className="h-6 w-6 text-orange-600" />
+        {!isSupabaseConfigured && (
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-950/20">
+                  <AlertTriangle className="h-6 w-6 text-orange-600" />
+                </div>
+                <div>
+                  <Text size="2xl" weight="bold">{lowStockProducts.length}</Text>
+                  <Text size="sm" muted>Stok Minimum</Text>
+                </div>
               </div>
-              <div>
-                <Text size="2xl" weight="bold">0</Text>
-                <Text size="sm" muted>Stok Minimum</Text>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -75,7 +81,11 @@ export const InventoryPage = () => {
             <CardDescription>Daftar gudang dan lokasi stok</CardDescription>
           </CardHeader>
           <CardContent>
-            {locations && locations.length > 0 ? (
+            {locationsError ? (
+              <div role="alert" className="text-sm text-destructive">Lokasi inventori tidak dapat dimuat.</div>
+            ) : locationsLoading ? (
+              <Text muted>Memuat lokasi...</Text>
+            ) : locations && locations.length > 0 ? (
               <div className="space-y-2">
                 {locations.map(loc => (
                   <div key={loc.id} className="flex items-center justify-between p-3 rounded-md border border-border">
@@ -104,7 +114,11 @@ export const InventoryPage = () => {
             <CardDescription>Pergerakan stok terbaru</CardDescription>
           </CardHeader>
           <CardContent>
-            {ledger && ledger.length > 0 ? (
+            {ledgerError ? (
+              <div role="alert" className="text-sm text-muted-foreground">Data ledger live belum tersedia.</div>
+            ) : ledgerLoading ? (
+              <Text muted>Memuat ledger...</Text>
+            ) : ledger && ledger.length > 0 ? (
               <div className="space-y-2">
                 {ledger.slice(0, 10).map(entry => (
                   <div key={entry.id} className="flex items-center justify-between p-3 rounded-md border border-border">
@@ -134,5 +148,3 @@ export const InventoryPage = () => {
     </div>
   )
 }
-
-import { Badge } from '@/shared/components/ui/badge'

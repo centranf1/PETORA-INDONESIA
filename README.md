@@ -93,6 +93,7 @@ Migrations are located in `supabase/migrations/`:
 - `004_bookings_clinical.sql` - Bookings, medical records, prescriptions, pharmacy
 - `005_hr_finance.sql` - Staff, attendance, payroll, finance, accounting
 - `006_settings_audit.sql` - System settings, audit logs, notifications
+- `007_tenant_integrity.sql` - Composite foreign keys that prevent cross-organization references
 
 ## Key Features (P0 Priority)
 1. **Authentication & Authorization** - Supabase Auth with role-based access control

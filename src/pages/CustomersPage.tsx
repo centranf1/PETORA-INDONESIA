@@ -5,6 +5,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Text } from '@/shared/components/ui/text'
 import { useCustomers } from '@/services/api/customers'
 import { usePets } from '@/services/api/customers'
+import { filterCustomers } from '@/lib/mockData'
 import { Input } from '@/shared/components/ui/input'
 import { Search, Plus, Users, PawPrint } from 'lucide-react'
 
@@ -13,10 +14,7 @@ export const CustomersPage = () => {
   const { data: customers, isLoading } = useCustomers()
   const { data: pets } = usePets()
   
-  const filteredCustomers = customers?.filter(c => 
-    c.full_name.toLowerCase().includes(search.toLowerCase()) ||
-    c.phone.includes(search)
-  )
+  const filteredCustomers = filterCustomers(customers ?? [], search)
   
   return (
     <div className="space-y-6">
@@ -95,7 +93,7 @@ export const CustomersPage = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <Text size="sm" weight="semibold">{formatCurrency(0)}</Text>
+                    <Text size="sm" weight="semibold">{customer.loyalty_points} pts</Text>
                     <Text size="xs" muted>{customer.status}</Text>
                   </div>
                 </Link>
@@ -112,5 +110,3 @@ export const CustomersPage = () => {
     </div>
   )
 }
-
-import { formatCurrency } from '@/lib/utils'

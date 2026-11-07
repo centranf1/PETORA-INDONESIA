@@ -59,7 +59,7 @@ Kebijakan runtime seperti refund, stock, pricing, loyalty, booking, dan notifica
 
 - Unit tests: schema validation and reducer logic
 - Integration tests: API contract and Edge Function validation
-- Database tests: RLS, transaction, and audit behavior
+- Database tests: run `npm run test:db` for migration ordering/idempotency and fail-closed RLS smoke checks; Supabase Auth/RLS transaction behavior still requires a Supabase integration environment
 - Security tests: role isolation and tampering detection
 - E2E tests: full settings approval flow from dashboard to runtime rules
 

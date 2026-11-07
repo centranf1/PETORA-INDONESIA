@@ -24,8 +24,8 @@ Audit dilakukan pada 2026-11-06 terhadap working tree yang tersedia.
 | Missing standard frontmatter | 0 | `docs/README.md` dan laporan ini sudah memiliki metadata |
 | Duplicate `document_id` found | 0 | Konflik ID indeks dengan project overview telah diperbaiki |
 | Broken relative Markdown links found | 0 | Tidak ditemukan target link lokal yang hilang pada audit |
-| Primary numbered test scenarios | 26 | `PET-TST-001` through `PET-TST-026`; settings/security suites are separately mapped |
-| Application source, migrations, tests, or CI files at repository root | Not present in inspected tree | Dokumen belum diverifikasi terhadap implementasi aktual |
+| Primary numbered test scenarios | 30 | `PET-TST-001` through `PET-TST-030`; settings/security suites are separately mapped |
+| Application source, migrations, tests, and CI | Source, seven Supabase migrations, executable tests, deployable Edge Function wrappers, a backend TypeScript check, and a Docker-based PostgreSQL migration smoke test are present; no `.github` CI workflow or Supabase CLI was found; Deno validation runs through Docker because standalone Deno is unavailable | Migrations are checked for clean apply/rerun, tenant-FK validation, all 45 tables enabling RLS, zero unapproved policies, unscoped read denial, and cross-tenant branch rejection. All ten Edge Function entry points pass Deno check in a container. Customer, product, inventory-location, and sales-header read endpoints have permission/tenant tests. Supabase deployment/Auth policy behavior, approved scoped RLS, write APIs, checkout, and payment-provider verification remain unverified/incomplete |
 
 Audit tautan/metadata perlu dijalankan kembali setelah perubahan dokumentasi. Ambang 180 kata hanya heuristik untuk menemukan kandidat review, bukan syarat panjang dokumen.
 
@@ -95,7 +95,7 @@ Markdown code fences were checked for balance; a Mermaid parser/rendering pass w
 
 ## Readiness Assessment
 
-**Status: Detailed documentation baseline assembled; implementation readiness is conditional and not production-ready.** Dokumen memiliki 18 requirement IDs, acceptance criteria, test mapping, 33 feature-to-module/data mappings, technical workflow/state/exception guidance, and five architecture ADRs. Physical schema/API items, legal/business policies, deployment values and measured NFR targets still contain TBDs, and this repository has no application source, migrations, executable tests or CI pipeline to verify the documented design.
+**Status: Detailed documentation baseline assembled with an application scaffold and partial backend runtime; implementation readiness is conditional and not production-ready.** Dokumen memiliki 18 requirement IDs, acceptance criteria, test mapping, 33 feature-to-module/data mappings, technical workflow/state/exception guidance, and five architecture ADRs. Source code, seven Supabase migrations, executable tests, deployable Edge Function wrappers, backend TypeScript/Deno checks, and a PostgreSQL smoke test are present. Sign-in/session lookup and scoped customer list execute; signup and settings mutations are explicitly fail-closed until policy and atomic commands exist. Supabase deployment/Auth policy behavior, approved scoped RLS, customer writes, checkout, and payment-provider verification remain unverified/incomplete, and no CI workflow was found. Physical schema/API items, legal/business policies, deployment values and measured NFR targets still contain TBDs.
 
 ### Blocking Gaps Before Full Implementation
 

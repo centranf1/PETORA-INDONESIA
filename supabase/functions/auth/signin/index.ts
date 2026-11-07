@@ -1,9 +1,5 @@
-import { createServerClient } from '@supabase/supabase-js'
-import type { Database } from '../../../types/database'
-import { generateTraceId, createSuccessResponse, createErrorResponse } from '../../../lib/validators/errors'
-
-const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+import { createBackendClient } from '../../_shared/supabase.ts'
+import { generateTraceId, createSuccessResponse, createErrorResponse } from '../../../../src/lib/validators/errors.ts'
 
 export default async function handler(req: Request): Promise<Response> {
   const traceId = generateTraceId()
@@ -26,11 +22,9 @@ export default async function handler(req: Request): Promise<Response> {
       )
     }
     
-    const client = createServerClient<Database>(supabaseUrl!, supabaseServiceKey!, {
-      auth: { autoRefreshToken: false, persistSession: false },
-    })
+    const client = createBackendClient()
     
-    const { data, error } = await client.auth.signUp({
+    const { data, error } = await client.auth.signInWithPassword({
       email,
       password,
     })
